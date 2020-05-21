@@ -3,6 +3,7 @@
       include './config/pg_con.class.php';
       $cid = $_SESSION['cid'];
       $hn  = $_SESSION['hn'];
+      //test
 ?>
 <!DOCTYPE html>
 <html lang="th">
