@@ -1,0 +1,80 @@
+.thb{
+	font-weight: bold;
+	font-size: 1.2em;
+	color: #0B6854;
+}
+.outgo{
+	color: #000000;
+	font-size: 1.2em;
+	background: #fff;
+}
+.outgo:hover{
+	color: #fff;
+	font-size: 1.2em;
+	background: #000;
+	cursor: pointer;
+}
+
+.summ{
+	font-weight: bold;
+	font-size: 1.2em;
+	color: #273746;
+}
+.fogoo{
+	font-size: 1.4em;
+	color: #0B5345;
+}
+.div-td{
+	font-size: 1.0em;
+	font-weight: lighter;
+}
+.paym{
+	font-weight: bold;
+	font-size: 1.6em;
+}
+.mo{
+	font-size: 1.2em;
+	font-weight: bold;
+}
+.modal_div{
+	font-weight: bold;
+	color: #1A5276;
+}
+.name-cen{
+ text-align: center;
+ font-weight: bold;
+ font-size: 1.4em;
+ color: #B03A2E;
+}
+.btt{
+	text-align: center;
+		font-size: 1.2em;
+}
+.ww{
+	text-align: center;
+	color: #D68910;
+		font-size: 1.2em;
+}
+.uu{
+	color: #CB4335;
+	font-weight: bold;
+	font-size: 1.2em;
+}
+.pp{
+	color: #CB4335;
+	font-weight: bold;
+	font-size: 1.2em;
+}
+.cc{
+	color: #1F618D;
+	font-weight: bold;
+	font-size: 1.2em;
+}
+.ma
+{
+	z-index: 999;
+	width: 100%;
+	font-weight: bold;
+	font-size: 1.4em;
+	color: #0C347E;
+}

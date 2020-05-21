@@ -1,0 +1,230 @@
+.inputd {
+  display: block;
+  width: 100%;
+  background: #f2f2f2;
+  border-radius: 2px;
+  /*font-family: Raleway-SemiBold;*/
+  font-family: 'Sriracha', cursive;
+  font-size: 20px;
+  color: #686868;
+  line-height: 1.2;
+  padding: 0 28px;
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+  margin-top: 10px;
+  border:#fff;
+  height: 50px;
+}
+.ffont{
+    font-family: 'Sriracha', cursive;
+}
+  .pro:hover{
+    cursor: pointer;
+    color: #9A0505;
+  }
+[data-toggle="buttons-radio"]>.btn>input[type="radio"] {
+  display: none;
+}
+[data-toggle="buttons-checkbox"]>.btn>input[type="checkbox"] {
+  display: none;
+}
+.detail-1{
+  text-align: center;
+  color: #109913;
+  font-family: 'Sriracha', cursive;
+  font-weight: bold;
+}
+.detail-2{
+  color: #065908;
+  font-family: 'Sriracha', cursive;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+.detail-3{
+  color: #109913;
+  font-family: 'Sriracha', cursive;
+}
+
+.detail-a{
+  text-align: center;
+  color: #109913;
+  font-family: 'Sriracha', cursive;
+  font-weight: bold;
+}
+.detail-b{
+  color: #0C810F;
+  font-family: 'Sriracha', cursive;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+.detail-c{
+  color: #109913;
+  font-family: 'Sriracha', cursive;
+  font-weight: bold;
+}
+.detail-d{
+  color: #109913;
+  font-family: 'Sriracha', cursive;
+
+}
+.ii{
+    border-radius: 50%;
+    background-position: left top;
+    background-repeat: repeat;
+    width: 60px;
+    height:60px;    
+}
+
+p {
+    text-indent: 50px;
+}
+    .btn-c {
+      color: #fff;
+      background-color: #686868;
+      border-color: #ddd;
+    }
+    .btn {
+      display: inline-block;
+      font-weight: 400;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      border: 1px solid transparent;
+      padding: .5rem .75rem;
+      font-size: 1rem;
+      line-height: 1.25;
+      border-radius: .25rem;
+      transition: all .15s ease-in-out;
+    }
+img{
+    border-radius: 50%;
+    background-position: left top;
+    background-repeat: repeat;
+    width: 120px;
+    height:120px;    
+}
+  .custom-radio-button div {
+    display: inline-block;
+  }
+  .custom-radio-button input[type="radio"] {
+    display: none;
+  }
+  .custom-radio-button input[type="radio"] + label {
+    color: #333;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+  }
+  .custom-radio-button input[type="radio"] + label span {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    margin: -1px 4px 0 0;
+    vertical-align: middle;
+    cursor: pointer;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.33);
+    background-repeat: no-repeat;
+    background-position: center;
+    text-align: center;
+    line-height: 44px;
+  }
+  .custom-radio-button input[type="radio"] + label span img {
+    opacity: 0;
+    transition: all 0.3s ease;
+  }
+  .custom-radio-button input[type="radio"]#colora + label span {
+    background-color: #85D387;
+  }
+  .custom-radio-button input[type="radio"]#colorb + label span {
+    background-color: #85D387;
+  }
+  .custom-radio-button input[type="radio"]#colorc + label span {
+    background-color: #85D387;
+  }
+  .custom-radio-button input[type="radio"]#colord + label span {
+    background-color: #85D387;
+  }
+  .custom-radio-button input[type="radio"]#colore + label span {
+    background-color: #85D387;
+  }
+  .custom-radio-button input[type="radio"]#colorf + label span {
+    background-color: #85D387;
+  }
+  .custom-radio-button input[type="radio"]#colorg + label span {
+    background-color: #85D387;
+  }
+  .custom-radio-button input[type="radio"]#colorh + label span {
+    background-color: #85D387;
+  }
+  .custom-radio-button input[type="radio"]#colori + label span {
+    background-color: #85D387;
+  }
+  .custom-radio-button input[type="radio"]#colorj + label span {
+    background-color: #85D387;
+  }
+  .custom-radio-button input[type="radio"]#colork + label span {
+    background-color: #85D387;
+  }
+  .custom-radio-button input[type="radio"]#colorl + label span {
+    background-color: #85D387;
+  }
+  .custom-radio-button input[type="radio"]#colorm + label span {
+    background-color: #85D387;
+  }
+  .custom-radio-button input[type="radio"]#colorn + label span {
+    background-color: #85D387;
+  }
+  .custom-radio-button input[type="radio"]#coloro + label span {
+    background-color: #85D387;
+  }
+  .custom-radio-button input[type="radio"]#colorp + label span {
+    background-color: #85D387;
+  }
+  .custom-radio-button input[type="radio"]#colorq + label span {
+    background-color: #85D387;
+  }
+  .custom-radio-button input[type="radio"]#colorr + label span {
+    background-color: #85D387;
+  }
+  .custom-radio-button input[type="radio"]#colors + label span {
+    background-color: #85D387;
+  }
+  .custom-radio-button input[type="radio"]#colort + label span {
+    background-color: #85D387;
+  }
+  .custom-radio-button input[type="radio"]#coloru + label span {
+    background-color: #85D387;
+  }
+  .custom-radio-button input[type="radio"]#colorv + label span {
+    background-color: #85D387;
+  }
+  .custom-radio-button input[type="radio"]#colorw + label span {
+    background-color: #85D387;
+  }
+  .custom-radio-button input[type="radio"]#colorx + label span {
+    background-color: #85D387;
+  }
+  .custom-radio-button input[type="radio"]#colory + label span {
+    background-color: #85D387;
+  }
+  .custom-radio-button input[type="radio"]#colorz + label span {
+    background-color: #85D387;
+  }
+  .custom-radio-button input[type="radio"]:checked + label span {
+    opacity: 1;
+    background: url("tick-icon-4657-01.png") center center no-repeat;
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+  }
+  .fboby{
+    font-weight: bold;
+    font-size: 1.4em;
+  }
