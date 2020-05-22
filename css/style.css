@@ -9,7 +9,9 @@
           font-size: 1.6em;
           display: block;
         }
-        
+        .fon{
+              font-family: 'Kanit', sans-serif !important;
+        }
         .button {
           display: inline-block;
           border-radius: 4px;

@@ -31,22 +31,26 @@ $query = mysqli_query($con,$searchuser);
 $row_result = mysqli_fetch_array($query)
 
 // hn,cid,fname,lname,phone,pttype,lineid,,,,,,,flage,dateupdate,ipupdate,cdate,ctime
-
 ?>
 <body>
     <div class="uk-container uk-padding">
         <h1>ทำรายการสำเร็จ เลขที่ OrderNo. <B><?php echo $row_result['token_check'];?></B></h1>
-        <span>บันทึกรายการเมื่อวันที่ <?php echo thaiDateFULL($row_result['cdate'])." เวลา ".$row_result['ctime']." น.";?></span>
+        <center><span class="fon">บันทึกรายการเมื่อวันที่ <?php echo thaiDateFULL($row_result['cdate'])." เวลา ".$row_result['ctime']." น.";?></span></center>
         <hr>
+        <h3 class="fon">ข้อมูลที่ลงทะเบียนรับยาทางไปรษณีย์</h3>
         <div class="">
-            <div class="hh2"><span class=""></span><span class=""><?php echo thaiDateFULL($row_result['date_appoint']);?></span></div>
-            <div class="hh2"><span> </span><?php echo $row_result['clinic_appoint'];?></div>
-            <div class="hh2"><span> </span><?php echo $row_result['doctor_appoint'];?></div>
-            <div class="hh2"><?php echo "คุณ".$row_result['fname']."  ".$row_result['lname']." ( HN : ".$row_result['hn']." )";?></div>
-            <div class="hh2"><?php echo $row_result['phone']; ?></div>
-            <div class="hh2"><?php echo " เลขที่ ".$row_result['adddess']." หมู่ ".$row_result['moo']." อ.".$row_result['district']." จ.".$row_result['amphoe']." ".$row_result['province']." ".$row_result['zipcode'];?></div>
-        </div>
+            <div class="hh2 fon"><span class="fon">คุณ</span><?php echo $row_result['fname']."  ".$row_result['lname']." ( HN : ".$row_result['hn']." )";?></div>
+            <div class="hh2 fon"><span class="fon">เบอร์โทรศัพท์ </span><?php echo $row_result['phone']; ?></div>
+            <hr>
+            <div class="hh2 fon"><span class="fon">วันที่ </span><span class=""><?php echo thaiDateFULL($row_result['date_appoint']);?></span></div>
+            <div class="hh2 fon"><span class=""></span><?php echo $row_result['clinic_appoint'];?></div>
+            <div class="hh2 fon"><span class=""></span><?php echo $row_result['doctor_appoint'];?></div>
+            <hr>
 
+            <div class="hh2 fon"><?php echo " เลขที่ ".$row_result['adddess']." หมู่ ".$row_result['moo'];?></div>
+            <div class="hh2 fon"><?php echo " ตำบล".$row_result['district']." อำเภอ".$row_result['amphoe'];?>
+            <div class="hh2 fon"><?php echo " จังหวัด".$row_result['province']." ".$row_result['zipcode'];?></div>
+        </div>
     </div>
 </body>
 </html>
