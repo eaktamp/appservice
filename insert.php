@@ -51,7 +51,7 @@ $ctime		= DATE('H:i:s');
 // }
 // 	$scoresum = $csumb;
 
-      $searchuser = "SELECT * FROM web_data_patient where cid = '".$cid."'  ";
+        $searchuser = "SELECT * FROM web_data_patient where cid = '".$cid."'  ";
         $have_user_yet = mysqli_query($con, $searchuser);
         $count = mysqli_num_rows($have_user_yet);
         // $have_user_yet['cid'];
