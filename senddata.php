@@ -37,6 +37,7 @@ $hn  = $_SESSION['hn'];
                 --    INNER JOIN thaiaddress tha  ON tha.addressid    = concat(p.chwpart,p.amppart,p.tmbpart)
                 INNER JOIN thaiaddress AS r ON r.tmbpart = p.tmbpart AND r.amppart = p.amppart AND r.chwpart = p.chwpart 
                 LEFT JOIN dbaddress as dbs on dbs.iddistrict = r.addressid
+
                 LEFT JOIN pttype pty        ON pty.pttype       = p.pttype
                 WHERE p.hn = '".$_SESSION['hn']."' and p.cid = '".$_SESSION['cid']."' ";
                 $have_user_yet = pg_query($conn, $searchuser);
