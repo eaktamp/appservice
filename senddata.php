@@ -79,7 +79,7 @@
             </div>
             <div class="uk-width-1-2@m">
                 <label class="h2">เบอร์โทรศัพท์</label>
-                <input name="phone" class="uk-input uk-width-1-1" type="text" value="<?php echo $result['mobile_phone_number']?>">
+                <input name="phone" class="uk-input uk-width-1-1" type="text" value="<?php echo $result['phone']?>">
             </div>
             <div class="uk-width-1-2@m">
                 <label class="h2">สิทธิ์</label>
@@ -91,11 +91,11 @@
             </div>
             <div class="uk-width-1-2@m">
                 <label class="h2">เลขที่</label>
-                <input name="adddess" class="uk-input uk-width-1-1" type="text" value="<?php echo $result['addrpart']?>">
+                <input name="adddess" class="uk-input uk-width-1-1" type="text" value="<?php echo $result['adddess']?>">
             </div>
             <div class="uk-width-1-2@m">
                 <label class="h2">หมู่</label>
-                <input name="moo" class="uk-input uk-width-1-1" type="text" value="<?php echo $result['moopart']?>">
+                <input name="moo" class="uk-input uk-width-1-1" type="text" value="<?php echo $result['moo']?>">
             </div>
             <div class="uk-width-1-2@m">
                 <label class="h2">ตำบล / แขวง</label>
@@ -103,7 +103,7 @@
             </div>
             <div class="uk-width-1-2@m">
                 <label class="h2">อำเภอ / เขต</label>
-                <input name="amphoe" class="uk-input uk-width-1-1" type="text" value="<?php echo $result['amphur']?>">
+                <input name="amphoe" class="uk-input uk-width-1-1" type="text" value="<?php echo $result['amphoe']?>">
             </div>
             <div class="uk-width-1-2@m">
                 <label class="h2">จังหวัด</label>
