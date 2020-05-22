@@ -10,7 +10,11 @@
           display: block;
         }
         .fon{
-              font-family: 'Kanit', sans-serif !important;
+          font-family: 'Kanit', sans-serif !important;
+        }
+        .iimg{
+          width: 50px;
+          height:50px;
         }
         .button {
           display: inline-block;

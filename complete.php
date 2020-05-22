@@ -29,12 +29,10 @@ AND a.cid = '".$cid."'
 AND a.token_check = '".$token_check."' ";
 $query = mysqli_query($con,$searchuser);
 $row_result = mysqli_fetch_array($query)
-
-// hn,cid,fname,lname,phone,pttype,lineid,,,,,,,flage,dateupdate,ipupdate,cdate,ctime
 ?>
 <body>
     <div class="uk-container uk-padding">
-        <h1>ทำรายการสำเร็จ เลขที่ OrderNo. <B><?php echo $row_result['token_check'];?></B></h1>
+        <h2><img src="img/iconsend.jpg" class="iimg">ทำรายการสำเร็จ เลขที่ OrderNo. <B><?php echo $row_result['token_check'];?></B></h2>
         <center><span class="fon">บันทึกรายการเมื่อวันที่ <?php echo thaiDateFULL($row_result['cdate'])." เวลา ".$row_result['ctime']." น.";?></span></center>
         <hr>
         <h3 class="fon">ข้อมูลที่ลงทะเบียนรับยาทางไปรษณีย์</h3>
