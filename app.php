@@ -4,15 +4,14 @@ date_default_timezone_set("Asia/Bangkok");
 include"config/pg_con.class.php";
 include"config/my_con.class.php";
 include"config/func.class.php";
-$cid    = $_POST['cid'];
-//$hn     = $_POST['hn'];
-$hn     = "000585078";
+$cid    = $_GET['cid'];
+$hn     = $_GET['hn'];
 $searchuser = " SELECT  id,order_number_check,fname,lname,phone,lineid,adddess,cid,hn
 moo,district,amphoe,province,zipcode,qcode,keycode,modify,status,flage,fileimg,dateupdate
 FROM web_data_patient
 WHERE hn = '$hn' ";
 $query = mysqli_query($con,$searchuser);
-$row_result = mysqli_fetch_array($query) 
+$row_result = mysqli_fetch_array($query); 
 
 ?>
 <!DOCTYPE html>
@@ -31,6 +30,7 @@ $row_result = mysqli_fetch_array($query)
 <?php
 $sql = " SELECT  o.nextdate AS dateapp ,C.NAME AS clinic
 ,o.hn
+,p.cid
 ,CAST ( concat ( P.pname, P.fname, '  ', P.lname ) AS VARCHAR ( 250 )) AS patientname
 ,d.NAME AS doctor 
 ,CONCAT(pp.pttype,' ',pp.name) as insptty
@@ -43,6 +43,8 @@ LEFT  JOIN kskdepartment K ON K.depcode = o.depcode
 LEFT JOIN pttype as pp ON pp.pttype = v.pttype  
 WHERE   1 = 1
 AND p.hn = '$hn'
+ -- AND DATE(o.nextdate) <> '$da'
+ -- AND C.NAME <> '$cc'
 AND o.nextdate > CURRENT_DATE
 AND (( o.oapp_status_id < 4 ) OR o.oapp_status_id IS NULL ) 
 ORDER BY    o.nextdate";
@@ -50,10 +52,10 @@ $result = pg_query($conn, $sql);
 ?>
 <body>
     <div class="uk-container uk-padding">
-        <h1>เลือกรายการนัด</h1>
+        <h1> รายการนัด  <sup><h3>เลือกรายการส่งยาทางไปรษณีย์</h3></sup></h1>
         <hr>
 
-        <form id="save" class="" autocomplete="" uk-grid method="get" action="save.php">
+        <form id="save" class="" autocomplete="" uk-grid method="POST" action="save.php">
             <?php
             $rw=0;
             while($row_result = pg_fetch_array($result)) 
@@ -62,7 +64,7 @@ $result = pg_query($conn, $sql);
                 ?>
                 <div class="">
                     <div>
-                      <input type="radio" id="<?=$rw;?>"  name="dateapp" value="<?php echo thaiDateFULL($row_result['dateapp']); ?>">
+                      <input type="radio" id="<?=$rw;?>"  name="dateapp" value="<?php echo $row_result['dateapp']; ?>">
                       <label for="<?=$rw;?>">
                         <h2 class="hh2"><?php echo thaiDateFULL($row_result['dateapp']); ?></h2>
                         <p class="p1"><?php echo $row_result['clinic']; ?></p>
@@ -70,8 +72,10 @@ $result = pg_query($conn, $sql);
                     </label>
                 </div>
             </div>
-                      <input type="hidden" id="<?=$rw;?>" name="clinic" value="<?php echo $row_result['clinic']; ?>">
-                      <input type="hidden" id="<?=$rw;?>" name="doctor" value="<?php echo $row_result['doctor'];?>">
+            <input type="hidden" id="<?=$rw;?>" name="clinic" value="<?php echo $row_result['clinic']; ?>">
+            <input type="hidden" id="<?=$rw;?>" name="doctor" value="<?php echo $row_result['doctor'];?>">
+            <input type="hidden" id="<?=$rw;?>" name="hn" value="<?php echo $row_result['hn']; ?>">
+            <input type="hidden" id="<?=$rw;?>" name="cid" value="<?php echo $row_result['cid']; ?>">
             <br>
             <?php
         }
@@ -81,6 +85,6 @@ $result = pg_query($conn, $sql);
             <button class="button" id="submit" name="submit" style="vertical-align:middle;font-size:16px"><span> ยืนยันรายการ </span></button>
         </div>
     </form>
-    </div>
+</div>
 </body>
 </html>
