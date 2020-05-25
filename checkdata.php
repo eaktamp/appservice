@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Kanit">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.20/css/uikit.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link href="fontawesome-free-5.13.0-web/css/all.css" rel="stylesheet"> <!--load all styles -->
 
     <!-- include the script -->
     <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
@@ -26,11 +27,11 @@
     <div class="uk-container uk-padding">
         <form name="form1" style=" margin-top:15%;" action="#" method="post">
             <div class="uk-width-1-2@m">
-                <label class="h2">รหัสประจำตัวประชาชน </label>
+                <label class="h2"> รหัสประจำตัวประชาชน <i class="fas fa-address-card"></i></label>
                 <input type="text" name="cid" value="" maxlength="13" minlength="13" placeholder="9999999999999" required />
             </div>
             <div class="uk-width-1-2@m">
-                <label class="h2">รหัสประจำตัวผู้ป่วย(HN) </label>
+                <label class="h2">รหัสประจำตัวผู้ป่วย (HN) </label>
                 <input type="text" name="hn" value="" maxlength="9" minlength="9" placeholder="123456789 ให้เติมเลข 0 จนครบ 9 หลัก" required />
             </div>
             <button class="button" type="submit" style="vertical-align:middle;font-size:16px;margin-top:20px" name="submit" value="submit"><span> ตรวจสอบ</span></button>
@@ -70,7 +71,7 @@
 <style>
     body {
         background: -webkit-linear-gradient(left, #6a11cb, #2575fc);
-        min-height: 95vh;
+        min-height: 96.9vh;
         padding: 15px;
         color: white;
     }

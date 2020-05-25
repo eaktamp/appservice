@@ -17,6 +17,7 @@ $hn  = $_SESSION['hn'];
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.20/css/uikit.css">
     <link rel="stylesheet" href="jquery.Thailand.js/dist/jquery.Thailand.min.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link href="fontawesome-free-5.13.0-web/css/all.css" rel="stylesheet"> <!--load all styles -->
 
     <?php
     $checkinmysqlbase =  " SELECT * FROM web_data_patient where cid = '" . $cid . "' AND hn = '" . $hn . "' ORDER BY dateupdate limit 1";
@@ -75,7 +76,8 @@ $hn  = $_SESSION['hn'];
 <body>
     <?php if (isset($_SESSION['cid']) == "" || isset($_SESSION['hn']) == null) { echo "<script>window.location ='./checkdata.php';</script>";} ?>
     <div class="uk-container uk-padding">
-        <h1>ข้อมูลของคุณ <?php echo $result['fname'] . ' ' . $result['lname'] ?></h1>
+        <h2>ข้อมูลของคุณ <?php echo $result['fname'] . ' ' . $result['lname'] ?></h2>
+        <hr>
         <div id="loader">
             <div uk-spinner></div> รอสักครู่ กำลังโหลดฐานข้อมูล...
         </div>
@@ -84,7 +86,7 @@ $hn  = $_SESSION['hn'];
             <input type="hidden" name="hn" value="<?php echo $result['hn'] ?>">
             <input type="hidden" name="cid" value="<?php echo $result['cid'] ?>">
             <div class="uk-width-1-2@m">
-                <label class="h2">ชื่อ</label>
+                <label class="h2"><i class="fas fa-male"></i>  ชื่อ </label>
                 <input name="fname" class="uk-input uk-width-1-1" type="text" value="<?php echo $result['fname'] ?>">
             </div>
             <div class="uk-width-1-2@m">
@@ -92,43 +94,43 @@ $hn  = $_SESSION['hn'];
                 <input name="lname" class="uk-input uk-width-1-1" type="text" value="<?php echo $result['lname'] ?>">
             </div>
             <div class="uk-width-1-2@m">
-                <label class="h2">เบอร์โทรศัพท์</label>
+                <label class="h2"><i class="fas fa-phone-square"></i>  เบอร์โทรศัพท์ </label>
                 <input name="phone" class="uk-input uk-width-1-1" type="text" value="<?php echo $result['phone'] ?>">
             </div>
             <div class="uk-width-1-2@m">
-                <label class="h2">สิทธิ์</label>
+                <label class="h2"><i class="fas fa-user-md"></i>  สิทธิ์</label>
                 <input name="pttype" class="uk-input uk-width-1-1" type="text" value="<?php echo $result['pttype'] ?>">
             </div>
             <div class="uk-width-1-2@m">
-                <label class="h2">LINE ID:</label>
+                <label class="h2"><i class="fab fa-line"></i>  LINE ID:</label>
                 <input name="lineid" class="uk-input uk-width-1-1" type="text">
             </div>
             <div class="uk-width-1-2@m">
-                <label class="h2">เลขที่</label>
+                <label class="h2"><i class="fas fa-address-book"></i> บ้านเลขที่</label>
                 <input name="adddess" class="uk-input uk-width-1-1" type="text" value="<?php echo $result['adddess'] ?>">
             </div>
             <div class="uk-width-1-2@m">
-                <label class="h2">หมู่</label>
+                <label class="h2"><i class="fas fa-address-book"></i> หมู่</label>
                 <input name="moo" class="uk-input uk-width-1-1" type="text" value="<?php echo $result['moo'] ?>">
             </div>
             <div class="uk-width-1-2@m">
-                <label class="h2">ตำบล / แขวง</label>
+                <label class="h2"><i class="fas fa-address-book"></i> ตำบล / แขวง</label>
                 <input name="district" class="uk-input uk-width-1-1" type="text" value="<?php echo $result['district'] ?>">
             </div>
             <div class="uk-width-1-2@m">
-                <label class="h2">อำเภอ / เขต</label>
+                <label class="h2"><i class="fas fa-address-book"></i> อำเภอ / เขต</label>
                 <input name="amphoe" class="uk-input uk-width-1-1" type="text" value="<?php echo $result['amphoe'] ?>">
             </div>
             <div class="uk-width-1-2@m">
-                <label class="h2">จังหวัด</label>
+                <label class="h2"><i class="fas fa-address-book"></i> จังหวัด</label>
                 <input name="province" class="uk-input uk-width-1-1" type="text" value="<?php echo $result['province'] ?>">
             </div>
             <div class="uk-width-1-2@m">
-                <label class="h2">รหัสไปรษณีย์</label>
-                <input name="zipcode" class="uk-input uk-width-1-1" type="text" value="<?php echo $result['zipcode'] ?>">
+                <label class="h2"><i class="fas fa-address-book"></i>  รหัสไปรษณีย์</label>
+                <input name="zipcode" class="uk-input uk-width-1-1" type="text" value="<?php echo trim($result['zipcode'])?>" required>
             </div>
             <div class="uk-width-1-2@m">
-                <button class="button" id="send" name="send" style="vertical-align:middle;font-size:16px"><span> ยืนยัน/แก้ไข ข้อมูล </span></button>
+                <button class="button" id="send" name="send" style="vertical-align:middle;font-size:16px;width:100%"><span> ยืนยัน/แก้ไขข้อมูล </span></button>
             </div>
         </form>
     </div>
@@ -170,3 +172,30 @@ $hn  = $_SESSION['hn'];
 </body>
 
 </html>
+
+
+<style>
+
+body{
+    width: 100%;
+    min-height: 96vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    background: #a64bf4;
+    background: -webkit-linear-gradient(45deg, #00dbde, #fc00ff);
+    background: -o-linear-gradient(45deg, #00dbde, #fc00ff);
+    background: -moz-linear-gradient(45deg, #00dbde, #fc00ff);
+    background: linear-gradient(45deg, #00dbde, #fc00ff);
+}
+.uk-container.uk-padding{
+    float: center;
+    background: white;
+    width: 75%;
+    border-radius: 25px;
+    box-shadow: black 5px 5px;
+}
+
+</style>
