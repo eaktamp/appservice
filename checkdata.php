@@ -24,14 +24,14 @@
 
 <body>
     <div class="uk-container uk-padding">
-        <form name="form1" action="#" method="post">
+        <form name="form1" style=" margin-top:15%;" action="#" method="post">
             <div class="uk-width-1-2@m">
                 <label class="h2">รหัสประจำตัวประชาชน </label>
-                <input class="uk-input uk-width-1-1" type="text" name="cid" value="" maxlength="13" minlength="13" placeholder="9999999999999" required />
+                <input type="text" name="cid" value="" maxlength="13" minlength="13" placeholder="9999999999999" required />
             </div>
             <div class="uk-width-1-2@m">
                 <label class="h2">รหัสประจำตัวผู้ป่วย(HN) </label>
-                <input class="uk-input uk-width-1-1" type="text" name="hn" value="" maxlength="9" minlength="9" placeholder="123456789 ให้เติมเลข 0 จนครบ 9 หลัก" required />
+                <input type="text" name="hn" value="" maxlength="9" minlength="9" placeholder="123456789 ให้เติมเลข 0 จนครบ 9 หลัก" required />
             </div>
             <button class="button" type="submit" style="vertical-align:middle;font-size:16px;margin-top:20px" name="submit" value="submit"><span> ตรวจสอบ</span></button>
         </form>
@@ -51,13 +51,13 @@
 
         if ($count > 0) {
             session_start();
-            $accoutUsser = pg_fetch_assoc($have_user_yet );
+            $accoutUsser = pg_fetch_assoc($have_user_yet);
             echo $_SESSION['hn']  =  $accoutUsser['hn'];
-            echo' <br>';
-            echo $_SESSION['cid'] =$accoutUsser['cid'];
+            echo ' <br>';
+            echo $_SESSION['cid'] = $accoutUsser['cid'];
             //$password = $con->real_escape_string md5((md5($_POST['cid'])));//decode
             echo "<script>alertify.success('พบข้อมูล');</script>";
-            header('location:senddata.php'); 
+            header('location:senddata.php');
         } else {
             echo "<script>alertify.error('ไม่พบข้อมูลผู้ป่วย');</script>";
         }
@@ -66,3 +66,24 @@
 </body>
 
 </html>
+
+<style>
+    body {
+        background: -webkit-linear-gradient(left, #6a11cb, #2575fc);
+        min-height: 95vh;
+        padding: 15px;
+        color: white;
+    }
+
+    input {
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 100%;
+        height: 40px;
+        vertical-align: middle;
+        display: inline-block;
+        line-height: 38px;
+        border-radius: 25px;
+        padding: 20px;
+    }
+</style>
