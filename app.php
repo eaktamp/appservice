@@ -32,7 +32,7 @@ $row_result = mysqli_fetch_array($query);
     <link rel="stylesheet" type="text/css" href="css/radio.css">
 </head>
 <?php
-$sql = " SELECT  o.nextdate AS dateapp ,C.NAME AS clinic
+ $sql = " SELECT  o.nextdate AS dateapp ,C.NAME AS clinic
 ,o.hn
 ,p.cid
 ,CAST ( concat ( P.pname, P.fname, '  ', P.lname ) AS VARCHAR ( 250 )) AS patientname
@@ -47,14 +47,13 @@ LEFT  JOIN kskdepartment K ON K.depcode = o.depcode
 LEFT JOIN pttype as pp ON pp.pttype = v.pttype  
 WHERE   1 = 1
 AND p.hn = '$hn'
- -- AND DATE(o.nextdate) <> '$da'
- -- AND C.NAME <> '$cc'
+--AND DATE(o.nextdate) <> '$da'
+--AND C.NAME <> '$cc'
 AND o.nextdate > CURRENT_DATE
 AND (( o.oapp_status_id < 4 ) OR o.oapp_status_id IS NULL ) 
 ORDER BY    o.nextdate";
 $result = pg_query($conn, $sql);
-$count = pg_fetch_row($result);
-//echo 'sadsad'.$count;
+$countdata = pg_num_rows($result);
 
 ?>
 <body>
@@ -69,6 +68,7 @@ $count = pg_fetch_row($result);
             { 
                 $rw++;
                 ?>
+              
                 <div class="">
                     <div>
                       <input type="radio" id="<?=$rw;?>"  name="dateapp" value="<?php echo $row_result['dateapp']; ?>">
@@ -86,12 +86,42 @@ $count = pg_fetch_row($result);
             <br>
             <?php
         }
+        if( $countdata < 1){
+            echo "<center><h1>ไม่พบรายการนัดหมาย !!</h1><hr/></center>"; 
+            $checkbutton = 1;
+        }
         ?>
 
-        <div class="uk-width-1-2@m">
-            <button class="button" id="submit" name="submit" style="vertical-align:middle;font-size:16px"><span> ยืนยันรายการ </span></button>
+        <div >
+            <?php if( $checkbutton == 1){?>
+                <center><input type="button" class="button1" onclick="window.location.href='./logout.php'" style="vertical-align:middle;font-size:16px;" value="กลับหน้าหลัก"></button> </center>
+            <?php }else{?>
+                <center><button type="submit" class="button" id="submit" name="submit" style="vertical-align:middle;font-size:16px"><span> ยืนยันรายการ </span></button> </center>
+            <?php }?>
         </div>
     </form>
 </div>
 </body>
 </html>
+
+<style>
+    .button1{
+        display: inline-block;
+        border-radius: 4px;
+        background-color: #f4511e;
+        border: none;
+        color: #FFFFFF;
+        text-align: center;
+        font-size: 28px;
+        padding: 20px;
+        width: 200px;
+        transition: all 0.5s;
+        cursor: pointer;
+        margin: 5px;
+    }
+    .button1:hover{
+        background-color:#f4511e; 
+        color:black;
+
+    }
+</style>
