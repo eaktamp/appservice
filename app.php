@@ -12,8 +12,12 @@ FROM web_data_patient
 WHERE hn = '$hn' ";
 $query = mysqli_query($con,$searchuser);
 $row_result = mysqli_fetch_array($query); 
-
 ?>
+
+<?php if (isset($_SESSION['cid']) == "" || isset($_SESSION['hn']) == null) {
+        echo "<script>window.location ='./checkdata.php';</script>";
+} ?>
+
 <!DOCTYPE html>
 <html lang="th">
 <head>
@@ -49,6 +53,9 @@ AND o.nextdate > CURRENT_DATE
 AND (( o.oapp_status_id < 4 ) OR o.oapp_status_id IS NULL ) 
 ORDER BY    o.nextdate";
 $result = pg_query($conn, $sql);
+$count = pg_fetch_row($result);
+//echo 'sadsad'.$count;
+
 ?>
 <body>
     <div class="uk-container uk-padding">

@@ -24,7 +24,7 @@ $hn  = $_SESSION['hn'];
     $count = mysqli_num_rows($have_user_inmydb);
 
     if ($count == 0) {
-        echo ' <br/>' . 'is null data in mydb then check in pgsql on his hospital' . '<br/>';
+        //echo ' <br/>' . 'is null data in mydb then check in pgsql on his hospital' . '<br/>';
         $searchuser = " SELECT p.fname     AS fname
         ,p.lname    AS lname
         ,pty.name   AS pttype
@@ -48,7 +48,7 @@ $hn  = $_SESSION['hn'];
         $have_user_yet = pg_query($conn, $searchuser);
         $result = pg_fetch_assoc($have_user_yet);
     } else {
-        echo '<br/>' . 'is have data in mydb then show data in db' . '<br/>';
+        //echo '<br/>' . 'is have data in mydb then show data in db' . '<br/>';
         $result = mysqli_fetch_assoc($have_user_inmydb);
     }
     ?>
@@ -73,6 +73,7 @@ $hn  = $_SESSION['hn'];
 </head>
 
 <body>
+    <?php if (isset($_SESSION['cid']) == "" || isset($_SESSION['hn']) == null) { echo "<script>window.location ='./checkdata.php';</script>";} ?>
     <div class="uk-container uk-padding">
         <h1>ข้อมูลของคุณ <?php echo $result['fname'] . ' ' . $result['lname'] ?></h1>
         <div id="loader">

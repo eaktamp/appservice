@@ -7,6 +7,9 @@ include"config/func.class.php";
 $cid             = $_GET['cid'];
 $token_check     = $_GET['token_check'];
 ?>
+<?php if (isset($_SESSION['cid']) == "" || isset($_SESSION['hn']) == null) {
+        echo "<script>window.location ='checkdata.php';</script>";
+} ?>
 <!DOCTYPE html>
 <html lang="th">
 <head>
