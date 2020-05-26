@@ -37,6 +37,8 @@ $row_result = mysqli_fetch_array($query);
 $checkAp = "SELECT * FROM web_data_appoint  where hn ='$hn' and cid = '$cid' and date_appoint > CURRENT_DATE ORDER BY date_appoint";
 $queryCheckAp = mysqli_query($con,$checkAp);
 $oppid_check = mysqli_query($con,$checkAp);
+$rowc        = mysqli_num_rows($oppid_check);
+
 
 $sql = " SELECT  o.nextdate AS dateapp ,C.NAME AS clinic
 ,o.hn
@@ -55,7 +57,8 @@ LEFT JOIN pttype as pp ON pp.pttype = v.pttype
 WHERE   1 = 1
 AND p.hn = '$hn' ";
 // AND o.oapp_id Not in ('1050932')";
-if(sizeof($oppid_check)>0){
+  if ($rowc > 0) {
+//if(sizeof($rowcount) > 0 ){
         $sql .= " AND o.oapp_id Not in (";
         while ($value = mysqli_fetch_array($oppid_check)) 
                 {
@@ -69,7 +72,7 @@ $sql .= " AND (( o.oapp_status_id < 4 ) OR o.oapp_status_id IS NULL ) ";
 $sql .= " ORDER BY o.nextdate ";
 $result = pg_query($conn, $sql);
 $countdata = pg_num_rows($result);//เช็คมีนัดไม่มีนัด
-echo $sql;
+ echo $sql;
 ?>
 
 <body>
