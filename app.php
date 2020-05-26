@@ -1,25 +1,26 @@
 <?php
 session_start();
 date_default_timezone_set("Asia/Bangkok");
-include"config/pg_con.class.php";
-include"config/my_con.class.php";
-include"config/func.class.php";
-$cid    = $_GET['cid'];
-$hn     = $_GET['hn'];
+include "config/pg_con.class.php";
+include "config/my_con.class.php";
+include "config/func.class.php";
+$cid    = $_SESSION['cid'];
+$hn     = $_SESSION['hn'];
 $searchuser = " SELECT  id,order_number_check,fname,lname,phone,lineid,adddess,cid,hn
 moo,district,amphoe,province,zipcode,qcode,keycode,modify,status,flage,fileimg,dateupdate
 FROM web_data_patient
 WHERE hn = '$hn' ";
-$query = mysqli_query($con,$searchuser);
-$row_result = mysqli_fetch_array($query); 
+$query = mysqli_query($con, $searchuser);
+$row_result = mysqli_fetch_array($query);
 ?>
 
 <?php if (isset($_SESSION['cid']) == "" || isset($_SESSION['hn']) == null) {
-        echo "<script>window.location ='./checkdata.php';</script>";
+    echo "<script>window.location ='./checkdata.php';</script>";
 } ?>
 
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -31,8 +32,15 @@ $row_result = mysqli_fetch_array($query);
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="css/radio.css">
 </head>
+
 <?php
- $sql = " SELECT  o.nextdate AS dateapp ,C.NAME AS clinic
+/*
+$querydateAppoint = "SELECT * FROM web_data_appoint where hn = '$hn' and cid = '$cid'";
+$queryDatemysql = mysqli_query($con,$querydateAppoint);
+$arrDateindb = [$row,$col];
+*/
+
+$sql = " SELECT  o.nextdate AS dateapp ,C.NAME AS clinic
 ,o.hn
 ,p.cid
 ,CAST ( concat ( P.pname, P.fname, '  ', P.lname ) AS VARCHAR ( 250 )) AS patientname
@@ -50,62 +58,75 @@ AND p.hn = '$hn'
 --AND DATE(o.nextdate) <> '$da'
 --AND C.NAME <> '$cc'
 AND o.nextdate > CURRENT_DATE
+-- AND o.nextdate not in ()
 AND (( o.oapp_status_id < 4 ) OR o.oapp_status_id IS NULL ) 
 ORDER BY    o.nextdate";
 $result = pg_query($conn, $sql);
 $countdata = pg_num_rows($result);
 
 ?>
+
 <body>
     <div class="uk-container uk-padding">
-        <h1> รายการนัด  <sup><h3>เลือกรายการส่งยาทางไปรษณีย์</h3></sup></h1>
+        <h1> รายการนัด <sup>
+                <h3>เลือกรายการส่งยาทางไปรษณีย์</h3>
+            </sup></h1>
         <hr>
 
         <form id="save" class="" autocomplete="" uk-grid method="POST" action="save.php">
             <?php
-            $rw=0;
-            while($row_result = pg_fetch_array($result)) 
-            { 
+            $rw = 0;
+            while ($row_result = pg_fetch_array($result)) {
                 $rw++;
-                ?>
-              
+
+              $dateapp  =  $row_result['dateapp'];
+              $clinic   =  $row_result['clinic'];
+              $doctor   =  $row_result['doctor'];
+              $hn       =  $row_result['hn'];
+              $cid      =  $row_result['cid'];
+
+
+            ?>
+
                 <div class="">
                     <div>
-                      <input type="radio" id="<?=$rw;?>"  name="dateapp" value="<?php echo $row_result['dateapp']; ?>">
-                      <label for="<?=$rw;?>">
-                        <h2 class="hh2"><?php echo thaiDateFULL($row_result['dateapp']); ?></h2>
-                        <p class="p1"><?php echo $row_result['clinic']; ?></p>
-                        <p class="p2"><?php echo $row_result['doctor'];?></p>
-                    </label>
+                        <input type="radio" id="<?= $rw; ?>" name="dateapp" value="<?php echo $dateapp."|".$clinic."|".$doctor."|".$hn."|".$cid; ?>">
+                        <label for="<?= $rw; ?>">
+                            <h2 class="hh2"><?php echo thaiDateFULL($row_result['dateapp']); ?></h2>
+                            <p class="p1"><?php echo $row_result['clinic']; ?></p>
+                            <p class="p2"><?php echo $row_result['doctor']; ?></p>
+                        </label>
+                    </div>
+                <!-- <input type="text" id="<?=$rw;?>" name="clinic" value="<?php //echo $row_result['clinic']; ?>">
+                <input type="text" id="<?=$rw;?>" name="doctor" value="<?php// echo $row_result['doctor'];?>">
+                <input type="text" id="<?=$rw;?>" name="hn" value="<?php// echo $row_result['hn']; ?>">
+                <input type="text" id="<?=$rw;?>" name="cid" value="<?php// echo $row_result['cid']; ?>"> -->
                 </div>
-            </div>
-            <input type="hidden" id="<?=$rw;?>" name="clinic" value="<?php echo $row_result['clinic']; ?>">
-            <input type="hidden" id="<?=$rw;?>" name="doctor" value="<?php echo $row_result['doctor'];?>">
-            <input type="hidden" id="<?=$rw;?>" name="hn" value="<?php echo $row_result['hn']; ?>">
-            <input type="hidden" id="<?=$rw;?>" name="cid" value="<?php echo $row_result['cid']; ?>">
-            <br>
+ 
+                <br> 
+            <?php } ?>
             <?php
-        }
-        if( $countdata < 1){
-            echo "<center><h1>ไม่พบรายการนัดหมาย !!</h1><hr/></center>"; 
-            $checkbutton = 1;
-        }
-        ?>
+            if ($countdata < 1) {
+                echo "<center><h1>ไม่พบรายการนัดหมาย !!</h1><hr/></center>";
+                $checkbutton = 1;
+            }
+            ?>
 
-        <div >
-            <?php if( $checkbutton == 1){?>
-                <center><input type="button" class="button1" onclick="window.location.href='./logout.php'" style="vertical-align:middle;font-size:16px;" value="กลับหน้าหลัก"></button> </center>
-            <?php }else{?>
-                <center><button type="submit" class="button" id="submit" name="submit" style="vertical-align:middle;font-size:16px"><span> ยืนยันรายการ </span></button> </center>
-            <?php }?>
-        </div>
-    </form>
-</div>
+            <div>
+                <?php if ($checkbutton == 1) { ?>
+                    <center><input type="button" class="button1" onclick="window.location.href='./logout.php'" style="vertical-align:middle;font-size:16px;" value="กลับหน้าหลัก"></button> </center>
+                <?php } else { ?>
+                    <center><button type="submit" class="button" id="submit" name="submit" style="vertical-align:middle;font-size:16px"><span> ยืนยันรายการ </span></button> </center>
+                <?php } ?>
+            </div>
+        </form>
+    </div>
 </body>
+
 </html>
 
 <style>
-    .button1{
+    .button1 {
         display: inline-block;
         border-radius: 4px;
         background-color: #f4511e;
@@ -119,9 +140,10 @@ $countdata = pg_num_rows($result);
         cursor: pointer;
         margin: 5px;
     }
-    .button1:hover{
-        background-color:#f4511e; 
-        color:black;
+
+    .button1:hover {
+        background-color: #f4511e;
+        color: black;
 
     }
 </style>

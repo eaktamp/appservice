@@ -4,7 +4,7 @@ date_default_timezone_set("Asia/Bangkok");
 include"config/pg_con.class.php";
 include"config/my_con.class.php";
 include"config/func.class.php";
-$cid             = $_GET['cid'];
+$cid             = $_SESSION['cid'];
 $token_check     = $_GET['token_check'];
 ?>
 <?php if (isset($_SESSION['cid']) == "" || isset($_SESSION['hn']) == null) {
