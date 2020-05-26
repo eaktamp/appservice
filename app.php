@@ -34,17 +34,15 @@ $row_result = mysqli_fetch_array($query);
 </head>
 
 <?php
-/*
-$querydateAppoint = "SELECT * FROM web_data_appoint where hn = '$hn' and cid = '$cid'";
-$queryDatemysql = mysqli_query($con,$querydateAppoint);
-$arrDateindb = [$row,$col];
-*/
+$checkAp = "SELECT * FROM web_data_appoint  where hn ='$hn' and cid = '$cid' and date_appoint > CURRENT_DATE ORDER BY date_appoint";
+$queryCheckAp = mysqli_query($con,$checkAp);
+
 
 $sql = " SELECT  o.nextdate AS dateapp ,C.NAME AS clinic
 ,o.hn
 ,p.cid
-,CAST ( concat ( P.pname, P.fname, '  ', P.lname ) AS VARCHAR ( 250 )) AS patientname
-,d.NAME AS doctor 
+,concat(P.pname,P.fname,'&nbsp;&nbsp;',P.lname) AS patientname
+,d.NAME::TEXT AS doctor 
 ,CONCAT(pp.pttype,' ',pp.name) as insptty
 FROM oapp o
 LEFT JOIN vn_stat v ON v.vn = o.vn
@@ -62,7 +60,7 @@ AND o.nextdate > CURRENT_DATE
 AND (( o.oapp_status_id < 4 ) OR o.oapp_status_id IS NULL ) 
 ORDER BY    o.nextdate";
 $result = pg_query($conn, $sql);
-$countdata = pg_num_rows($result);
+$countdata = pg_num_rows($result);//เช็คมีนัดไม่มีนัด
 
 ?>
 
@@ -73,41 +71,47 @@ $countdata = pg_num_rows($result);
             </sup></h1>
         <hr>
 
+        <?php
+        //ทดสอบเช็คหากมีการกดไปแล้วให้ไม่แสดง
+        $i = 0;
+          while ($row_result22 = mysqli_fetch_array($queryCheckAp)) {
+            $i++;
+            $date_appoint[$i] = $row_result22['date_appoint'];
+            $clinic_appoint[$i] = $row_result22['clinic_appoint'];
+            $doctor_appoint[$i] = $row_result22['doctor_appoint'];
+            //echo '<br>data ['.$i.'] '.$date_appoint[$i].' '.$clinic_appoint[$i].' '.$doctor_appoint[$i];
+         }
+        ?>
+    
         <form id="save" class="" autocomplete="" uk-grid method="POST" action="save.php">
             <?php
             $rw = 0;
             while ($row_result = pg_fetch_array($result)) {
                 $rw++;
+                $dateapp  =  $row_result['dateapp'];
+                $clinic   =  $row_result['clinic'];
+                $doctor   =  $row_result['doctor'];
+                $hn       =  $row_result['hn'];
+                $cid      =  $row_result['cid'];
 
-              $dateapp  =  $row_result['dateapp'];
-              $clinic   =  $row_result['clinic'];
-              $doctor   =  $row_result['doctor'];
-              $hn       =  $row_result['hn'];
-              $cid      =  $row_result['cid'];
-
-
+                //echo $dateapp .' '. $date_appoint[$rw];
+                if($dateapp!= $date_appoint[$rw] &&  $clinic !=   $clinic_appoint[$rw] && $doctor !=  $doctor_appoint[$rw]   ){echo 'ยังไม่มีกดติก';
             ?>
-
                 <div class="">
                     <div>
-                        <input type="radio" id="<?= $rw; ?>" name="dateapp" value="<?php echo $dateapp."|".$clinic."|".$doctor."|".$hn."|".$cid; ?>">
+                        <input type="radio" id="<?= $rw; ?>" name="dateapp" value="<?php echo $dateapp."|".$clinic."|".$doctor."|".$hn."|".$cid;?>" required>
                         <label for="<?= $rw; ?>">
                             <h2 class="hh2"><?php echo thaiDateFULL($row_result['dateapp']); ?></h2>
                             <p class="p1"><?php echo $row_result['clinic']; ?></p>
                             <p class="p2"><?php echo $row_result['doctor']; ?></p>
                         </label>
                     </div>
-                <!-- <input type="text" id="<?=$rw;?>" name="clinic" value="<?php //echo $row_result['clinic']; ?>">
-                <input type="text" id="<?=$rw;?>" name="doctor" value="<?php// echo $row_result['doctor'];?>">
-                <input type="text" id="<?=$rw;?>" name="hn" value="<?php// echo $row_result['hn']; ?>">
-                <input type="text" id="<?=$rw;?>" name="cid" value="<?php// echo $row_result['cid']; ?>"> -->
                 </div>
- 
                 <br> 
-            <?php } ?>
+            <?php  } } ?>
             <?php
             if ($countdata < 1) {
-                echo "<center><h1>ไม่พบรายการนัดหมาย !!</h1><hr/></center>";
+                echo "<center><h1>ไม่พบรายการนัดหมาย/ยืนยันรับยาครบแล้ว !!</h1><hr/></center>";
                 $checkbutton = 1;
             }
             ?>

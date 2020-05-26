@@ -27,7 +27,8 @@
 
   $date_appoint   = $data[0];
   $clinic_appoint = $data[1];
-  $doctor_appoint = $data[2];
+  $doctor_appoint = trim($data[2]);
+  $doctor_appoint  = str_replace("  "," ",$doctor_appoint);//เกิดปัญหาinsert ชื่อสกุลเป็น2เคาะ เจอ2เคาะให้เปลี่ยนเป็ฯเคาะเดียว
   $hn             = $data[3];
   $cid            = $data[4];
   $app_status     = "1";
@@ -36,7 +37,7 @@
 
   $searchdata = "SELECT * FROM  web_data_appoint 
     where hn = '$hn' and cid = '$cid' and date_appoint = '$date_appoint' 
-    and clinic_appoint = '$clinic_appoint' -- and doctor_appoint = '$doctor_appoint'";
+    and clinic_appoint = '$clinic_appoint' and doctor_appoint = '$doctor_appoint'";
   $check_have_data = mysqli_query($con, $searchdata);
   $countrow = mysqli_num_rows($check_have_data);
   echo   $searchdata.'<br>';
@@ -47,10 +48,10 @@
     $query = mysqli_query($con, $log);
     echo $log;
     //header("Location: complete.php?cid=$cid&token_check=$token_check");
-    header("Location: complete.php?token_check=$token_check");
+    //header("Location: complete.php?token_check=$token_check");
     mysqli_close($con);
   } else {
-    echo "<script>javascript:alert('เคยบันทึกอนุมัติรายการนี้ไปแล้ว!');window.location='app.php';</script>";
+    //echo "<script>javascript:alert('เคยบันทึกอนุมัติรายการนี้ไปแล้ว!');window.location='app.php';</script>";
   }
   ?>
 </body>
