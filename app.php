@@ -36,11 +36,12 @@ $row_result = mysqli_fetch_array($query);
 <?php
 $checkAp = "SELECT * FROM web_data_appoint  where hn ='$hn' and cid = '$cid' and date_appoint > CURRENT_DATE ORDER BY date_appoint";
 $queryCheckAp = mysqli_query($con,$checkAp);
-
+$oppid_check = mysqli_query($con,$checkAp);
 
 $sql = " SELECT  o.nextdate AS dateapp ,C.NAME AS clinic
 ,o.hn
 ,p.cid
+,o.oapp_id
 ,concat(P.pname,P.fname,'&nbsp;&nbsp;',P.lname) AS patientname
 ,d.NAME::TEXT AS doctor 
 ,CONCAT(pp.pttype,' ',pp.name) as insptty
@@ -52,16 +53,23 @@ LEFT  JOIN doctor d ON d.code = o.doctor
 LEFT  JOIN kskdepartment K ON K.depcode = o.depcode
 LEFT JOIN pttype as pp ON pp.pttype = v.pttype  
 WHERE   1 = 1
-AND p.hn = '$hn'
---AND DATE(o.nextdate) <> '$da'
---AND C.NAME <> '$cc'
-AND o.nextdate > CURRENT_DATE
--- AND o.nextdate not in ()
-AND (( o.oapp_status_id < 4 ) OR o.oapp_status_id IS NULL ) 
-ORDER BY    o.nextdate";
+AND p.hn = '$hn' ";
+// AND o.oapp_id Not in ('1050932')";
+if(sizeof($oppid_check)>0){
+        $sql .= " AND o.oapp_id Not in (";
+        while ($value = mysqli_fetch_array($oppid_check)) 
+                {
+                    $sql .="'" .$value['oapp_id']. "',";
+                }
+                    $sql = rtrim($sql,',');
+                    $sql .= ") ";
+                }
+$sql .= " AND o.nextdate > CURRENT_DATE ";
+$sql .= " AND (( o.oapp_status_id < 4 ) OR o.oapp_status_id IS NULL ) "; 
+$sql .= " ORDER BY o.nextdate ";
 $result = pg_query($conn, $sql);
 $countdata = pg_num_rows($result);//เช็คมีนัดไม่มีนัด
-
+echo $sql;
 ?>
 
 <body>
@@ -79,7 +87,8 @@ $countdata = pg_num_rows($result);//เช็คมีนัดไม่มี�
             $date_appoint[$i] = $row_result22['date_appoint'];
             $clinic_appoint[$i] = $row_result22['clinic_appoint'];
             $doctor_appoint[$i] = $row_result22['doctor_appoint'];
-            //echo '<br>data ['.$i.'] '.$date_appoint[$i].' '.$clinic_appoint[$i].' '.$doctor_appoint[$i];
+
+           // echo '<br>data ['.$i.'] '.$date_appoint[$i].' '.$clinic_appoint[$i].' '.$doctor_appoint[$i];
          }
         ?>
     
@@ -93,13 +102,14 @@ $countdata = pg_num_rows($result);//เช็คมีนัดไม่มี�
                 $doctor   =  $row_result['doctor'];
                 $hn       =  $row_result['hn'];
                 $cid      =  $row_result['cid'];
+                $oapp_id  =  $row_result['oapp_id'];
 
                 //echo $dateapp .' '. $date_appoint[$rw];
                 if($dateapp!= $date_appoint[$rw] &&  $clinic !=   $clinic_appoint[$rw] && $doctor !=  $doctor_appoint[$rw]   ){echo 'ยังไม่มีกดติก';
             ?>
                 <div class="">
                     <div>
-                        <input type="radio" id="<?= $rw; ?>" name="dateapp" value="<?php echo $dateapp."|".$clinic."|".$doctor."|".$hn."|".$cid;?>" required>
+                        <input type="radio" id="<?= $rw; ?>" name="dateapp" value="<?php echo $dateapp."|".$clinic."|".$doctor."|".$hn."|".$cid."|".$oapp_id;?>" required>
                         <label for="<?= $rw; ?>">
                             <h2 class="hh2"><?php echo thaiDateFULL($row_result['dateapp']); ?></h2>
                             <p class="p1"><?php echo $row_result['clinic']; ?></p>
