@@ -6,6 +6,7 @@ include"config/my_con.class.php";
 include"config/func.class.php";
 $cid             = $_SESSION['cid'];
 $token_check     = $_GET['token_check'];
+$oapp_id     = $_GET['oapp_id'];
 ?>
 <?php if (isset($_SESSION['cid']) == "" || isset($_SESSION['hn']) == null) {
         echo "<script>window.location ='checkdata.php';</script>";
@@ -29,16 +30,17 @@ FROM web_data_appoint as a
 INNER JOIN web_data_patient as b ON a.cid = b.cid
 WHERE 1 = 1
 AND a.cid = '".$cid."' 
-AND a.token_check = '".$token_check."' ";
+AND a.oapp_id = '".$oapp_id."' ";
 $query = mysqli_query($con,$searchuser);
-$row_result = mysqli_fetch_array($query)
+$row_result = mysqli_fetch_array($query);
+//echo $searchuser;
 ?>
 <body>
     <div class="uk-container uk-padding">
-        <h2><img src="img/iconsend.jpg" class="iimg">ทำรายการสำเร็จ เลขที่ OrderNo. <B><?php echo $row_result['token_check'];?></B></h2>
+        <h2><img src="img/iconsend.jpg" class="iimg">ทำรายการสำเร็จ เลขที่ OrderNo. <B><?php echo $row_result['oapp_id'];?></B></h2>
         <center><span class="fon">บันทึกรายการเมื่อวันที่ <?php echo thaiDateFULL($row_result['cdate'])." เวลา ".$row_result['ctime']." น.";?></span></center>
         <hr>
-        <h3 class="fon">ข้อมูลที่ลงทะเบียนรับยาทางไปรษณีย์</h3>
+        <h3 class="fon">ข้อมูลที่ลงทะเบียนและที่อยู่ ในการจัดส่งยาทางไปรษณีย์</h3>
         <div class="">
             <div class="hh2 fon"><span class="fon">คุณ</span><?php echo $row_result['fname']."  ".$row_result['lname']." ( HN : ".$row_result['hn']." )";?></div>
             <div class="hh2 fon"><span class="fon">เบอร์โทรศัพท์ </span><?php echo $row_result['phone']; ?></div>
@@ -53,5 +55,9 @@ $row_result = mysqli_fetch_array($query)
             <div class="hh2 fon"><?php echo " จังหวัด".$row_result['province']." ".$row_result['zipcode'];?></div>
         </div>
     </div>
+<!--    <hr>
+    <center><span class="fon">ติดต่อสอบถามข้อมูลเพิ่มเติมได้ที่ Line@ </span></center>
+  <center><span class="fon"><img src="img/lineadd.jpg" width="150px" height="150px;"> </span></center> 
+-->
 </body>
 </html>

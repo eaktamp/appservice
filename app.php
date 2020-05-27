@@ -72,7 +72,7 @@ $sql .= " AND (( o.oapp_status_id < 4 ) OR o.oapp_status_id IS NULL ) ";
 $sql .= " ORDER BY o.nextdate ";
 $result = pg_query($conn, $sql);
 $countdata = pg_num_rows($result);//เช็คมีนัดไม่มีนัด
- echo $sql;
+// echo $sql;
 ?>
 
 <body>
@@ -87,7 +87,7 @@ $countdata = pg_num_rows($result);//เช็คมีนัดไม่มี�
         $i = 0;
           while ($row_result22 = mysqli_fetch_array($queryCheckAp)) {
             $i++;
-            $date_appoint[$i] = $row_result22['date_appoint'];
+            $date_appoint[$i]   = $row_result22['date_appoint'];
             $clinic_appoint[$i] = $row_result22['clinic_appoint'];
             $doctor_appoint[$i] = $row_result22['doctor_appoint'];
 
@@ -108,7 +108,7 @@ $countdata = pg_num_rows($result);//เช็คมีนัดไม่มี�
                 $oapp_id  =  $row_result['oapp_id'];
 
                 //echo $dateapp .' '. $date_appoint[$rw];
-                if($dateapp!= $date_appoint[$rw] &&  $clinic !=   $clinic_appoint[$rw] && $doctor !=  $doctor_appoint[$rw]   ){echo 'ยังไม่มีกดติก';
+                if($dateapp!= $date_appoint[$rw] &&  $clinic !=   $clinic_appoint[$rw] && $doctor !=  $doctor_appoint[$rw]   ){//echo 'ยังไม่มีกดติก';
             ?>
                 <div class="">
                     <div>

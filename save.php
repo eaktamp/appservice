@@ -51,7 +51,7 @@
     $query = mysqli_query($con, $log);
     echo $log;
     //header("Location: complete.php?cid=$cid&token_check=$token_check");
-    header("Location: complete.php?token_check=$token_check");
+    header("Location: complete.php?token_check=$token_check&oapp_id=$oapp_id");
     mysqli_close($con);
   } else {
     echo "<script>javascript:alert('เคยบันทึกอนุมัติรายการนี้ไปแล้ว!');window.location='app.php';</script>";

@@ -130,7 +130,7 @@ $hn  = $_SESSION['hn'];
                 <input name="zipcode" class="uk-input uk-width-1-1" type="text" value="<?php echo trim($result['zipcode'])?>" required>
             </div>
             <div class="uk-width-1-2@m">
-                <button class="button" id="send" name="send" style="vertical-align:middle;font-size:16px;width:100%"><span> ยืนยัน/แก้ไขข้อมูล </span></button>
+                <button class="button" id="send" name="send" style="vertical-align:middle;font-size:16px;width:100%"><span> ยืนยันข้อมูล </span></button>
             </div>
         </form>
     </div>

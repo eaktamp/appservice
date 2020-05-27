@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="th">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,7 +9,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.20/css/uikit.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link href="fontawesome-free-5.13.0-web/css/all.css" rel="stylesheet"> <!--load all styles -->
-
     <!-- include the script -->
     <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
     <!-- CSS -->
@@ -22,17 +20,16 @@
     <!-- Bootstrap theme -->
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css" />
 </head>
-
 <body>
     <div class="uk-container uk-padding">
         <form name="form1" style=" margin-top:15%;" action="#" method="post">
             <div class="uk-width-1-2@m">
                 <label class="h2"> รหัสประจำตัวประชาชน <i class="fas fa-address-card"></i></label>
-                <input type="text" name="cid" value="" maxlength="13" minlength="13" placeholder="9999999999999" required />
+                <input type="text" name="cid" value="" maxlength="13" minlength="13" placeholder="9999999999999" onKeyUp="if(isNaN(this.value)){ alert('กรุณากรอกตัวเลข'); this.value='';}" required />
             </div>
             <div class="uk-width-1-2@m">
                 <label class="h2">รหัสประจำตัวผู้ป่วย (HN) </label>
-                <input type="text" name="hn" value="" maxlength="9" minlength="9" placeholder="123456789 ให้เติมเลข 0 จนครบ 9 หลัก" required />
+                <input type="text" name="hn" value="" maxlength="9" minlength="9" placeholder="123456789 ให้เติมเลข 0 จนครบ 9 หลัก" onKeyUp="if(isNaN(this.value)){ alert('กรุณากรอกตัวเลข'); this.value='';}" required />
             </div>
             <button class="button" type="submit" style="vertical-align:middle;font-size:16px;margin-top:20px" name="submit" value="submit"><span> ตรวจสอบ</span></button>
         </form>
@@ -41,10 +38,6 @@
     <?php
     include 'config/pg_con.class.php';
     if (isset($_POST['submit'])) {
-        /* 
-           echo $hn = $_POST['hn'];
-           echo $cid = $_POST['cid'];
-        */
         $searchuser = "SELECT hn,cid FROM patient where  hn = '" . $_POST['hn'] . "' and cid = '" . $_POST['cid'] . "'  ";
         $have_user_yet = pg_query($conn, $searchuser);
         $count = pg_num_rows($have_user_yet);
