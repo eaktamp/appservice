@@ -38,7 +38,7 @@
     <?php
     include 'config/pg_con.class.php';
     if (isset($_POST['submit'])) {
-        $searchuser = "SELECT hn,cid FROM patient where  hn = '" . $_POST['hn'] . "' and cid = '" . $_POST['cid'] . "'  ";
+        $searchuser = " SELECT hn,cid FROM patient where  hn = '" . $_POST['hn'] . "' and cid = '" . $_POST['cid'] . "'  ";
         $have_user_yet = pg_query($conn, $searchuser);
         $count = pg_num_rows($have_user_yet);
         echo $have_user_yet['hn'];
