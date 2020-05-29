@@ -39,26 +39,12 @@ $oppid_check = mysqli_query($conf,$checkAp);
 $rowc        = mysqli_num_rows($oppid_check);
 
 
-$sql = " SELECT  o.nextdate AS dateapp ,C.NAME AS clinic
-,o.hn
-,p.cid
-,o.oapp_id
-,concat(P.pname,P.fname,'&nbsp;&nbsp;',P.lname) AS patientname
-,d.NAME::TEXT AS doctor 
-,CONCAT(pp.pttype,' ',pp.name) as insptty
-FROM oapp o
-LEFT JOIN vn_stat v ON v.vn = o.vn
-LEFT  JOIN patient P ON P.hn = o.hn 
-LEFT  JOIN clinic C ON C.clinic = o.clinic
-LEFT  JOIN doctor d ON d.code = o.doctor
-LEFT  JOIN kskdepartment K ON K.depcode = o.depcode
-LEFT JOIN pttype as pp ON pp.pttype = v.pttype  
-WHERE   1 = 1
-AND p.hn = '$hn' ";
+$sql = " SELECT * FROM oapp WHERE
+hn = '$hn' ";
 // AND o.oapp_id Not in ('1050932')";
   if ($rowc > 0) {
 //if(sizeof($rowcount) > 0 ){
-        $sql .= " AND o.oapp_id Not in (";
+        $sql .= " AND oapp_id Not in (";
         while ($value = mysqli_fetch_array($oppid_check)) 
                 {
                     $sql .="'" .$value['oapp_id']. "',";
@@ -66,10 +52,10 @@ AND p.hn = '$hn' ";
                     $sql = rtrim($sql,',');
                     $sql .= ") ";
                 }
-$sql .= " AND o.nextdate > CURRENT_DATE ";
-$sql .= " AND (( o.oapp_status_id < 4 ) OR o.oapp_status_id IS NULL ) "; 
-$sql .= " ORDER BY o.nextdate ";
-$result = mysqli_query($confn, $sql);
+$sql .= " AND dateapp > CURRENT_DATE ";
+//$sql .= " AND (( oapp_status_id < 4 ) OR oapp_status_id IS NULL ) "; 
+$sql .= " ORDER BY dateapp ";
+$result = mysqli_query($conf, $sql);
 $countdata = mysqli_num_rows($result);//เช็คมีนัดไม่มีนัด
 // echo $sql;
 ?>

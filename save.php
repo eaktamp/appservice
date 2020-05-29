@@ -34,6 +34,7 @@
   $oapp_id        = $data[5]; // เพิ่ม oapp_id
   $app_status     = "1";
   $updatedate     = DATE('Y-m-d');
+  $update_time    = DATE('H:i:s');
   //echo  $date_appoint . '<br/>' . $clinic_appoint . '<br/>' . $doctor_appoint . '<br>';
 
   $searchdata = " SELECT * FROM  web_data_appoint WHERE oapp_id <> '$oapp_id'
@@ -46,8 +47,8 @@
   echo   $searchdata.'<br>';
 
   if ($countrow <= 0) {
-    $log = "INSERT INTO web_data_appoint (hn,cid,oapp_id,token_check,date_appoint,clinic_appoint,doctor_appoint,app_status,updatedate) 
-          VALUES ('$hn','$cid','$oapp_id','$token_check','$date_appoint','$clinic_appoint','$doctor_appoint','$app_status','$updatedate')  ";
+    $log = "INSERT INTO web_data_appoint (hn,cid,oapp_id,token_check,date_appoint,clinic_appoint,doctor_appoint,app_status,updatedate,update_time) 
+          VALUES ('$hn','$cid','$oapp_id','$token_check','$date_appoint','$clinic_appoint','$doctor_appoint','$app_status','$updatedate','$update_time')";
     $query = mysqli_query($conf, $log);
     echo $log;
     //header("Location: complete.php?cid=$cid&token_check=$token_check");
