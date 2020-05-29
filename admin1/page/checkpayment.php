@@ -1,6 +1,7 @@
 <?php
 date_default_timezone_set("Asia/Bangkok");
 include("../../config/web_con.php");
+include "../../config/func.class.php";
 session_start();
 if (isset($_SESSION['username']) == "" || isset($_SESSION['username']) == null) {
   echo "<script>window.location ='login.php';</script>";
@@ -142,7 +143,7 @@ if (isset($_SESSION['username']) == "" || isset($_SESSION['username']) == null) 
         doctor_appoint,clinic_appoint,app_status as checkaddress,confirm_drugs as successpayment
         FROM web_data_patient wp 
         LEFT JOIN web_data_appoint  wa on wp.hn = wa.hn
-        -- where confirm_drugs is not null AND  date_appoint is not null
+        where  date_appoint is not null -- AND confirm_drugs is not null   
         GROUP BY  wp.hn,wp.cid,patient,pttype,phone,lineid,adddess,moo,district,amphoe,province,zipcode,
         date_appoint,doctor_appoint,clinic_appoint,app_status,confirm_drugs
         ORDER BY date_appoint";
@@ -153,7 +154,7 @@ if (isset($_SESSION['username']) == "" || isset($_SESSION['username']) == null) 
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">ตารางแสดงข้อมูลผู้ป่วยที่ผ่านการ verify ข้อมูลที่อยู่แล้วและมีรายการนัดหลังจากวันที่ <?php echo date("Y/m/d") ;?></h3>
+                  <h3 class="card-title">ตารางแสดงข้อมูลผู้ป่วยที่ผ่านการ verify ข้อมูลที่อยู่แล้วและมีรายการนัดหลังจาก วันที่ &nbsp<?php echo '&nbsp;'. thaiDatefull(date("Y-m-d")) ;?></h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -172,6 +173,7 @@ if (isset($_SESSION['username']) == "" || isset($_SESSION['username']) == null) 
                         <th>วันที่นัด</th>
                         <th>ยืนยันรับยา</th>
                         <th>ชำระเงิน</th>
+                        <th>print</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -190,9 +192,10 @@ if (isset($_SESSION['username']) == "" || isset($_SESSION['username']) == null) 
                           <td><?php echo $row_result['adddess'] . ' หมู่ ' . $row_result['moo'] . ' ' . $row_result['district'] . ' ' . $row_result['amphoe'] . ' ' . $row_result['province'] ?></td>
                           <td><?php echo $row_result['clinic_appoint'] ;?></td>
                           <td><?php echo $row_result['doctor_appoint'] ;?></td>
-                          <td><?php echo $row_result['date_appoint'] ;?></td>
+                          <td><?php echo thaiDate($row_result['date_appoint']) ;?></td>
                           <td class="text-center text-success"><?php if($row_result['checkaddress'] == '1'){echo ' <i class="fas fa-check"></i>';} ;?></td>
                           <td class="text-center text-success"><?php if($row_result['successpayment'] == 'Y'){echo ' <i class="fas fa-check"></i>';} ;?></td>
+                          <td><button class="btn btn-secondary align-center"><i class="fas fa-print"></i></button></td>
                         </tr>
                       <?php } ?>
                     </tbody>

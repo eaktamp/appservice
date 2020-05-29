@@ -1,6 +1,7 @@
 <?php
 date_default_timezone_set("Asia/Bangkok");
 include("../config/web_con.php");
+include "../config/func.class.php";
 session_start();
 if (isset($_SESSION['username']) == "" || isset($_SESSION['username']) == null) {
   echo "<script>window.location ='login.php';</script>";
@@ -175,7 +176,7 @@ if($_SESSION['statusinsert'] == 1){
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">ตารางแสดงข้อมูลผู้ป่วยที่ผ่านการ verify ข้อมูลที่อยู่แล้วและมีรายการนัดหลังจากวันที่ <?php echo date("Y/m/d") ;?></h3>
+                  <h3 class="card-title">ตารางแสดงข้อมูลผู้ป่วยที่ผ่านการ verify ข้อมูลที่อยู่แล้วและมีรายการนัดหลังจากวันที่ <?php echo thaiDate(date("Y-m-d")) ;?></h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -253,14 +254,14 @@ if($_SESSION['statusinsert'] == 1){
                         $resultappoint = mysqli_query($conf, $queryApp);
                         foreach ($resultappoint as $Appointment) { ?>
                   <div class="time-label">
-                    <span class="bg-green"><?php echo $Appointment['date_appoint']; ?></span>
+                    <span class="bg-green"><?php echo thaiDatefull($Appointment['date_appoint']); ?></span>
                   </div>
                   <!-- /.timeline-label -->
                   <!-- timeline item -->
                   <div>
                     <i class="fas fa-clock bg-purple"></i>
                     <div class="timeline-item">
-                      <span class="time"><i class="fas fa-clock"></i><?php echo $Appointment['date_appoint']; ?></span>
+                      <span class="time"><i class="fas fa-clock"></i><?php echo thaiDate($Appointment['date_appoint']); ?></span>
                       <h3 class="timeline-header"><a href="#"> <?php echo $Appointment['clinic_appoint']; ?></a> </h3>
 
                       <div class="timeline-body">
