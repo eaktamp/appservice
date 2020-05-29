@@ -54,7 +54,7 @@ if (isset($_POST['NeedGetMedicine'])) { //หากกดยืนยันร�
 
   $updatestatus = "UPDATE `web_data_appoint` SET 
   `confirm_drugs` = 'Y', 
-  `admin_checkConfirm` = '" .$_SESSION['username']. "' WHERE oapp_id = '" .  $_POST['oapp_id']. "'";
+  `admin_checkConfirm` = '" . $_SESSION['qfname'].' '.$_SESSION['qlname'] . "' WHERE oapp_id = '" .  $_POST['oapp_id']. "'";
   $Queryaddadminjob =  mysqli_query($conf, $updatestatus);
   if ($Queryaddadminjob) {
         $_POST['oapp_id'] = '';
