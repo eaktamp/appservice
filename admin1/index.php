@@ -131,7 +131,7 @@ if($_SESSION['statusinsert'] == 1){
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="./index.html" class="nav-link">
+                  <a href="./page/checkpayment.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>ข้อมูลนัดส่งยาที่จ่ายเงินแล้ว</p>
                   </a>

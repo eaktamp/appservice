@@ -1,31 +1,32 @@
 <?php
 date_default_timezone_set("Asia/Bangkok");
-include("../config/my_con.class.php");
+include("../../config/web_con.php");
 session_start();
 if (isset($_SESSION['username']) == "" || isset($_SESSION['username']) == null) {
   echo "<script>window.location ='login.php';</script>";
 }
 //echo   $_SESSION['statusinsert'];
 ?>
+
 <!DOCTYPE html>
 <html>
 
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>EDITPASSWORD</title>
+  <title>หน้าแรก</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="./plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- DataTables -->
-  <link rel="stylesheet" href="./plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-  <link rel="stylesheet" href="./plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="./dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="../dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
@@ -42,43 +43,6 @@ if (isset($_SESSION['username']) == "" || isset($_SESSION['username']) == null) 
 </head>
 
 <body class="hold-transition sidebar-mini">
-<?php 
-    include('../config/my_con.class.php');
-    include("../config/pg_con.class.php");
-  ///////////////////////////////////// เมื่อกดรับงาน ส่ง POST เข้ามาทำงาน //////////////////////////////// 
-
-
-  if (isset($_POST['submit'])) {
-    echo $newpassword  =  md5($_POST['password']);
-    $opassword  =  md5($_POST['opassword']);
-    $newniname  =  ($_POST['niname']);
-    if($opassword == $_SESSION['password'] ){
-        echo $Updatepassword = 'UPDATE web_data_admin SET qpasslogin = "'.$newpassword .'"   WHERE qnamelogin = "'.$_SESSION['username'].'"';
-        $queryUpdate = mysqli_query($con, $Updatepassword);
-        if($queryUpdate){
-            $_SESSION['statusinsert'] = 1;
-            $message = '<hr/><p style="color:GREEN;">ดำเนินการเรียบร้อย โปรดเข้าสู่ระบบอีกครั้ง</p>';
-            session_destroy();
-            header('location:./login.php');
-        }
-    }
-    else 
-    $_SESSION['statusinsert'] = 2;
-    $_POST['password'] = '';
-    $_POST['opassword'] = '';
-    $message = '<hr/><p style="color:red;">รหัสผ่านไม่ถูกต้อง</p>';
-}
-
-if($_SESSION['statusinsert'] == 1){
-    echo "<script>alertify.success('บันทึกสำเร็จ');</script>";
-    $_SESSION['statusinsert'] = 0;//กำหนดให้ค่าเป็น 0 
-    unset($_SESSION['statusinsert']);//ยกเลิกการใช้งาน session ตัวเช็คสถานะการบันทึกออก
-  }
-  if($_SESSION['statusinsert'] == 2){
-    echo "<script>alertify.error('รหัสผ่านเดิมไม่ถูกต้อง');</script>";
-    unset($_SESSION['statusinsert']);//ยกเลิกการใช้งาน session ตัวเช็คสถานะการบันทึกออก
-  }
-?>
 
   <div class="wrapper">
     <!-- Navbar -->
@@ -113,8 +77,8 @@ if($_SESSION['statusinsert'] == 1){
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
       <a href="#" class="brand-link">
-      <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"  style="opacity: .8">
-      <span class="brand-text font-weight-light">EDITPASSWORD</span>
+      <img src="../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"  style="opacity: .8">
+      <span class="brand-text font-weight-light">ข้อมูลนัดที่จ่ายเงินแล้ว</span>
       </a>
 
       <!-- Sidebar -->
@@ -134,19 +98,19 @@ if($_SESSION['statusinsert'] == 1){
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item ">
-                  <a href="./index.php" class="nav-link">
+                  <a href="../index.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>หน้าแรก</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="page/checkpayment.php" class="nav-link">
+                  <a href="#" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>ข้อมูลนัดส่งยาที่จ่ายเงินแล้ว</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="./changepassword.php" class="nav-link">
+                  <a href="../changepassword.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>เปลี่ยนรหัสผ่าน</p>
                   </a>
@@ -159,7 +123,6 @@ if($_SESSION['statusinsert'] == 1){
       <!-- /.sidebar -->
     </aside>
 
-
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
       <!-- Content Header (Page header) -->
@@ -167,68 +130,74 @@ if($_SESSION['statusinsert'] == 1){
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>PROFILE <?php// echo date("Y/m/d") ;?></h1>
+                <h1>ข้อมูลนัดที่มีการชำระเงินแล้ว <?php// echo date("Y/m/d") ;?></h1>
             </div>
           </div>
         </div><!-- /.container-fluid -->
       </section>
-
-      <!-- Main content -->
-      <section class="content">
+ <!-- Main content -->
+ <section class="content">
+        <?php
+        $log = "SELECT wp.hn,wp.cid,concat(fname,' ',lname)as patient,pttype,phone,lineid,adddess,moo,district,amphoe,province,zipcode,date_appoint,
+        doctor_appoint,clinic_appoint,app_status as checkaddress,confirm_drugs as successpayment
+        FROM web_data_patient wp 
+        LEFT JOIN web_data_appoint  wa on wp.hn = wa.hn
+        -- where confirm_drugs is not null AND  date_appoint is not null
+        GROUP BY  wp.hn,wp.cid,patient,pttype,phone,lineid,adddess,moo,district,amphoe,province,zipcode,
+        date_appoint,doctor_appoint,clinic_appoint,app_status,confirm_drugs
+        ORDER BY date_appoint";
+        $query = mysqli_query($conf, $log);
+        ?>
         <div class="container-fluid">
           <div class="row">
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">แก้ไขข้อมูลUSER</h3>
+                  <h3 class="card-title">ตารางแสดงข้อมูลผู้ป่วยที่ผ่านการ verify ข้อมูลที่อยู่แล้วและมีรายการนัดหลังจากวันที่ <?php echo date("Y/m/d") ;?></h3>
                 </div>
                 <!-- /.card-header -->
-
                 <div class="card-body">
-                <div class="tab-content">
-                  <div class="tab-pane active" id="settings">
-                    <form class="form-horizontal"   action="#" method="post">
-                      <div class="form-group row">
-                        <label for="inputName" class="col-sm-2 col-form-label">ชื่อ</label>
-                        <div class="col-sm-10">
-                          <input type="email" class="form-control" id="inputName" placeholder="ชื่อ" name="fname" value="<?php echo $_SESSION['qfname'];?>" disabled>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label for="inputName" class="col-sm-2 col-form-label">นามสกุล</label>
-                        <div class="col-sm-10">
-                          <input type="email" class="form-control" id="inputName" placeholder="นามสกุล"  name="lname" value="<?php echo $_SESSION['qlname'];?>" disabled>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label for="inputEmail" class="col-sm-2 col-form-label" >username</label>
-                        <div class="col-sm-10">
-                          <input type="email" class="form-control" id="inputEmail" value="<?php echo $_SESSION['username'];?>" disabled> 
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label for="password" class="col-sm-2 col-form-label">passwordเดิม</label>
-                        <div class="col-sm-10">
-                          <input type="password" class="form-control" id="passwordold" placeholder="password" name="opassword" required="">
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label for="password" class="col-sm-2 col-form-label">passwordใหม่</label>
-                        <div class="col-sm-10">
-                          <input type="password" class="form-control" id="passwordnew" placeholder="password" name="password" required="">
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <div class="offset-sm-2 col-sm-10">
-                          <button type="submit" class="btn btn-danger" name='submit' value="submit">Submit</button>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                  <!-- /.tab-pane -->
+                  <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th>HN</th>
+                        <th>เลขบัตรประชาชน</th>
+                        <th>ชื่อ-นามสกุล</th>
+                        <th>สิทธิ</th>
+                        <th>หมายเลขโทรศัพท์</th>
+                        <th>LINE ID</th>
+                        <th>ที่อยู่</th>
+                        <th>คลินิก</th>
+                        <th>แพทย์</th>
+                        <th>วันที่นัด</th>
+                        <th>ยืนยันรับยา</th>
+                        <th>ชำระเงิน</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                       
+                      <?php
+                      $rw = 0;
+                      while ($row_result = mysqli_fetch_array($query)) {
+                        $rw++;  ?>
+                        <tr>
+                          <td><?php echo $row_result['hn']; ?></td>
+                          <td><?php echo $row_result['cid'] ;?></td>
+                          <td><?php echo $row_result['patient']; ?></td>
+                          <td><?php echo $row_result['pttype']; ?></td>
+                          <td><?php echo $row_result['phone'] ;?></td>
+                          <td><?php echo $row_result['lineid'] ;?></td>
+                          <td><?php echo $row_result['adddess'] . ' หมู่ ' . $row_result['moo'] . ' ' . $row_result['district'] . ' ' . $row_result['amphoe'] . ' ' . $row_result['province'] ?></td>
+                          <td><?php echo $row_result['clinic_appoint'] ;?></td>
+                          <td><?php echo $row_result['doctor_appoint'] ;?></td>
+                          <td><?php echo $row_result['date_appoint'] ;?></td>
+                          <td class="text-center text-success"><?php if($row_result['checkaddress'] == '1'){echo ' <i class="fas fa-check"></i>';} ;?></td>
+                          <td class="text-center text-success"><?php if($row_result['successpayment'] == 'Y'){echo ' <i class="fas fa-check"></i>';} ;?></td>
+                        </tr>
+                      <?php } ?>
+                    </tbody>
+                  </table>
                 </div>
-                <!-- /.tab-content -->
-              </div>
                 <!-- /.card-body -->
               </div>
               <!-- /.card -->
@@ -244,7 +213,7 @@ if($_SESSION['statusinsert'] == 1){
 
 
 
- 
+
     <!-- /.content-wrapper -->
     <footer class="main-footer">
       <div class="float-right d-none d-sm-block">
@@ -262,18 +231,18 @@ if($_SESSION['statusinsert'] == 1){
   <!-- ./wrapper -->
 
   <!-- jQuery -->
-  <script src="./plugins/jquery/jquery.min.js"></script>
+  <script src="../plugins/jquery/jquery.min.js"></script>
   <!-- Bootstrap 4 -->
-  <script src="./plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
   <!-- DataTables -->
-  <script src="./plugins/datatables/jquery.dataTables.min.js"></script>
-  <script src="./plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-  <script src="./plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-  <script src="./plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+  <script src="../plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+  <script src="../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+  <script src="../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
   <!-- AdminLTE App -->
-  <script src="./dist/js/adminlte.min.js"></script>
+  <script src="../dist/js/adminlte.min.js"></script>
   <!-- AdminLTE for demo purposes -->
-  <script src="./dist/js/demo.js"></script>
+  <script src="../dist/js/demo.js"></script>
   <!-- page script -->
   <script>
     $(function() {
