@@ -36,16 +36,16 @@
     </div>
 
     <?php
-    include 'config/pg_con.class.php';
+    include 'config/web_con.php';
     if (isset($_POST['submit'])) {
         $searchuser = " SELECT hn,cid FROM patient where  hn = '" . $_POST['hn'] . "' and cid = '" . $_POST['cid'] . "'  ";
-        $have_user_yet = pg_query($conn, $searchuser);
-        $count = pg_num_rows($have_user_yet);
-        echo $have_user_yet['hn'];
+        $have_user_yet = mysqli_query($conf, $searchuser);
+        $count = mysqli_num_rows($have_user_yet);
+        //echo $have_user_yet['hn'];
 
         if ($count > 0) {
             session_start();
-            $accoutUsser = pg_fetch_assoc($have_user_yet);
+            $accoutUsser = mysqli_fetch_assoc($have_user_yet);
             echo $_SESSION['hn']  =  $accoutUsser['hn'];
             echo ' <br>';
             echo $_SESSION['cid'] = $accoutUsser['cid'];

@@ -27,24 +27,24 @@
   <!-- /.login-logo -->
   <?php 
     include "../config/pg_con.class.php";
-    include '../config/my_con.class.php';
+    include "../config/web_con.php";
     if(isset($_POST['submit'])){
       $username = $_POST['username'];
-      $password = $con->real_escape_string (md5($_POST['password']));
+      $password = $conf->real_escape_string (md5($_POST['password']));
       /*
       $hash = password_hash($password,PASSWORD_BCRYPT);
       echo  $hash;
       */
       $sql = "SELECT * FROM `web_data_admin` WHERE `qnamelogin` =  '".$username."'";//query เช็ค user password ตรงไหม
-      $result = $con->query($sql);
+      $result = $conf->query($sql);
     
       if($result->num_rows>0){
         $sqlcheckpassword = "SELECT * FROM `web_data_admin` WHERE  `qnamelogin` =  '".$username."' AND `qpasslogin` = '".$password."'";
-        $resultcheckpassword  = $con->query($sqlcheckpassword);
+        $resultcheckpassword  = $conf->query($sqlcheckpassword);
         if($resultcheckpassword->num_rows>0){
             $accoutUsser = $result->fetch_assoc();
             $_SESSION['username'] =  $accoutUsser['qnamelogin'];
-            //$_SESSION['password'] =  $accoutUsser['qpasslogin'];
+            $_SESSION['password'] =  $accoutUsser['qpasslogin'];
             $_SESSION['qfname'] =  $accoutUsser['qfname'];
             $_SESSION['qlname'] =  $accoutUsser['qlname'];
             $_SESSION['status'] =  $accoutUsser['qstatus'];

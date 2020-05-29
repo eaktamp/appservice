@@ -1,7 +1,6 @@
 <?php session_start();
 date_default_timezone_set('asia/bangkok');
-include './config/pg_con.class.php';
-include './config/my_con.class.php';
+include './config/web_con.php';
 $cid = $_SESSION['cid'];
 $hn  = $_SESSION['hn'];
 ?>
@@ -21,33 +20,15 @@ $hn  = $_SESSION['hn'];
 
     <?php
     $checkinmysqlbase =  " SELECT * FROM web_data_patient where cid = '" . $cid . "' AND hn = '" . $hn . "' ORDER BY dateupdate limit 1";
-    $have_user_inmydb = mysqli_query($con, $checkinmysqlbase);
+    $have_user_inmydb = mysqli_query($conf, $checkinmysqlbase);
     $count = mysqli_num_rows($have_user_inmydb);
 
     if ($count == 0) {
         //echo ' <br/>' . 'is null data in mydb then check in pgsql on his hospital' . '<br/>';
-        $searchuser = " SELECT p.fname     AS fname
-        ,p.lname    AS lname
-        ,pty.name   AS pttype
-        ,p.addrpart AS adddess
-        ,dbs.province AS province
-        ,dbs.amphur    AS amphoe
-        ,dbs.district  AS district
-        ,p.moopart     AS moo
-        ,p.mobile_phone_number AS phone
-        ,(SELECT pocode FROM thaiaddress WHERE pocode IS NOT NULL AND chwpart = p.chwpart AND amppart =  p.amppart AND tmbpart = '00' AND codetype = '2') as zipcode
-         -- ,r.pocode AS zipcode
-        ,p.cid      AS cid
-        ,p.hn       AS hn
-        FROM patient p
-        --  INNER JOIN dbaddress dbs    ON dbs.iddistrict   = concat(p.chwpart,p.amppart,p.tmbpart)
-        --  INNER JOIN thaiaddress tha  ON tha.addressid    = concat(p.chwpart,p.amppart,p.tmbpart)
-            INNER JOIN thaiaddress AS r ON r.tmbpart = p.tmbpart AND r.amppart = p.amppart AND r.chwpart = p.chwpart 
-            LEFT JOIN dbaddress as dbs on dbs.iddistrict = r.addressid
-            LEFT JOIN pttype pty        ON pty.pttype       = p.pttype
+        $searchuser = " SELECT * FROM patient
         WHERE p.hn = '" . $_SESSION['hn'] . "' and p.cid = '" . $_SESSION['cid'] . "' ";
-        $have_user_yet = pg_query($conn, $searchuser);
-        $result = pg_fetch_assoc($have_user_yet);
+        $have_user_yet = mysqli_query($conf, $searchuser);
+        $result = mysqli_fetch_assoc($have_user_yet);
     } else {
         //echo '<br/>' . 'is have data in mydb then show data in db' . '<br/>';
         $result = mysqli_fetch_assoc($have_user_inmydb);

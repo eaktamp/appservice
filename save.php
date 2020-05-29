@@ -8,7 +8,7 @@
 <body>
   <?php
   date_default_timezone_set("Asia/Bangkok");
-  include("config/my_con.class.php");
+  include("config/web_con.php");
   $token_check = mt_rand(100, 999) . mt_rand(100, 999);
 
   //เอาค่าที่รับมาจาก radio มา suustring แต่ละตัวที่ขั้นด้วย | เก็บไว้ในตัวแปร data เป็น array แต่ละช่อง
@@ -41,18 +41,18 @@
                   --AND clinic_appoint = '$clinic_appoint' and doctor_appoint = '$doctor_appoint'
                  ";
 
-  $check_have_data = mysqli_query($con, $searchdata);
+  $check_have_data = mysqli_query($conf, $searchdata);
   $countrow = mysqli_num_rows($check_have_data);
   echo   $searchdata.'<br>';
 
   if ($countrow <= 0) {
     $log = "INSERT INTO web_data_appoint (hn,cid,oapp_id,token_check,date_appoint,clinic_appoint,doctor_appoint,app_status,updatedate) 
           VALUES ('$hn','$cid','$oapp_id','$token_check','$date_appoint','$clinic_appoint','$doctor_appoint','$app_status','$updatedate')  ";
-    $query = mysqli_query($con, $log);
+    $query = mysqli_query($conf, $log);
     echo $log;
     //header("Location: complete.php?cid=$cid&token_check=$token_check");
     header("Location: complete.php?token_check=$token_check&oapp_id=$oapp_id");
-    mysqli_close($con);
+    mysqli_close($conf);
   } else {
     echo "<script>javascript:alert('เคยบันทึกอนุมัติรายการนี้ไปแล้ว!');window.location='app.php';</script>";
   }

@@ -8,7 +8,7 @@
 <body>
   <?php
   date_default_timezone_set("Asia/Bangkok");
-  include("config/my_con.class.php");
+  include("config/web_con.php");
 
   $hn        = $_POST['hn'];
   $cid       = $_POST['cid'];
@@ -54,7 +54,7 @@
   // 	$scoresum = $csumb;
 
   $searchuser = "SELECT * FROM web_data_patient where cid = '" . $cid . "'  ";
-  $have_user_yet = mysqli_query($con, $searchuser);
+  $have_user_yet = mysqli_query($conf, $searchuser);
   $count = mysqli_num_rows($have_user_yet);
   // $have_user_yet['cid'];
   if ($count > 0) {
@@ -62,16 +62,16 @@
        ,pttype='$pttype',lineid='$lineid',adddess='$adddess',moo='$moo',district='$district',amphoe='$amphoe',province='$province'
        ,zipcode='$zipcode',flage='$flage',dateupdate='$dateupdate',ipupdate='$ipupdate',cdate='$cdate',ctime='$ctime'
       WHERE cid = '$cid'";
-    $query = mysqli_query($con, $log);
+    $query = mysqli_query($conf, $log);
     //header("Location: app.php?cid=$cid&hn=$hn");
     header("Location: app.php"); //เอาค่า params ที่ส่งไปออกเพื่อให้ link clean ขึ้น
-    mysqli_close($con);
+    mysqli_close($conf);
   } else {
     $log = "INSERT INTO web_data_patient (hn,cid,fname,lname,phone,pttype,lineid,adddess,moo,district,amphoe,province,zipcode,flage,dateupdate,ipupdate,cdate,ctime) 
                     VALUES ('$hn','$cid','$fname','$lname','$phone','$pttype','$lineid','$adddess','$moo','$district','$amphoe','$province','$zipcode','$flage','$dateupdate','$ipupdate','$cdate','$ctime')";
-    $query = mysqli_query($con, $log);
+    $query = mysqli_query($conf, $log);
     header("Location: app.php");
-    mysqli_close($con);
+    mysqli_close($conf);
   }
 
 

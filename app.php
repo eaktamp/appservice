@@ -1,8 +1,7 @@
 <?php
 session_start();
 date_default_timezone_set("Asia/Bangkok");
-include "config/pg_con.class.php";
-include "config/my_con.class.php";
+include "config/web_con.php";
 include "config/func.class.php";
 $cid    = $_SESSION['cid'];
 $hn     = $_SESSION['hn'];
@@ -10,7 +9,7 @@ $searchuser = " SELECT  id,order_number_check,fname,lname,phone,lineid,adddess,c
 moo,district,amphoe,province,zipcode,qcode,keycode,modify,status,flage,fileimg,dateupdate
 FROM web_data_patient
 WHERE hn = '$hn' ";
-$query = mysqli_query($con, $searchuser);
+$query = mysqli_query($conf, $searchuser);
 $row_result = mysqli_fetch_array($query);
 ?>
 
@@ -35,8 +34,8 @@ $row_result = mysqli_fetch_array($query);
 
 <?php
 $checkAp = "SELECT * FROM web_data_appoint  where hn ='$hn' and cid = '$cid' and date_appoint > CURRENT_DATE ORDER BY date_appoint";
-$queryCheckAp = mysqli_query($con,$checkAp);
-$oppid_check = mysqli_query($con,$checkAp);
+$queryCheckAp = mysqli_query($conf,$checkAp);
+$oppid_check = mysqli_query($conf,$checkAp);
 $rowc        = mysqli_num_rows($oppid_check);
 
 
@@ -70,8 +69,8 @@ AND p.hn = '$hn' ";
 $sql .= " AND o.nextdate > CURRENT_DATE ";
 $sql .= " AND (( o.oapp_status_id < 4 ) OR o.oapp_status_id IS NULL ) "; 
 $sql .= " ORDER BY o.nextdate ";
-$result = pg_query($conn, $sql);
-$countdata = pg_num_rows($result);//เช็คมีนัดไม่มีนัด
+$result = mysqli_query($confn, $sql);
+$countdata = mysqli_num_rows($result);//เช็คมีนัดไม่มีนัด
 // echo $sql;
 ?>
 
@@ -98,7 +97,7 @@ $countdata = pg_num_rows($result);//เช็คมีนัดไม่มี�
         <form id="save" class="" autocomplete="" uk-grid method="POST" action="save.php">
             <?php
             $rw = 0;
-            while ($row_result = pg_fetch_array($result)) {
+            while ($row_result = mysqli_fetch_array($result)) {
                 $rw++;
                 $dateapp  =  $row_result['dateapp'];
                 $clinic   =  $row_result['clinic'];

@@ -1,20 +1,19 @@
 <?php
 date_default_timezone_set("Asia/Bangkok");
-include("../config/web_con.php");
+include("../config/my_con.class.php");
 session_start();
 if (isset($_SESSION['username']) == "" || isset($_SESSION['username']) == null) {
   echo "<script>window.location ='login.php';</script>";
 }
 //echo   $_SESSION['statusinsert'];
 ?>
-
 <!DOCTYPE html>
 <html>
 
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>หน้าแรก</title>
+  <title>EDITPASSWORD</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -44,31 +43,41 @@ if (isset($_SESSION['username']) == "" || isset($_SESSION['username']) == null) 
 
 <body class="hold-transition sidebar-mini">
 <?php 
-  
+    include('../config/my_con.class.php');
+    include("../config/pg_con.class.php");
   ///////////////////////////////////// เมื่อกดรับงาน ส่ง POST เข้ามาทำงาน //////////////////////////////// 
-if (isset($_POST['NeedGetMedicine'])) { //หากกดยืนยันรับงาน 
 
-  $_SESSION['username'];
-  mysqli_set_charset($conf, "utf8");
 
-  $updatestatus = "UPDATE `web_data_appoint` SET 
-  `confirm_drugs` = 'Y', 
-  `admin_checkConfirm` = '" .$_SESSION['username']. "' WHERE oapp_id = '" .  $_POST['oapp_id']. "'";
-  $Queryaddadminjob =  mysqli_query($conf, $updatestatus);
-  if ($Queryaddadminjob) {
-        $_POST['oapp_id'] = '';
-        $_SESSION['statusinsert'] = 1;
-        header('location:./index.php'); 
-        exit(0);
-  }else{
-    echo "<script>alertify.error('บันทึกไม่สำเร็จ');</script>";
-  }
+  if (isset($_POST['submit'])) {
+    echo $newpassword  =  md5($_POST['password']);
+    $opassword  =  md5($_POST['opassword']);
+    $newniname  =  ($_POST['niname']);
+    if($opassword == $_SESSION['password'] ){
+        echo $Updatepassword = 'UPDATE web_data_admin SET qpasslogin = "'.$newpassword .'"   WHERE qnamelogin = "'.$_SESSION['username'].'"';
+        $queryUpdate = mysqli_query($con, $Updatepassword);
+        if($queryUpdate){
+            $_SESSION['statusinsert'] = 1;
+            $message = '<hr/><p style="color:GREEN;">ดำเนินการเรียบร้อย โปรดเข้าสู่ระบบอีกครั้ง</p>';
+            session_destroy();
+            header('location:./login.php');
+        }
+    }
+    else 
+    $_SESSION['statusinsert'] = 2;
+    $_POST['password'] = '';
+    $_POST['opassword'] = '';
+    $message = '<hr/><p style="color:red;">รหัสผ่านไม่ถูกต้อง</p>';
 }
+
 if($_SESSION['statusinsert'] == 1){
-  echo "<script>alertify.success('บันทึกสำเร็จ');</script>";
-  $_SESSION['statusinsert'] = 0;//กำหนดให้ค่าเป็น 0 
-  unset($_SESSION['statusinsert']);//ยกเลิกการใช้งาน session ตัวเช็คสถานะการบันทึกออก
-}
+    echo "<script>alertify.success('บันทึกสำเร็จ');</script>";
+    $_SESSION['statusinsert'] = 0;//กำหนดให้ค่าเป็น 0 
+    unset($_SESSION['statusinsert']);//ยกเลิกการใช้งาน session ตัวเช็คสถานะการบันทึกออก
+  }
+  if($_SESSION['statusinsert'] == 2){
+    echo "<script>alertify.error('รหัสผ่านเดิมไม่ถูกต้อง');</script>";
+    unset($_SESSION['statusinsert']);//ยกเลิกการใช้งาน session ตัวเช็คสถานะการบันทึกออก
+  }
 ?>
 
   <div class="wrapper">
@@ -105,7 +114,7 @@ if($_SESSION['statusinsert'] == 1){
       <!-- Brand Logo -->
       <a href="#" class="brand-link">
       <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"  style="opacity: .8">
-      <span class="brand-text font-weight-light">AdminPage</span>
+      <span class="brand-text font-weight-light">EDITPASSWORD</span>
       </a>
 
       <!-- Sidebar -->
@@ -158,7 +167,7 @@ if($_SESSION['statusinsert'] == 1){
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>ข้อมูลผู้ป่วยที่มีนัดหลังจากวันที่ <?php// echo date("Y/m/d") ;?></h1>
+                <h1>PROFILE <?php// echo date("Y/m/d") ;?></h1>
             </div>
           </div>
         </div><!-- /.container-fluid -->
@@ -166,51 +175,60 @@ if($_SESSION['statusinsert'] == 1){
 
       <!-- Main content -->
       <section class="content">
-        <?php
-        $log = " SELECT * FROM web_data_patient where hn in (select hn from web_data_appoint where date_appoint > CURRENT_DATE GROUP BY hn) ";
-        $query = mysqli_query($conf, $log);
-        ?>
         <div class="container-fluid">
           <div class="row">
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">ตารางแสดงข้อมูลผู้ป่วยที่ผ่านการ verify ข้อมูลที่อยู่แล้วและมีรายการนัดหลังจากวันที่ <?php echo date("Y/m/d") ;?></h3>
+                  <h3 class="card-title">แก้ไขข้อมูลUSER</h3>
                 </div>
                 <!-- /.card-header -->
+
                 <div class="card-body">
-                  <table id="example1" class="table table-bordered table-striped">
-                    <thead>
-                      <tr>
-                        <th>HN</th>
-                        <th>เลขบัตรประชาชน</th>
-                        <th>ชื่อ-นามสกุล</th>
-                        <th>สิทธิ</th>
-                        <th>หมายเลขโทรศัพท์</th>
-                        <th>LINE ID</th>
-                        <th>ที่อยู่</th>
-                        <th>ข้อมูลนัด</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <?php
-                      $rw = 0;
-                      while ($row_result = mysqli_fetch_array($query)) {
-                        $rw++;  ?>
-                        <tr>
-                          <td><?php echo $row_result['hn'] ?></td>
-                          <td><?php echo $row_result['cid'] ?></td>
-                          <td><?php echo $row_result['fname'] . ' ' . $row_result['lname'] ?></td>
-                          <td><?php echo $row_result['pttype'] ?></td>
-                          <td><?php echo $row_result['phone'] ?></td>
-                          <td><?php echo $row_result['lineid'] ?></td>
-                          <td><?php echo $row_result['adddess'] . ' หมู่ ' . $row_result['moo'] . ' ' . $row_result['district'] . ' ' . $row_result['amphoe'] . ' ' . $row_result['province'] ?></td>
-                          <td><button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#appoint<?php echo $row_result['hn'];?>"><i class="fas fa-bars"></i></button></td>
-                        </tr>
-                      <?php } ?>
-                    </tbody>
-                  </table>
+                <div class="tab-content">
+                  <div class="tab-pane active" id="settings">
+                    <form class="form-horizontal"   action="#" method="post">
+                      <div class="form-group row">
+                        <label for="inputName" class="col-sm-2 col-form-label">ชื่อ</label>
+                        <div class="col-sm-10">
+                          <input type="email" class="form-control" id="inputName" placeholder="ชื่อ" name="fname" value="<?php echo $_SESSION['qfname'];?>" disabled>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="inputName" class="col-sm-2 col-form-label">นามสกุล</label>
+                        <div class="col-sm-10">
+                          <input type="email" class="form-control" id="inputName" placeholder="นามสกุล"  name="lname" value="<?php echo $_SESSION['qlname'];?>" disabled>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="inputEmail" class="col-sm-2 col-form-label" >username</label>
+                        <div class="col-sm-10">
+                          <input type="email" class="form-control" id="inputEmail" value="<?php echo $_SESSION['username'];?>" disabled> 
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="password" class="col-sm-2 col-form-label">passwordเดิม</label>
+                        <div class="col-sm-10">
+                          <input type="password" class="form-control" id="passwordold" placeholder="password" name="opassword" required="">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="password" class="col-sm-2 col-form-label">passwordใหม่</label>
+                        <div class="col-sm-10">
+                          <input type="password" class="form-control" id="passwordnew" placeholder="password" name="password" required="">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="offset-sm-2 col-sm-10">
+                          <button type="submit" class="btn btn-danger" name='submit' value="submit">Submit</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <!-- /.tab-pane -->
                 </div>
+                <!-- /.tab-content -->
+              </div>
                 <!-- /.card-body -->
               </div>
               <!-- /.card -->
@@ -226,78 +244,7 @@ if($_SESSION['statusinsert'] == 1){
 
 
 
-
-    <!----------------------------------------------------- Modal----------------------------------------------------------------------------- -->
-      <!--------------------------------------------------------------------------------------------------------------------------------------- -->
-    <?php 
-       $sql = " SELECT hn FROM web_data_appoint where date_appoint > CURRENT_DATE ORDER BY date_appoint DESC  ";
-       $result1 = mysqli_query($conf, $sql);
-       foreach ($result1 as $item) { $hn = $item['hn'];
-    ?>
-    <div class="modal fade bd-example-modal-lg" id="appoint<?php echo $item['hn']?>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">ข้อมูลรายการนัด HN:<?php echo $item['hn']?></h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="row">
-              <div class="col-md-12">
-                <!-- The time line -->
-                <div class="timeline">
-                  <!-- timeline time label -->
-                  <?php $queryApp = " SELECT * FROM web_data_appoint where hn = '$hn' and oapp_id is not null and date_appoint > CURRENT_DATE ORDER BY date_appoint  limit 10 ";
-                        $resultappoint = mysqli_query($conf, $queryApp);
-                        foreach ($resultappoint as $Appointment) { ?>
-                  <div class="time-label">
-                    <span class="bg-green"><?php echo $Appointment['date_appoint']; ?></span>
-                  </div>
-                  <!-- /.timeline-label -->
-                  <!-- timeline item -->
-                  <div>
-                    <i class="fas fa-clock bg-purple"></i>
-                    <div class="timeline-item">
-                      <span class="time"><i class="fas fa-clock"></i><?php echo $Appointment['date_appoint']; ?></span>
-                      <h3 class="timeline-header"><a href="#"> <?php echo $Appointment['clinic_appoint']; ?></a> </h3>
-
-                      <div class="timeline-body">
-                            <?php echo 'แพทย์ผู้นัด : '. $Appointment['doctor_appoint']; ?><br>
-                            <form action="#" method="POST" name='NeedGetMedicine'>
-                              <input type="hidden" name="oapp_id" value="<?= $Appointment['oapp_id'];?>">
-                              <button type="submit" class="btn btn-primary" name="NeedGetMedicine" <?php if($Appointment['confirm_drugs'] !='') echo 'disabled';?>>
-                                <i class="fas fa-check"></i>&nbsp; จ่ายเงินแล้ว </button>
-                                <button type="button" class="btn btn-warning" name="NeedGetMedicine" ><i class="fas fa-print"></i>&nbsp; พิมพ์รายการนี้ </button>
-                            </form>
-                      </div>
-                    </div>
-                  </div>
-                  <?php } ?>
-                  <div>
-                    <i class="fas fa-clock bg-gray"></i>
-                  </div>
-                  <!-- END timeline item -->
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-danger">Print ที่อยู่</button>
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <?php } ?>
-  <!----------------------------------------------------- END   Modal----------------------------------------------------------------------------- -->
-
  
-
-
-
-
     <!-- /.content-wrapper -->
     <footer class="main-footer">
       <div class="float-right d-none d-sm-block">
