@@ -3,10 +3,8 @@ session_start();
 date_default_timezone_set("Asia/Bangkok");
 include "config/web_con.php";
 include "config/func.class.php";
-$cid    = $_GET['cid'];
-$hn     = $_GET['hn'];
-//$cid    = $_SESSION['cid'];
-//$hn     = $_SESSION['hn'];
+$cid    = $_SESSION['cid'];
+$hn     = $_SESSION['hn'];
 $searchuser = " SELECT  id,order_number_check,fname,lname,phone,lineid,adddess,cid,hn
 moo,district,amphoe,province,zipcode,qcode,keycode,modify,status,flage,fileimg,dateupdate
 FROM web_data_patient
@@ -15,16 +13,9 @@ $query = mysqli_query($conf, $searchuser);
 $row_result = mysqli_fetch_array($query);
 ?>
 
-<?php 
-/*
-if (isset($_SESSION['cid']) == "" || isset($_SESSION['hn']) == null) {
+<?php if (isset($_SESSION['cid']) == "" || isset($_SESSION['hn']) == null) {
     echo "<script>window.location ='./checkdata.php';</script>";
-} */
-if (isset($_GET['cid']) == "" || isset($_GET['hn']) == null) {
-    echo "<script>window.location ='./checkdata.php';</script>";
-}
-
-?>
+} ?>
 
 <!DOCTYPE html>
 <html lang="th">
