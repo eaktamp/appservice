@@ -22,7 +22,7 @@
 </head>
 <body>
     <div class="uk-container uk-padding">
-        <form name="form1" style=" margin-top:15%;" action="#" method="post">
+        <form name="form1" style=" margin-top:15%;" action="senddata.php" method="POST">
             <div class="uk-width-1-2@m">
                 <label class="h2"> รหัสประจำตัวประชาชน <i class="fas fa-address-card"></i></label>
                 <input type="text" name="cid" value="" maxlength="13" minlength="13" placeholder="9999999999999" onKeyUp="if(isNaN(this.value)){ alert('กรุณากรอกตัวเลข'); this.value='';}" required />
@@ -46,9 +46,15 @@
         if ($count > 0) {
             session_start();
             $accoutUsser = mysqli_fetch_assoc($have_user_yet);
-            echo $_SESSION['hn']  =  $accoutUsser['hn'];
+         /*   echo $_SESSION['hn']  =  $accoutUsser['hn'];
             echo ' <br>';
             echo $_SESSION['cid'] = $accoutUsser['cid'];
+*/
+            echo $_POST['hn']  =  $accoutUsser['hn'];
+            echo ' <br>';
+            echo $_POST['cid'] = $accoutUsser['cid'];
+
+
             //$password = $con->real_escape_string md5((md5($_POST['cid'])));//decode
             echo "<script>alertify.success('พบข้อมูล');</script>";
             header('location:senddata.php');
@@ -58,7 +64,7 @@
     }
     ?>
         <div class="iBannerFix">
-        for admin : <a href="./admin1/login.php" >Click</a>
+        for admin : <a href="./admin1/login.php" >Click&nbsp;</a>
     </div>
       
 </body>
