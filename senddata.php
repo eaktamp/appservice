@@ -26,7 +26,7 @@ $hn  = $_SESSION['hn'];
     if ($count == 0) {
         //echo ' <br/>' . 'is null data in mydb then check in pgsql on his hospital' . '<br/>';
         $searchuser = " SELECT * FROM patient
-        WHERE p.hn = '" . $_SESSION['hn'] . "' and p.cid = '" . $_SESSION['cid'] . "' ";
+        WHERE hn = '" . $_SESSION['hn'] . "' and cid = '" . $_SESSION['cid'] . "' ";
         $have_user_yet = mysqli_query($conf, $searchuser);
         $result = mysqli_fetch_assoc($have_user_yet);
     } else {
