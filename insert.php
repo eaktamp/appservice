@@ -63,14 +63,15 @@
        ,zipcode='$zipcode',flage='$flage',dateupdate='$dateupdate',ipupdate='$ipupdate',cdate='$cdate',ctime='$ctime'
       WHERE cid = '$cid'";
     $query = mysqli_query($conf, $log);
-    //header("Location: app.php?cid=$cid&hn=$hn");
-    header("Location: app.php"); //เอาค่า params ที่ส่งไปออกเพื่อให้ link clean ขึ้น
+    header("Location: app.php?cid=$cid&hn=$hn");
+    //header("Location: app.php"); //เอาค่า params ที่ส่งไปออกเพื่อให้ link clean ขึ้น
     mysqli_close($conf);
   } else {
     $log = "INSERT INTO web_data_patient (hn,cid,fname,lname,phone,pttype,lineid,adddess,moo,district,amphoe,province,zipcode,flage,dateupdate,ipupdate,cdate,ctime) 
                     VALUES ('$hn','$cid','$fname','$lname','$phone','$pttype','$lineid','$adddess','$moo','$district','$amphoe','$province','$zipcode','$flage','$dateupdate','$ipupdate','$cdate','$ctime')";
     $query = mysqli_query($conf, $log);
-    header("Location: app.php");
+    //header("Location: app.php");
+     header("Location: app.php?cid=$cid&hn=$hn");
     mysqli_close($conf);
   }
 
