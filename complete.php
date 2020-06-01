@@ -53,6 +53,7 @@ $row_result = mysqli_fetch_array($query);
             <div class="hh2 fon"><?php echo " ตำบล".$row_result['district']." อำเภอ".$row_result['amphoe'];?>
             <div class="hh2 fon"><?php echo " จังหวัด".$row_result['province']." ".$row_result['zipcode'];?></div>
         </div>
+        <a href="logout.php"><< กลับหน้าแรก</a>
     </div>
 <!--    <hr>
     <center><span class="fon">ติดต่อสอบถามข้อมูลเพิ่มเติมได้ที่ Line@ </span></center>

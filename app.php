@@ -62,9 +62,11 @@ $countdata = mysqli_num_rows($result);//เช็คมีนัดไม่ม�
 
 <body>
     <div class="uk-container uk-padding">
+ 
         <h1> รายการนัด <sup>
                 <h3>เลือกรายการส่งยาทางไปรษณีย์</h3>
             </sup></h1>
+            <a href="logout.php"><< กลับหน้าแรก</a>
         <hr>
 
         <?php
@@ -120,6 +122,7 @@ $countdata = mysqli_num_rows($result);//เช็คมีนัดไม่ม�
                 <?php } else { ?>
                     <center><button type="submit" class="button" id="submit" name="submit" style="vertical-align:middle;font-size:16px"><span> ยืนยันรายการ </span></button> </center>
                 <?php } ?>
+              
             </div>
         </form>
     </div>
