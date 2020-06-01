@@ -13,7 +13,6 @@ $mtime = $mtime[1] + $mtime[0];
 $endtime = $mtime;
 $totaltime = ($endtime - $starttime);
 ?>
-<center><?php echo "กำลังโยกย้าย ".$totaltime." วินาที"; ?></center>
 
 <?php
 $checkAp = "SELECT oapp_id FROM oapp ";
@@ -56,7 +55,9 @@ try {
 	else {
 		require_once('config/web_con.class.php' );
 		$pdo = sql_con();
+		$rw = 0;
 		while ($result = pg_fetch_array($have_user_yet)) {
+		$rw++;	
 			$dateapp 	=   $result['dateapp'];
 			$clinic 	=	$result['clinic'];
 			$cid 		=	$result['cid'];
@@ -74,9 +75,12 @@ try {
 			};		   
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
-echo $sql; 
+//echo $sql; 
+echo $rw." | ";
+
 
 }
+
 
 }
 } catch (Exception $e) {
