@@ -38,6 +38,7 @@ $file       = $_POST['hn'];
 		<div align="center" style="font-size: 14px"><?php echo "(หลีกเลี่ยงแสงแดดและความชื้น) (ระวังการกระแทก)" ?></div>
 	</table>
 </div>
+
 	<div class="div1">
 		<div style="font-size: 12px"><?php echo "ฝ่ายเภสัชกรรม"; ?></div>
 		<div style="font-size: 12px"><?php echo "โรงพยาบาลเจ้าพระยาอภัยภูเบศร"; ?></div>
@@ -45,6 +46,7 @@ $file       = $_POST['hn'];
 		<div style="font-size: 12px"><?php echo "อำเภอเมือง จังหวัดปราจีนบุรี"; ?></div>
 		<div style="font-size: 12px"><?php echo "25000"; ?></div>
 	</div>
+
 	<div class="div2" >
 		<div style="font-size: 15px"><?php echo "ชื่อที่อยู่ผู้รับ"; ?></div>
 		<div style="font-size: 20px"><?php echo "คุณ".$fname." ".$lname." (".$phone.")"; ?></div>
@@ -65,10 +67,6 @@ $file       = $_POST['hn'];
 
 	</div>
 
-
-
-	
-
 </body>
 </html>
 
@@ -83,7 +81,7 @@ $lo   = "Location:pdf/".$filel.".pdf";
 
 $html = ob_get_contents();
 ob_end_clean();
-$pdf = new mPDF('th','A5-L','0','THSaraban');
+$pdf = new mPDF('th','A4','0','THSaraban');
 $pdf->SetDisplayMode('fullpage');
 $stylesheet = file_get_contents('css/print.css');
 $pdf->WriteHTML($stylesheet,1);
@@ -94,3 +92,11 @@ die();
 
 
 ?>
+
+
+
+<style>
+	.div1{
+	
+	}
+</style>

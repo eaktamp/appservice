@@ -270,7 +270,7 @@ if($_SESSION['statusinsert'] == 1){
                               <input type="hidden" name="oapp_id" value="<?= $Appointment['oapp_id'];?>">
                               <button type="submit" class="btn btn-primary" name="NeedGetMedicine" <?php if($Appointment['confirm_drugs'] !='') echo 'disabled';?>>
                                 <i class="fas fa-check"></i>&nbsp; จ่ายเงินแล้ว </button>
-                                <button type="button" class="btn btn-warning" name="NeedGetMedicine" ><i class="fas fa-print"></i>&nbsp; พิมพ์รายการนี้ </button>
+                               <!-- <button type="button" class="btn btn-warning" name="NeedGetMedicine" ><i class="fas fa-print"></i>&nbsp; พิมพ์รายการนี้ </button> -->
                             </form>
                       </div>
                     </div>

@@ -131,7 +131,19 @@ if (isset($_SESSION['username']) == "" || isset($_SESSION['username']) == null) 
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>ข้อมูลนัดที่มีการชำระเงินแล้ว <?php// echo date("Y/m/d") ;?></h1>
+                <h1>ข้อมูลนัดที่มีการชำระเงินแล้ว</h1>
+                <form class="form-inline" method="POST" action="#">
+                    วันที่นัด 
+                    <input type="date" class="form-control" id="datepickers" name="datepickers" data-provide="datepicker" data-date-language="th" autocomplete="off" required >
+                    ถึง 
+                    <input type="date" class="form-control" id="datepickert" name="datepickert" data-provide="datepicker" data-date-language="th" autocomplete="off" required>
+                   
+                    <input type="radio" id="Y" name="payment" value="Y">
+                    <label for="Y">ชำระเงินแล้ว</label><br>
+                    <input type="radio" id="N" name="payment" value="N" >
+                    <label for="N">ยังไม่ได้ชำระเงิน</label>
+                  <button type="submit" name="submit" class="btn btn-default" vaule = 'submit'>ตกลง</button>
+              </form>
             </div>
           </div>
         </div><!-- /.container-fluid -->
@@ -139,14 +151,39 @@ if (isset($_SESSION['username']) == "" || isset($_SESSION['username']) == null) 
  <!-- Main content -->
  <section class="content">
         <?php
-        $log = "SELECT wp.hn,wp.cid,concat(fname,' ',lname)as patient,pttype,phone,lineid,adddess,moo,district,amphoe,province,zipcode,date_appoint,
-        doctor_appoint,clinic_appoint,app_status as checkaddress,confirm_drugs as successpayment
-        FROM web_data_patient wp 
-        LEFT JOIN web_data_appoint  wa on wp.hn = wa.hn
-        where  date_appoint is not null -- AND confirm_drugs is not null   
-        GROUP BY  wp.hn,wp.cid,patient,pttype,phone,lineid,adddess,moo,district,amphoe,province,zipcode,
-        date_appoint,doctor_appoint,clinic_appoint,app_status,confirm_drugs
-        ORDER BY date_appoint";
+          if(isset($_POST['datepickers'])) {
+             //หากมีการเลือกวันที่และสถานะให้ใช้คิวรี่นี้
+             $datepickers    = $_POST['datepickers'];
+             $datepickert    = $_POST['datepickert'];
+             $radiopayment   = $_POST['payment'];
+             $log = "SELECT wp.hn,wp.cid,concat(fname,' ',lname)as patient,pttype,phone,lineid,adddess,moo,district,amphoe,province,zipcode,date_appoint,
+             doctor_appoint,clinic_appoint,app_status as checkaddress,confirm_drugs as successpayment
+             FROM web_data_patient wp 
+             LEFT JOIN web_data_appoint  wa on wp.hn = wa.hn
+             where  date_appoint BETWEEN {datepickers} AND {datepickert}  ";
+              if(isset( $radiopayment)){
+                  $log .= "AND confirm_drugs = "."'".$radiopayment."'";
+              }
+             $log .= " GROUP BY  wp.hn,wp.cid,patient,pttype,phone,lineid,adddess,moo,district,amphoe,province,zipcode,
+             date_appoint,doctor_appoint,clinic_appoint,app_status,confirm_drugs
+             ORDER BY date_appoint";
+
+             if($datepickers != "--") {
+              $log = str_replace("{datepickers}", "'$datepickers'", $log);
+              $log = str_replace("{datepickert}", "'$datepickert'", $log);
+            }
+          }
+          if($_POST['datepickers'] == '' || $_POST['datepickers']  = null){
+          $log = "SELECT wp.hn,wp.cid,concat(fname,' ',lname)as patient,pttype,phone,lineid,adddess,moo,district,amphoe,province,zipcode,date_appoint,
+          doctor_appoint,clinic_appoint,app_status as checkaddress,confirm_drugs as successpayment
+          FROM web_data_patient wp 
+          LEFT JOIN web_data_appoint  wa on wp.hn = wa.hn
+          where  date_appoint is not null  
+          GROUP BY  wp.hn,wp.cid,patient,pttype,phone,lineid,adddess,moo,district,amphoe,province,zipcode,
+          date_appoint,doctor_appoint,clinic_appoint,app_status,confirm_drugs
+          ORDER BY date_appoint";
+          }
+   
         $query = mysqli_query($conf, $log);
         ?>
         <div class="container-fluid">
@@ -154,7 +191,9 @@ if (isset($_SESSION['username']) == "" || isset($_SESSION['username']) == null) 
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">ตารางแสดงข้อมูลผู้ป่วยที่ผ่านการ verify ข้อมูลที่อยู่แล้วและมีรายการนัดหลังจาก วันที่ &nbsp<?php echo '&nbsp;'. thaiDatefull(date("Y-m-d")) ;?></h3>
+                  <h3 class="card-title">
+                    ตารางแสดงข้อมูลผู้ป่วยที่ผ่านการ verify ข้อมูลที่อยู่แล้วและมีรายการนัดหลังจาก วันที่ &nbsp<?php echo '&nbsp;'. thaiDatefull(date("Y-m-d")) ;?>
+                  </h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
