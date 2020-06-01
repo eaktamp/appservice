@@ -1,6 +1,7 @@
 <?php
 date_default_timezone_set("Asia/Bangkok");
-include("../config/my_con.class.php");
+include("../config/web_con.php");
+include "../config/func.class.php";
 session_start();
 if (isset($_SESSION['username']) == "" || isset($_SESSION['username']) == null) {
   echo "<script>window.location ='login.php';</script>";
@@ -49,12 +50,12 @@ if (isset($_SESSION['username']) == "" || isset($_SESSION['username']) == null) 
 if (isset($_POST['NeedGetMedicine'])) { //หากกดยืนยันรับงาน 
 
   $_SESSION['username'];
-  mysqli_set_charset($con, "utf8");
+  mysqli_set_charset($conf, "utf8");
 
   $updatestatus = "UPDATE `web_data_appoint` SET 
   `confirm_drugs` = 'Y', 
-  `admin_checkConfirm` = '" .$_SESSION['username']. "' WHERE oapp_id = '" .  $_POST['oapp_id']. "'";
-  $Queryaddadminjob =  mysqli_query($con, $updatestatus);
+  `admin_checkConfirm` = '" . $_SESSION['qfname'].' '.$_SESSION['qlname'] . "' WHERE oapp_id = '" .  $_POST['oapp_id']. "'";
+  $Queryaddadminjob =  mysqli_query($conf, $updatestatus);
   if ($Queryaddadminjob) {
         $_POST['oapp_id'] = '';
         $_SESSION['statusinsert'] = 1;
@@ -131,19 +132,13 @@ if($_SESSION['statusinsert'] == 1){
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="./index.html" class="nav-link">
+                  <a href="./page/checkpayment.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>ข้อมูลนัดส่งยาที่จ่ายเงินแล้ว</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="./index.html" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>แก้ไขข้อมูลUSER</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="./index.html" class="nav-link">
+                  <a href="./changepassword.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>เปลี่ยนรหัสผ่าน</p>
                   </a>
@@ -164,7 +159,7 @@ if($_SESSION['statusinsert'] == 1){
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>ข้อมูลผู้ป่วยที่มีนัดหลังจากวันที่ <?php// echo date("Y/m/d") ;?></h1>
+                <h1>รายชื่อผู้ป่วยที่มีการยืนยันสถานที่อยู่ในการจัดส่งแล้ว </h1>
             </div>
           </div>
         </div><!-- /.container-fluid -->
@@ -174,14 +169,14 @@ if($_SESSION['statusinsert'] == 1){
       <section class="content">
         <?php
         $log = " SELECT * FROM web_data_patient where hn in (select hn from web_data_appoint where date_appoint > CURRENT_DATE GROUP BY hn) ";
-        $query = mysqli_query($con, $log);
+        $query = mysqli_query($conf, $log);
         ?>
         <div class="container-fluid">
           <div class="row">
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">ตารางแสดงข้อมูลผู้ป่วยที่ผ่านการ verify ข้อมูลที่อยู่แล้วและมีรายการนัดหลังจากวันที่ <?php echo date("Y/m/d") ;?></h3>
+                  <h3 class="card-title">ตารางแสดงข้อมูลผู้ป่วยที่ผ่านการ verify ข้อมูลที่อยู่แล้ว <hilight style="color:red;font:bold;"> รายการนัดจะแสดงแค่หลังจากวันที่ <?php echo thaiDate(date("Y-m-d")) ;?>  </hilight></h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -237,7 +232,7 @@ if($_SESSION['statusinsert'] == 1){
       <!--------------------------------------------------------------------------------------------------------------------------------------- -->
     <?php 
        $sql = " SELECT hn FROM web_data_appoint where date_appoint > CURRENT_DATE ORDER BY date_appoint DESC  ";
-       $result1 = mysqli_query($con, $sql);
+       $result1 = mysqli_query($conf, $sql);
        foreach ($result1 as $item) { $hn = $item['hn'];
     ?>
     <div class="modal fade bd-example-modal-lg" id="appoint<?php echo $item['hn']?>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -256,26 +251,37 @@ if($_SESSION['statusinsert'] == 1){
                 <div class="timeline">
                   <!-- timeline time label -->
                   <?php $queryApp = " SELECT * FROM web_data_appoint where hn = '$hn' and oapp_id is not null and date_appoint > CURRENT_DATE ORDER BY date_appoint  limit 10 ";
-                        $resultappoint = mysqli_query($con, $queryApp);
+                        $resultappoint = mysqli_query($conf, $queryApp);
                         foreach ($resultappoint as $Appointment) { ?>
                   <div class="time-label">
-                    <span class="bg-green"><?php echo $Appointment['date_appoint']; ?></span>
+                    <span class="bg-green"><?php echo thaiDatefull($Appointment['date_appoint']); ?></span>
                   </div>
                   <!-- /.timeline-label -->
                   <!-- timeline item -->
                   <div>
                     <i class="fas fa-clock bg-purple"></i>
                     <div class="timeline-item">
-                      <span class="time"><i class="fas fa-clock"></i><?php echo $Appointment['date_appoint']; ?></span>
+                      <span class="time"><i class="fas fa-clock"></i><?php echo thaiDate($Appointment['date_appoint']); ?></span>
                       <h3 class="timeline-header"><a href="#"> <?php echo $Appointment['clinic_appoint']; ?></a> </h3>
 
                       <div class="timeline-body">
                             <?php echo 'แพทย์ผู้นัด : '. $Appointment['doctor_appoint']; ?><br>
+                            <div class="row">
                             <form action="#" method="POST" name='NeedGetMedicine'>
                               <input type="hidden" name="oapp_id" value="<?= $Appointment['oapp_id'];?>">
                               <button type="submit" class="btn btn-primary" name="NeedGetMedicine" <?php if($Appointment['confirm_drugs'] !='') echo 'disabled';?>>
                                 <i class="fas fa-check"></i>&nbsp; จ่ายเงินแล้ว </button>
                             </form>
+                       
+                            <form action="./page/print_appoint.php" target="blank" method="POST" name='printappoint'>
+                                <input type="hidden" name="hn"   value="<?php echo $hn; ?>"  required />
+                                <input type="hidden" name="oapp_id"   value="<?php echo $Appointment['oapp_id'];?>"  required />
+                                <button type="submit" class="btn btn-warning" name="printappoint" value = "submit" <?php if($Appointment['confirm_drugs'] != 'Y'){ echo"disabled";}?>>
+                                  <i class="fas fa-print">
+                                  </i>&nbsp; พิมพ์รายการนี้ </button>
+                            </form>
+                           
+                            </div>
                       </div>
                     </div>
                   </div>
@@ -286,8 +292,35 @@ if($_SESSION['statusinsert'] == 1){
                   <!-- END timeline item -->
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-danger">Print ที่อยู่</button>
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+                  <form action="page/print_pems.php" target="blank" method="POST" name='print'>
+                  <?php
+                    $selectaddresspt = "SELECT * FROM web_data_patient where hn = '$hn'";
+                    $queryAdpt= mysqli_query($conf,$selectaddresspt);
+                    $resultaddressPt = mysqli_fetch_array($queryAdpt);
+                       $fname      = $resultaddressPt['fname'];
+                       $lname      = $resultaddressPt['lname'];
+                       $adddess    = $resultaddressPt['adddess'];
+                       $moo        = $resultaddressPt['moo'];
+                       $district   = $resultaddressPt['district'];
+                       $amphoe     = $resultaddressPt['amphoe'];
+                       $province   = $resultaddressPt['province'];
+                       $zipcode    = $resultaddressPt['zipcode'];
+                       $hn         = $resultaddressPt['hn'];
+                       $phone      = $resultaddressPt['phone'];
+                  ?>
+                      <input type="hidden" name="fname"     value="<?php echo $fname; ?>"  required />
+                      <input type="hidden" name="lname"     value="<?php echo $lname; ?>"  required />
+                      <input type="hidden" name="adddess"   value="<?php echo $adddess; ?>"  required />
+                      <input type="hidden" name="moo"       value="<?php echo $moo; ?>"  required />
+                      <input type="hidden" name="district"  value="<?php echo $district; ?>"  required />
+                      <input type="hidden" name="amphoe"    value="<?php echo $amphoe; ?>"  required />
+                      <input type="hidden" name="province"  value="<?php echo $province; ?>"  required />
+                      <input type="hidden" name="zipcode"   value="<?php echo $zipcode; ?>"  required />
+                      <input type="hidden" name="hn"   value="<?php echo $hn; ?>"  required />
+                      <input type="hidden" name="phone"   value="<?php echo $phone; ?>"  required />
+                    <button id="send" type="submit" type="button" class="btn btn-danger">Print ที่อยู่ไม่มีคลินิก</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+                  </form>
                 </div>
               </div>
             </div>

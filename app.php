@@ -1,8 +1,7 @@
 <?php
 session_start();
 date_default_timezone_set("Asia/Bangkok");
-include "config/pg_con.class.php";
-include "config/my_con.class.php";
+include "config/web_con.php";
 include "config/func.class.php";
 $cid    = $_SESSION['cid'];
 $hn     = $_SESSION['hn'];
@@ -10,7 +9,7 @@ $searchuser = " SELECT  id,order_number_check,fname,lname,phone,lineid,adddess,c
 moo,district,amphoe,province,zipcode,qcode,keycode,modify,status,flage,fileimg,dateupdate
 FROM web_data_patient
 WHERE hn = '$hn' ";
-$query = mysqli_query($con, $searchuser);
+$query = mysqli_query($conf, $searchuser);
 $row_result = mysqli_fetch_array($query);
 ?>
 
@@ -35,31 +34,17 @@ $row_result = mysqli_fetch_array($query);
 
 <?php
 $checkAp = "SELECT * FROM web_data_appoint  where hn ='$hn' and cid = '$cid' and date_appoint > CURRENT_DATE ORDER BY date_appoint";
-$queryCheckAp = mysqli_query($con,$checkAp);
-$oppid_check = mysqli_query($con,$checkAp);
+$queryCheckAp = mysqli_query($conf,$checkAp);
+$oppid_check = mysqli_query($conf,$checkAp);
 $rowc        = mysqli_num_rows($oppid_check);
 
 
-$sql = " SELECT  o.nextdate AS dateapp ,C.NAME AS clinic
-,o.hn
-,p.cid
-,o.oapp_id
-,concat(P.pname,P.fname,'&nbsp;&nbsp;',P.lname) AS patientname
-,d.NAME::TEXT AS doctor 
-,CONCAT(pp.pttype,' ',pp.name) as insptty
-FROM oapp o
-LEFT JOIN vn_stat v ON v.vn = o.vn
-LEFT  JOIN patient P ON P.hn = o.hn 
-LEFT  JOIN clinic C ON C.clinic = o.clinic
-LEFT  JOIN doctor d ON d.code = o.doctor
-LEFT  JOIN kskdepartment K ON K.depcode = o.depcode
-LEFT JOIN pttype as pp ON pp.pttype = v.pttype  
-WHERE   1 = 1
-AND p.hn = '$hn' ";
+$sql = " SELECT * FROM oapp WHERE
+hn = '$hn' ";
 // AND o.oapp_id Not in ('1050932')";
   if ($rowc > 0) {
 //if(sizeof($rowcount) > 0 ){
-        $sql .= " AND o.oapp_id Not in (";
+        $sql .= " AND oapp_id Not in (";
         while ($value = mysqli_fetch_array($oppid_check)) 
                 {
                     $sql .="'" .$value['oapp_id']. "',";
@@ -67,19 +52,21 @@ AND p.hn = '$hn' ";
                     $sql = rtrim($sql,',');
                     $sql .= ") ";
                 }
-$sql .= " AND o.nextdate > CURRENT_DATE ";
-$sql .= " AND (( o.oapp_status_id < 4 ) OR o.oapp_status_id IS NULL ) "; 
-$sql .= " ORDER BY o.nextdate ";
-$result = pg_query($conn, $sql);
-$countdata = pg_num_rows($result);//เช็คมีนัดไม่มีนัด
+$sql .= " AND dateapp > CURRENT_DATE ";
+//$sql .= " AND (( oapp_status_id < 4 ) OR oapp_status_id IS NULL ) "; 
+$sql .= " ORDER BY dateapp ";
+$result = mysqli_query($conf, $sql);
+$countdata = mysqli_num_rows($result);//เช็คมีนัดไม่มีนัด
 // echo $sql;
 ?>
 
 <body>
     <div class="uk-container uk-padding">
+ 
         <h1> รายการนัด <sup>
                 <h3>เลือกรายการส่งยาทางไปรษณีย์</h3>
             </sup></h1>
+            <?php if ($checkbutton == 1) { ?><a href="logout.php"><< กลับหน้าแรก</a><?php }?>
         <hr>
 
         <?php
@@ -98,7 +85,7 @@ $countdata = pg_num_rows($result);//เช็คมีนัดไม่มี�
         <form id="save" class="" autocomplete="" uk-grid method="POST" action="save.php">
             <?php
             $rw = 0;
-            while ($row_result = pg_fetch_array($result)) {
+            while ($row_result = mysqli_fetch_array($result)) {
                 $rw++;
                 $dateapp  =  $row_result['dateapp'];
                 $clinic   =  $row_result['clinic'];
@@ -135,6 +122,7 @@ $countdata = pg_num_rows($result);//เช็คมีนัดไม่มี�
                 <?php } else { ?>
                     <center><button type="submit" class="button" id="submit" name="submit" style="vertical-align:middle;font-size:16px"><span> ยืนยันรายการ </span></button> </center>
                 <?php } ?>
+              
             </div>
         </form>
     </div>

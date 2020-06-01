@@ -1,0 +1,49 @@
+.div1 {
+
+  /*border: 1px solid blue;*/
+}
+
+.div2 {
+
+  float: right;
+  width: 450px;
+  height: 80px;  
+  /*border: 1px solid red;*/
+}
+
+.div3 { 
+  float: right;
+  width: 150px;
+  height: 100px;  
+/*  padding: 50px;*/
+  /*border: 1px solid red;*/
+}
+.div4 { 
+  margin: 10%; 
+  padding: 1%;
+  float: right;
+  width: 200px;
+  height: 100px;  
+/*  padding: 50px;*/
+  /*border: 1px solid red;*/
+}
+
+.div5 { 
+  margin: 5%; 
+  
+  float: right;
+  width: 250px;
+  height: 100px;  
+/*  padding: 50px;*/
+  /*border: 1px solid red;*/
+}
+
+.div6 { 
+  margin: 2%; 
+  
+  float: left;
+  width: 250px;
+  height: 100px;  
+/*  padding: 50px;*/
+  /*border: 1px solid red;*/
+}

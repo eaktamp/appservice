@@ -1,9 +1,8 @@
 <?php
 session_start();
 date_default_timezone_set("Asia/Bangkok");
-include"config/pg_con.class.php";
-include"config/my_con.class.php";
-include"config/func.class.php";
+include "config/web_con.php";
+include "config/func.class.php";
 $cid             = $_SESSION['cid'];
 $token_check     = $_GET['token_check'];
 $oapp_id     = $_GET['oapp_id'];
@@ -31,7 +30,7 @@ INNER JOIN web_data_patient as b ON a.cid = b.cid
 WHERE 1 = 1
 AND a.cid = '".$cid."' 
 AND a.oapp_id = '".$oapp_id."' ";
-$query = mysqli_query($con,$searchuser);
+$query = mysqli_query($conf,$searchuser);
 $row_result = mysqli_fetch_array($query);
 //echo $searchuser;
 ?>
@@ -54,6 +53,7 @@ $row_result = mysqli_fetch_array($query);
             <div class="hh2 fon"><?php echo " ตำบล".$row_result['district']." อำเภอ".$row_result['amphoe'];?>
             <div class="hh2 fon"><?php echo " จังหวัด".$row_result['province']." ".$row_result['zipcode'];?></div>
         </div>
+        <a href="logout.php"><< กลับหน้าแรก</a>
     </div>
 <!--    <hr>
     <center><span class="fon">ติดต่อสอบถามข้อมูลเพิ่มเติมได้ที่ Line@ </span></center>
