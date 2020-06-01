@@ -4,7 +4,7 @@ include("../../config/web_con.php");
 include "../../config/func.class.php";
 session_start();
 if (isset($_SESSION['username']) == "" || isset($_SESSION['username']) == null) {
-  echo "<script>window.location ='login.php';</script>";
+  echo "<script>window.location ='../login.php';</script>";
 }
 //echo   $_SESSION['statusinsert'];
 ?>
