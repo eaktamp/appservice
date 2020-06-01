@@ -266,12 +266,22 @@ if($_SESSION['statusinsert'] == 1){
 
                       <div class="timeline-body">
                             <?php echo 'แพทย์ผู้นัด : '. $Appointment['doctor_appoint']; ?><br>
+                            <div class="row">
                             <form action="#" method="POST" name='NeedGetMedicine'>
                               <input type="hidden" name="oapp_id" value="<?= $Appointment['oapp_id'];?>">
                               <button type="submit" class="btn btn-primary" name="NeedGetMedicine" <?php if($Appointment['confirm_drugs'] !='') echo 'disabled';?>>
                                 <i class="fas fa-check"></i>&nbsp; จ่ายเงินแล้ว </button>
-                               <!-- <button type="button" class="btn btn-warning" name="NeedGetMedicine" ><i class="fas fa-print"></i>&nbsp; พิมพ์รายการนี้ </button> -->
                             </form>
+                       
+                            <form action="./page/print_appoint.php" target="blank" method="POST" name='printappoint'>
+                                <input type="hidden" name="hn"   value="<?php echo $hn; ?>"  required />
+                                <input type="hidden" name="oapp_id"   value="<?php echo $Appointment['oapp_id'];?>"  required />
+                                <button type="submit" class="btn btn-warning" name="printappoint" value = "submit" <?php if($Appointment['confirm_drugs'] != 'Y'){ echo"disabled";}?>>
+                                  <i class="fas fa-print">
+                                  </i>&nbsp; พิมพ์รายการนี้ </button>
+                            </form>
+                           
+                            </div>
                       </div>
                     </div>
                   </div>
@@ -282,6 +292,7 @@ if($_SESSION['statusinsert'] == 1){
                   <!-- END timeline item -->
                 </div>
                 <div class="modal-footer">
+                  <form action="page/print_pems.php" target="blank" method="POST" name='print'>
                   <?php
                     $selectaddresspt = "SELECT * FROM web_data_patient where hn = '$hn'";
                     $queryAdpt= mysqli_query($conf,$selectaddresspt);
@@ -297,7 +308,6 @@ if($_SESSION['statusinsert'] == 1){
                        $hn         = $resultaddressPt['hn'];
                        $phone      = $resultaddressPt['phone'];
                   ?>
-                  <form action="page/print_pems.php" target="blank" method="POST" name='print'>
                       <input type="hidden" name="fname"     value="<?php echo $fname; ?>"  required />
                       <input type="hidden" name="lname"     value="<?php echo $lname; ?>"  required />
                       <input type="hidden" name="adddess"   value="<?php echo $adddess; ?>"  required />

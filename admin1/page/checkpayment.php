@@ -140,8 +140,6 @@ if (isset($_SESSION['username']) == "" || isset($_SESSION['username']) == null) 
                    
                     <input type="radio" id="Y" name="payment" value="Y">
                     <label for="Y">ชำระเงินแล้ว</label><br>
-                    <input type="radio" id="N" name="payment" value="N" >
-                    <label for="N">ยังไม่ได้ชำระเงิน</label>
                   <button type="submit" name="submit" class="btn btn-default" vaule = 'submit'>ตกลง</button>
               </form>
             </div>
@@ -192,7 +190,14 @@ if (isset($_SESSION['username']) == "" || isset($_SESSION['username']) == null) 
               <div class="card">
                 <div class="card-header">
                   <h3 class="card-title">
+                  <?php 
+                  if($datepickers != '' || $datepickert != null){ 
+                    echo "ตารางแสดงข้อมูลผู้ป่วยที่ผ่านการ verify ข้อมูลที่อยู่แล้วและมีรายการนัดระหว่าง วันที่ ".thaiDateFull($datepickers).' ถึงวันที่ '.thaiDateFull($datepickert);
+                  }
+                  if($datepickers == '' || $datepickert == null ){
+                  ?>
                     ตารางแสดงข้อมูลผู้ป่วยที่ผ่านการ verify ข้อมูลที่อยู่แล้วและมีรายการนัดหลังจาก วันที่ &nbsp<?php echo '&nbsp;'. thaiDatefull(date("Y-m-d")) ;?>
+                  <?php }?>
                   </h3>
                 </div>
                 <!-- /.card-header -->
