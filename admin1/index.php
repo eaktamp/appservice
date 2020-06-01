@@ -282,8 +282,35 @@ if($_SESSION['statusinsert'] == 1){
                   <!-- END timeline item -->
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-danger">Print ที่อยู่</button>
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+                  <?php
+                    $selectaddresspt = "SELECT * FROM web_data_patient where hn = '$hn'";
+                    $queryAdpt= mysqli_query($conf,$selectaddresspt);
+                    $resultaddressPt = mysqli_fetch_array($queryAdpt);
+                       $fname      = $resultaddressPt['fname'];
+                       $lname      = $resultaddressPt['lname'];
+                       $adddess    = $resultaddressPt['adddess'];
+                       $moo        = $resultaddressPt['moo'];
+                       $district   = $resultaddressPt['district'];
+                       $amphoe     = $resultaddressPt['amphoe'];
+                       $province   = $resultaddressPt['province'];
+                       $zipcode    = $resultaddressPt['zipcode'];
+                       $hn         = $resultaddressPt['hn'];
+                       $phone      = $resultaddressPt['phone'];
+                  ?>
+                  <form action="page/print_pems.php" target="blank" method="POST" name='print'>
+                      <input type="hidden" name="fname"     value="<?php echo $fname; ?>"  required />
+                      <input type="hidden" name="lname"     value="<?php echo $lname; ?>"  required />
+                      <input type="hidden" name="adddess"   value="<?php echo $adddess; ?>"  required />
+                      <input type="hidden" name="moo"       value="<?php echo $moo; ?>"  required />
+                      <input type="hidden" name="district"  value="<?php echo $district; ?>"  required />
+                      <input type="hidden" name="amphoe"    value="<?php echo $amphoe; ?>"  required />
+                      <input type="hidden" name="province"  value="<?php echo $province; ?>"  required />
+                      <input type="hidden" name="zipcode"   value="<?php echo $zipcode; ?>"  required />
+                      <input type="hidden" name="hn"   value="<?php echo $hn; ?>"  required />
+                      <input type="hidden" name="phone"   value="<?php echo $phone; ?>"  required />
+                    <button id="send" type="submit" type="button" class="btn btn-danger">Print ที่อยู่</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+                  </form>
                 </div>
               </div>
             </div>
