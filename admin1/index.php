@@ -159,7 +159,7 @@ if($_SESSION['statusinsert'] == 1){
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>ข้อมูลผู้ป่วยที่มีนัดหลังจากวันที่ <?php// echo date("Y/m/d") ;?></h1>
+                <h1>รายชื่อผู้ป่วยที่มีการยืนยันสถานที่อยู่ในการจัดส่งแล้ว </h1>
             </div>
           </div>
         </div><!-- /.container-fluid -->
@@ -176,7 +176,7 @@ if($_SESSION['statusinsert'] == 1){
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">ตารางแสดงข้อมูลผู้ป่วยที่ผ่านการ verify ข้อมูลที่อยู่แล้วและมีรายการนัดหลังจากวันที่ <?php echo thaiDate(date("Y-m-d")) ;?></h3>
+                  <h3 class="card-title">ตารางแสดงข้อมูลผู้ป่วยที่ผ่านการ verify ข้อมูลที่อยู่แล้ว <hilight style="color:red;font:bold;"> รายการนัดจะแสดงแค่หลังจากวันที่ <?php echo thaiDate(date("Y-m-d")) ;?>  </hilight></h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -318,7 +318,7 @@ if($_SESSION['statusinsert'] == 1){
                       <input type="hidden" name="zipcode"   value="<?php echo $zipcode; ?>"  required />
                       <input type="hidden" name="hn"   value="<?php echo $hn; ?>"  required />
                       <input type="hidden" name="phone"   value="<?php echo $phone; ?>"  required />
-                    <button id="send" type="submit" type="button" class="btn btn-danger">Print ที่อยู่</button>
+                    <button id="send" type="submit" type="button" class="btn btn-danger">Print ที่อยู่ไม่มีคลินิก</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
                   </form>
                 </div>
