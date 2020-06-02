@@ -1,8 +1,11 @@
 <?php session_start();
 date_default_timezone_set('asia/bangkok');
 include './config/web_con.php';
-$cid = $_SESSION['cid'];
-$hn  = $_SESSION['hn'];
+$cid = $_POST['cid'];
+$hn  = $_POST['hn'];
+
+//$cid = $_SESSION['cid'];
+//$hn  = $_SESSION['hn'];
 ?>
 <!DOCTYPE html>
 <html lang="th">

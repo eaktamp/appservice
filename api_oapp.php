@@ -2,19 +2,67 @@
 date_default_timezone_set('asia/bangkok');
 	include"config/pg_con.class.php";
  	include"config/web_con.php";
-
-$mtime = microtime();
-$mtime = explode(" ",$mtime);
-$mtime = $mtime[1] + $mtime[0];
-$starttime = $mtime;
-$mtime = microtime();
-$mtime = explode(" ",$mtime);
-$mtime = $mtime[1] + $mtime[0];
-$endtime = $mtime;
-$totaltime = ($endtime - $starttime);
 ?>
-<center><?php echo "กำลังโยกย้าย ".$totaltime." วินาที"; ?></center>
+<html>
+   <head>
+      <title></title>
+      <style type="text/css">
+         #progressbox {
+         border: 1px solid #4E616D;
+         padding: 1px;
+         position:relative;
+         width:400px;
+         border-radius: 3px;
+         margin: 10px;
+         display:block;
+         text-align:left;
+         }
+         #progressbar {
+         height:20px;
+         border-radius: 3px;
+         background-color: #D84A38;
+         width:1%;
+         }
+         #statustxt {
+         top:3px;
+         left:50%;
+         position:absolute;
+         display:inline-block;
+         color: #003333;
+         }
+      </style>
+      <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+      <script type="text/javascript">
+         $( document ).ready(function() {
 
+          var idTime=self.setInterval(function(){clock()},50);//ตั้งเวลา
+
+          var i=0;
+         function clock()
+         {
+           i=i+1;
+           $('#progressbar').width(i+'%');
+           $('#statustxt').text(i+'%');
+
+         if(i==100)
+         {
+ 			clearInterval(idTime);//กรณีที่ไม่ต้องการ Loop  100% แล้วให้หยุด
+             i=0;
+         }
+
+         }
+         });
+
+      </script>
+   </head>
+      <body>
+	 API Service Appoint  
+      <div id="progressbox">
+         <div id="progressbar"></div >
+         <div id="statustxt">0%</div >
+      </div>
+   </body>
+</html>
 <?php
 $checkAp = "SELECT oapp_id FROM oapp ";
 $oppid_check = mysqli_query($conf,$checkAp);
@@ -56,7 +104,9 @@ try {
 	else {
 		require_once('config/web_con.class.php' );
 		$pdo = sql_con();
+		$rw = 0;
 		while ($result = pg_fetch_array($have_user_yet)) {
+		$rw++;	
 			$dateapp 	=   $result['dateapp'];
 			$clinic 	=	$result['clinic'];
 			$cid 		=	$result['cid'];
@@ -74,10 +124,9 @@ try {
 			};		   
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
-echo $sql; 
+echo $rw."-".$hn." | ";
 
 }
-
 }
 } catch (Exception $e) {
 	echo '<p><span style="color:red">ERROR : </span><span>' . $e->getMessage() . '</span></p>';
