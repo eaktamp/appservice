@@ -57,9 +57,6 @@
         }
     }
     ?>
-        <div class="iBannerFix">
-        for admin : <a href="./admin1/login.php" >Click</a>
-    </div>
       
 </body>
 
@@ -83,15 +80,5 @@
         line-height: 38px;
         border-radius: 25px;
         padding: 20px;
-    }
-    .iBannerFix{
-    height:35px;
-    position:fixed;
-    text-align: right;
-    left:0px;
-    bottom:0px;
-    background-color:#000000;
-    width:100%;color:white;
-    z-index: 99;
     }
 </style>
