@@ -3,13 +3,12 @@ session_start();
 date_default_timezone_set("Asia/Bangkok");
 include "config/web_con.php";
 include "config/func.class.php";
-//$cid             = $_GET['cid'];
-//$token_check     = $_GET['token_check'];
-$oapp_id         = $_GET['oapp_id'];
-
+$cid             = $_SESSION['cid'];
+$token_check     = $_GET['token_check'];
+$oapp_id     = $_GET['oapp_id'];
 ?>
-<?php if (isset($_GET['oapp_id']) == "") {
-    echo "<script>window.location ='checkdata.php';</script>";
+<?php if (isset($_SESSION['cid']) == "" || isset($_SESSION['hn']) == null) {
+        echo "<script>window.location ='checkdata.php';</script>";
 } ?>
 <!DOCTYPE html>
 <html lang="th">
@@ -29,6 +28,7 @@ $searchuser = " SELECT  *
 FROM web_data_appoint as a  
 INNER JOIN web_data_patient as b ON a.cid = b.cid
 WHERE 1 = 1
+AND a.cid = '".$cid."' 
 AND a.oapp_id = '".$oapp_id."' ";
 $query = mysqli_query($conf,$searchuser);
 $row_result = mysqli_fetch_array($query);
@@ -53,9 +53,8 @@ $row_result = mysqli_fetch_array($query);
             <div class="hh2 fon"><?php echo " ตำบล".$row_result['district']." อำเภอ".$row_result['amphoe'];?>
             <div class="hh2 fon"><?php echo " จังหวัด".$row_result['province']." ".$row_result['zipcode'];?></div>
         </div>
-   <!--      <a href="logout.php">
-          <button class="button com" type="submit" style="vertical-align:middle;font-size:16px;margin-top:20px" name="submit" value="submit"><span>กลับหน้าแรก</span></button></a> -->
-      </div>
+        <a href="logout.php"><< กลับหน้าแรก</a>
+    </div>
 <!--    <hr>
     <center><span class="fon">ติดต่อสอบถามข้อมูลเพิ่มเติมได้ที่ Line@ </span></center>
   <center><span class="fon"><img src="img/lineadd.jpg" width="150px" height="150px;"> </span></center> 

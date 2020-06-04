@@ -1,6 +1,3 @@
-<?php
-session_start();
-?>
 <!DOCTYPE html>
 <html>
 
@@ -45,40 +42,17 @@ session_start();
                   --AND clinic_appoint = '$clinic_appoint' and doctor_appoint = '$doctor_appoint'
                  ";
 
-
-  function alphanumeric_rand($num_require=8) {
-  $alphanumeric = array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',0,1,2,3,4,5,6,7,8,9);
-  if($num_require > sizeof($alphanumeric)){
-    echo "Error alphanumeric_rand(\$num_require) : \$num_require must less than " . sizeof($alphanumeric) . ", $num_require given";
-    return;
-  }
-  $rand_key = array_rand($alphanumeric , $num_require);
-  for($i=0;$i<sizeof($rand_key);$i++) $randomstring .= $alphanumeric[$rand_key[$i]];
-  return $randomstring;
-}
- $rd = alphanumeric_rand(12);
- $r5 = substr(str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ23456789'),0,5);
- $fc = DATE('YmdHis');
-
-$link = $rd.MD5($fc).$r5;
-
   $check_have_data = mysqli_query($conf, $searchdata);
   $countrow = mysqli_num_rows($check_have_data);
-  //echo   $searchdata.'<br>';
+  echo   $searchdata.'<br>';
 
   if ($countrow <= 0) {
     $log = "INSERT INTO web_data_appoint (hn,cid,oapp_id,token_check,date_appoint,clinic_appoint,doctor_appoint,app_status,updatedate,update_time) 
           VALUES ('$hn','$cid','$oapp_id','$token_check','$date_appoint','$clinic_appoint','$doctor_appoint','$app_status','$updatedate','$update_time')";
     $query = mysqli_query($conf, $log);
-   // echo $log;
+    echo $log;
     //header("Location: complete.php?cid=$cid&token_check=$token_check");
-   // header("Location: complete.php?token_check=$token_check&oapp_id=$oapp_id");
-    ?>
-     <script type="text/javascript">
-    window.location.href = "complete.php?<?=$link;?>&oapp_id=<?=$oapp_id;?>&<?=$link;?>";
-    </script>
-    <?php
-
+    header("Location: complete.php?token_check=$token_check&oapp_id=$oapp_id");
     mysqli_close($conf);
   } else {
     echo "<script>javascript:alert('เคยบันทึกอนุมัติรายการนี้ไปแล้ว!');window.location='app.php';</script>";

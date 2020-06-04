@@ -1,8 +1,8 @@
 <?php session_start();
 date_default_timezone_set('asia/bangkok');
-include 'config/web_con.php';
-$cid = $_GET['cid'];
-$hn  = $_GET['hn'];
+include './config/web_con.php';
+$cid = $_POST['cid'];
+$hn  = $_POST['hn'];
 
 //$cid = $_SESSION['cid'];
 //$hn  = $_SESSION['hn'];
@@ -29,7 +29,7 @@ $hn  = $_GET['hn'];
     if ($count == 0) {
         //echo ' <br/>' . 'is null data in mydb then check in pgsql on his hospital' . '<br/>';
         $searchuser = " SELECT * FROM patient
-        WHERE hn = '".$hn."' and cid = '". $cid."' ";
+        WHERE hn = '" . $_SESSION['hn'] . "' and cid = '" . $_SESSION['cid'] . "' ";
         $have_user_yet = mysqli_query($conf, $searchuser);
         $result = mysqli_fetch_assoc($have_user_yet);
     } else {
@@ -58,7 +58,7 @@ $hn  = $_GET['hn'];
 </head>
 
 <body>
-    <?php if (isset($_GET['cid']) == "" || isset($_GET['hn']) == null) { echo "<script>window.location ='checkdata.php';</script>";} ?>
+    <?php if (isset($_SESSION['cid']) == "" || isset($_SESSION['hn']) == null) { echo "<script>window.location ='./checkdata.php';</script>";} ?>
     <div class="uk-container uk-padding">
         <h2>ข้อมูลของคุณ <?php echo $result['fname'] . ' ' . $result['lname'] ?></h2>
         <hr>

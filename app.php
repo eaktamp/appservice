@@ -3,8 +3,8 @@ session_start();
 date_default_timezone_set("Asia/Bangkok");
 include "config/web_con.php";
 include "config/func.class.php";
- $cid    = $_GET['cid'];
- $hn     = $_GET['hn'];
+$cid    = $_SESSION['cid'];
+$hn     = $_SESSION['hn'];
 $searchuser = " SELECT  id,order_number_check,fname,lname,phone,lineid,adddess,cid,hn
 moo,district,amphoe,province,zipcode,qcode,keycode,modify,status,flage,fileimg,dateupdate
 FROM web_data_patient
@@ -13,7 +13,7 @@ $query = mysqli_query($conf, $searchuser);
 $row_result = mysqli_fetch_array($query);
 ?>
 
-<?php if (isset($_GET['cid']) == "" || isset($_GET['hn']) == null) {
+<?php if (isset($_SESSION['cid']) == "" || isset($_SESSION['hn']) == null) {
     echo "<script>window.location ='./checkdata.php';</script>";
 } ?>
 
@@ -66,7 +66,7 @@ $countdata = mysqli_num_rows($result);//เช็คมีนัดไม่ม�
         <h1> รายการนัด <sup>
                 <h3>เลือกรายการส่งยาทางไปรษณีย์</h3>
             </sup></h1>
-            <?php if ($checkbutton == 1) { ?><a href="checkdata.php"><< กลับหน้าแรก</a><?php }?>
+            <?php if ($checkbutton == 1) { ?><a href="logout.php"><< กลับหน้าแรก</a><?php }?>
         <hr>
 
         <?php
@@ -118,7 +118,7 @@ $countdata = mysqli_num_rows($result);//เช็คมีนัดไม่ม�
 
             <div>
                 <?php if ($checkbutton == 1) { ?>
-                    <center><input type="button" class="button1" onclick="window.location.href='checkdata.php'" style="vertical-align:middle;font-size:16px;" value="กลับหน้าหลัก"></button> </center>
+                    <center><input type="button" class="button1" onclick="window.location.href='./logout.php'" style="vertical-align:middle;font-size:16px;" value="กลับหน้าหลัก"></button> </center>
                 <?php } else { ?>
                     <center><button type="submit" class="button" id="submit" name="submit" style="vertical-align:middle;font-size:16px"><span> ยืนยันรายการ </span></button> </center>
                 <?php } ?>
