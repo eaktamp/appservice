@@ -25,7 +25,7 @@
         <form name="form1" style=" margin-top:15%;" action="#" method="POST">
             <div class="uk-width-1-2@m">
                 <label class="h2"> รหัสประจำตัวประชาชน <i class="fas fa-address-card"></i></label>
-                <input type="text" name="cid" value="" maxlength="13" minlength="13" placeholder="9999999999999" onKeyUp="if(isNaN(this.value)){ alert('กรุณากรอกตัวเลข'); this.value='';}" required />
+                <input type="text"  name="cid" value="" maxlength="13" minlength="13" placeholder="9999999999999" onKeyUp="if(isNaN(this.value)){ alert('กรุณากรอกตัวเลข'); this.value='';}" required />
             </div>
             <div class="uk-width-1-2@m">
                 <label class="h2">รหัสประจำตัวผู้ป่วย (HN) </label>
@@ -75,7 +75,9 @@
         padding: 15px;
         color: white;
     }
-
+    input[type=text]:focus {
+        border-radius: 0px;
+    }
     input {
         box-sizing: border-box;
         width: 100%;
@@ -85,6 +87,8 @@
         display: inline-block;
         line-height: 38px;
         border-radius: 25px;
+        border: none;
         padding: 20px;
     }
+
 </style>
