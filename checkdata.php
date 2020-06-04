@@ -75,7 +75,9 @@
         padding: 15px;
         color: white;
     }
-
+input:focus{
+    border-radius: 0;
+}
     input {
         box-sizing: border-box;
         width: 100%;
