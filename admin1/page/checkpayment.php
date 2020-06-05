@@ -105,6 +105,12 @@ if (isset($_SESSION['username']) == "" || isset($_SESSION['username']) == null) 
                   </a>
                 </li>
                 <li class="nav-item">
+                  <a href="../confirmhn.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>ยืนยันข้อมูลสำหรับ admin</p>
+                  </a>
+                </li>
+                <li class="nav-item">
                   <a href="#" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>ข้อมูลนัดส่งยาที่จ่ายเงินแล้ว</p>

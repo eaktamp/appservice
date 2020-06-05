@@ -57,6 +57,10 @@ $sql .= " AND dateapp > CURRENT_DATE ";
 $sql .= " ORDER BY dateapp ";
 $result = mysqli_query($conf, $sql);
 $countdata = mysqli_num_rows($result);//เช็คมีนัดไม่มีนัด
+if($countdata < 1 ){$checkbutton = 1;}
+if($countdata > 1 ){$checkbutton = 0;}
+
+
 // echo $sql;
 ?>
 
@@ -66,7 +70,7 @@ $countdata = mysqli_num_rows($result);//เช็คมีนัดไม่ม�
         <h1> รายการนัด <sup>
                 <h3>เลือกรายการส่งยาทางไปรษณีย์</h3>
             </sup></h1>
-            <?php if ($checkbutton != 1) { ?><a href="logout.php"><< กลับหน้าแรก</a><?php }?>
+            <?php  if ($checkbutton == 0) { ?><a href="logout.php"><< กลับหน้าแรก</a><?php }?>
         <hr>
 
         <?php
@@ -112,7 +116,6 @@ $countdata = mysqli_num_rows($result);//เช็คมีนัดไม่ม�
             <?php
             if ($countdata < 1) {
                 echo "<center><h1>ไม่พบรายการนัดหมาย/ยืนยันรับยาครบแล้ว !!</h1><hr/></center>";
-                $checkbutton = 1;
             }
             ?>
 
@@ -121,7 +124,7 @@ $countdata = mysqli_num_rows($result);//เช็คมีนัดไม่ม�
                     <center><input type="button" class="button1" onclick="window.location.href='./logout.php'" style="vertical-align:middle;font-size:16px;" value="กลับหน้าหลัก"></button> </center>
                 <?php } else { ?>
                     <center><button type="submit" class="button" id="submit" name="submit" style="vertical-align:middle;font-size:16px"><span> ยืนยันรายการ </span></button> </center>
-                <?php } ?>
+                <?php   } ?>
               
             </div>
         </form>
