@@ -68,7 +68,7 @@ if (isset($_SESSION['username']) == "" || isset($_SESSION['username']) == null) 
         <a href="../logout.php" class="nav-link">คุณ: <?php echo $_SESSION['qfname'].' '. $_SESSION['qlname'];?></a>
         </li>
         <li class="nav-item dropdown">
-          <a href="../logout.php" class="nav-link">Logout</a>
+          <a href="../../logout.php" class="nav-link">Logout</a>
         </li>
       </ul>
     </nav>
