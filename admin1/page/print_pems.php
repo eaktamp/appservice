@@ -49,7 +49,7 @@ $file       = $_POST['hn'];
 
 	<div class="div2" >
 		<div style="font-size: 15px"><?php echo "ชื่อที่อยู่ผู้รับ"; ?></div>
-		<div style="font-size: 20px"><?php echo "คุณ".$fname." ".$lname." (".$phone.")"; ?></div>
+		<div style="font-size: 20px"><?php echo "คุณ. ".$fname." ".$lname." (".$phone.")"; ?></div>
 		<div style="font-size: 20px"><?php echo "เลขที่ ".$adddess." หมู่ ".$moo." ตำบล".$district; ?></div>
 		<div style="font-size: 20px"><?php echo "อำเภอ".$amphoe." จังหวัด".$province; ?></div>
 		<div style="font-size: 20px"><?php echo $zipcode; ?></div>

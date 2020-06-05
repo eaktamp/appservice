@@ -29,7 +29,7 @@
             </div>
             <div class="uk-width-1-2@m">
                 <label class="h2">รหัสประจำตัวผู้ป่วย (HN) </label>
-                <input type="text" name="hn" value="" maxlength="9" minlength="9" placeholder="123456789 ให้เติมเลข 0 จนครบ 9 หลัก" onKeyUp="if(isNaN(this.value)){ alert('กรุณากรอกตัวเลข'); this.value='';}" required />
+                <input type="text" name="hn" value="" maxlength="9"  placeholder="โปรดกรอกเลขประจำตัวผู้ป่วย (HN)" onKeyUp="if(isNaN(this.value)){ alert('กรุณากรอกตัวเลข'); this.value='';}" required />
             </div>
             <button class="button" type="submit" style="vertical-align:middle;font-size:16px;margin-top:20px" name="submit" value="submit"><span> ตรวจสอบ</span></button>
         </form>
@@ -38,7 +38,25 @@
     <?php
     include 'config/web_con.php';
     if (isset($_POST['submit'])) {
-        $searchuser = " SELECT hn,cid FROM patient where  hn = '" . $_POST['hn'] . "' and cid = '" . $_POST['cid'] . "'  ";
+        $HnfromAdmin = $_POST['hn'] ;
+        //echo strlen( $HnfromAdmin).'<br/>';
+        $numofhn = strlen( $HnfromAdmin);
+        if(strlen( $HnfromAdmin) < 9 ){
+          for($ins=0;$ins < 9 - strlen( $HnfromAdmin) ;$ins++){
+                 $numss[$ins] = '0';
+          }
+          //วนเอาค่าเลขในอาเรย์มาใช้
+          for($sum=0;$sum < sizeof($numss);$sum++ ){
+              $fillHn .= $numss[$sum]  ;
+          }
+             $realhn = $fillHn .=  $HnfromAdmin;
+              $realhn;
+        }
+        else{
+            $realhn = $_POST['hn'];
+        }
+
+        $searchuser = " SELECT hn,cid FROM patient where  hn = '" .  $realhn . "' and cid = '" . $_POST['cid'] . "'  ";
         $have_user_yet = mysqli_query($conf, $searchuser);
         $count = mysqli_num_rows($have_user_yet);
         //echo $have_user_yet['hn'];

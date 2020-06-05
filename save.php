@@ -9,6 +9,7 @@
   <?php
   date_default_timezone_set("Asia/Bangkok");
   include("config/web_con.php");
+  include "config/func.class.php";
   $token_check = mt_rand(100, 999) . mt_rand(100, 999);
 
   //เอาค่าที่รับมาจาก radio มา suustring แต่ละตัวที่ขั้นด้วย | เก็บไว้ในตัวแปร data เป็น array แต่ละช่อง
@@ -52,6 +53,39 @@
     $query = mysqli_query($conf, $log);
     //echo $log;
     //header("Location: complete.php?cid=$cid&token_check=$token_check");
+    
+    if ($query) {
+      //echo "<script>alert('แจ้งข้อมูลไปยังผู้ดูแลระบบเรียบร้อย');window.location=index.php;</script>";
+      //echo "<script>window.location='test.php';</script>";
+
+      // LINE API NOTIFY//
+     function send_line_notify($message, $token)
+      {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://notify-api.line.me/api/notify");
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "message=$message");
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        $headers = array("Content-type: application/x-www-form-urlencoded", "Authorization: Bearer $token",);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $result = curl_exec($ch);
+        curl_close($ch);
+        return $result;
+      }
+
+      $message = "\r\n" .
+        'วันที่เพิ่มข้อมูล :' . thaiDate(date("Y/m/d H:i:s")) . "\r\n-------\r\n" .
+        'HN :' . $hn. "\r\n" .
+        'วันที่นัด :' .thaiDate($date_appoint). "\r\n" .
+        'คลินิก :' . $clinic_appoint. "\r\n" .
+        'แพทย์ผู้นัด : '.$doctor_appoint."\r\n"
+        ;
+      $token = 'o6XnDMUaRGM8l8OKVxduEesOvNaeWJohaZ0FGHINnXN';
+      send_line_notify($message, $token);
+    } 
     header("Location: complete.php?token_check=$token_check&oapp_id=$oapp_id");
     mysqli_close($conf);
   } else {

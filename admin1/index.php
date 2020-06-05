@@ -152,7 +152,7 @@ if($_SESSION['statusinsert'] == 1){
     <!----------------------------------------------------- Modal----------------------------------------------------------------------------- -->
       <!--------------------------------------------------------------------------------------------------------------------------------------- -->
     <?php 
-       $sql = " SELECT pt.hn FROM web_data_patient pt LEFT JOIN  web_data_appoint wp on wp.hn = pt.hn";
+       $sql = " SELECT hn FROM web_data_patient  ";
        $result1 = mysqli_query($conf, $sql);
        foreach ($result1 as $item) { 
          $hn = $item['hn'];
