@@ -30,11 +30,6 @@ if (isset($_SESSION['username']) == "" || isset($_SESSION['username']) == null) 
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.20/css/uikit.css">
-    <link rel="stylesheet" href="../jquery.Thailand.js/dist/jquery.Thailand.min.css">
-
-
   <!-- JavaScript alerttify-->
   <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
   <!-- alerttify CSS -->
@@ -44,7 +39,9 @@ if (isset($_SESSION['username']) == "" || isset($_SESSION['username']) == null) 
   <!-- alerttify Semantic UI theme -->
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
 
-
+  
+  <!-- jquery.Thailand.js -->
+  <link rel="stylesheet" href="../jquery.Thailand.js/dist/jquery.Thailand.min.css">
 
 </head>
 
@@ -178,9 +175,6 @@ if($_SESSION['statusinsert'] == 1){
                 }
                 ?>
 
-
-
-
                     <script>
                         (function(i, s, o, g, r, a, m) {
                             i['GoogleAnalyticsObject'] = r;
@@ -201,7 +195,7 @@ if($_SESSION['statusinsert'] == 1){
 
 
                 <?php if(isset($result['fname'])){?>
-                    <h2>ข้อมูลของคุณ <?php echo $result['fname'] . ' ' . $result['lname'].'เลขประจำตัวผู้ป่วย (HN) : '.$realhn?></h2>
+                    <h2>ข้อมูลของคุณ <?php echo  '<hilight style="color:#3366FF">'.$result['fname'] . ' ' . $result['lname'].'</hilight>  เลขประจำตัวผู้ป่วย (HN) : <hilight style="color:brown">  '.$realhn .'</hilight>'?></h2>
                     <hr>
                     <div id="loader">
                         <div uk-spinner></div> รอสักครู่ กำลังโหลดฐานข้อมูล...

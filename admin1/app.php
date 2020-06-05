@@ -155,8 +155,8 @@ if (isset($_SESSION['username']) == "" || isset($_SESSION['username']) == null) 
                             <div>
                                 <div class="row">
                                     <div class="col-3"></div>
-                                    <div class="col-3"> <center><button type="submit" class="btn btn-block btn-primary" id="submit" name="submit" style="vertical-align:middle;font-size:16px"><span> ยืนยันรายการ </span></button> </center></div>
-                                    <div class="col-3"> <center><button type="cancle" class="btn btn-block btn-secondary" onclick="window.location.href='./confirmhn.php'" style="vertical-align:middle;font-size:16px;">ยกเลิก</button> </center></div>   
+                                    <div class="col-3"> <center><button type="submit" class="btn btn-block btn-primary" id="submit" name="submit" style="vertical-align:middle;font-size:16px" <?php if($countdata < 1) { echo 'disabled';}?>><span> ยืนยันรายการ </span></button> </center></div>
+                                    <div class="col-3"> <center><button type="button" class="btn btn-block btn-secondary" onclick="window.location.href='confirmhn.php'" style="vertical-align:middle;font-size:16px;">ยกเลิก</button> </center></div>   
                                     <div class="col-3"></div>
                                 </div>
                             </div>
