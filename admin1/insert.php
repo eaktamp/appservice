@@ -7,6 +7,8 @@
 
 <body>
   <?php
+  session_start();
+  $admininsert =  $_SESSION['qfname'].' '. $_SESSION['qlname'];
   date_default_timezone_set("Asia/Bangkok");
   include("../config/web_con.php");
 
@@ -67,10 +69,10 @@
     header("Location: app.php?hn=$hn"); //เอาค่า params ที่ส่งไปออกเพื่อให้ link clean ขึ้น
     mysqli_close($conf);
   } else {
-   echo $log = "INSERT INTO web_data_patient (hn,cid,fname,lname,phone,pttype,lineid,adddess,moo,district,amphoe,province,zipcode,flage,dateupdate,ipupdate,cdate,ctime) 
-                    VALUES ('$hn','$cid','$fname','$lname','$phone','$pttype','$lineid','$adddess','$moo','$district','$amphoe','$province','$zipcode','$flage','$dateupdate','$ipupdate','$cdate','$ctime')";
+   echo $log = "INSERT INTO web_data_patient (hn,cid,fname,lname,phone,pttype,lineid,adddess,moo,district,amphoe,province,zipcode,flage,dateupdate,ipupdate,cdate,ctime,user_insert) 
+                    VALUES ('$hn','$cid','$fname','$lname','$phone','$pttype','$lineid','$adddess','$moo','$district','$amphoe','$province','$zipcode','$flage','$dateupdate','$ipupdate','$cdate','$ctime','$admininsert' )";
     $query = mysqli_query($conf, $log);
-    header("Location: app.php");
+    header("Location: app.php?hn=$hn");
     mysqli_close($conf);
   }
 
