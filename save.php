@@ -43,14 +43,14 @@
                  ";
 
   $check_have_data = mysqli_query($conf, $searchdata);
-  $countrow = mysqli_num_rows($check_have_data);
-  echo   $searchdata.'<br>';
+  echo $countrow = mysqli_num_rows($check_have_data);
+  //echo   $searchdata.'<br>';
 
   if ($countrow <= 0) {
     $log = "INSERT INTO web_data_appoint (hn,cid,oapp_id,token_check,date_appoint,clinic_appoint,doctor_appoint,app_status,updatedate,update_time) 
           VALUES ('$hn','$cid','$oapp_id','$token_check','$date_appoint','$clinic_appoint','$doctor_appoint','$app_status','$updatedate','$update_time')";
     $query = mysqli_query($conf, $log);
-    echo $log;
+    //echo $log;
     //header("Location: complete.php?cid=$cid&token_check=$token_check");
     header("Location: complete.php?token_check=$token_check&oapp_id=$oapp_id");
     mysqli_close($conf);

@@ -53,12 +53,12 @@
   // }
   // 	$scoresum = $csumb;
 
-  $searchuser = "SELECT * FROM web_data_patient where cid = '" . $cid . "'  ";
+  echo $searchuser = "SELECT * FROM web_data_patient where cid = '" . $cid . "'  ";
   $have_user_yet = mysqli_query($conf, $searchuser);
   $count = mysqli_num_rows($have_user_yet);
   // $have_user_yet['cid'];
   if ($count > 0) {
-    echo    $log = "UPDATE  web_data_patient SET hn = '$hn',cid = '$cid',fname = '$fname',lname = '$lname',phone='$phone'
+        $log = "UPDATE  web_data_patient SET hn = '$hn',cid = '$cid',fname = '$fname',lname = '$lname',phone='$phone'
        ,pttype='$pttype',lineid='$lineid',adddess='$adddess',moo='$moo',district='$district',amphoe='$amphoe',province='$province'
        ,zipcode='$zipcode',flage='$flage',dateupdate='$dateupdate',ipupdate='$ipupdate',cdate='$cdate',ctime='$ctime'
       WHERE cid = '$cid'";
@@ -67,7 +67,7 @@
     header("Location: app.php"); //เอาค่า params ที่ส่งไปออกเพื่อให้ link clean ขึ้น
     mysqli_close($conf);
   } else {
-    $log = "INSERT INTO web_data_patient (hn,cid,fname,lname,phone,pttype,lineid,adddess,moo,district,amphoe,province,zipcode,flage,dateupdate,ipupdate,cdate,ctime) 
+   echo $log = "INSERT INTO web_data_patient (hn,cid,fname,lname,phone,pttype,lineid,adddess,moo,district,amphoe,province,zipcode,flage,dateupdate,ipupdate,cdate,ctime) 
                     VALUES ('$hn','$cid','$fname','$lname','$phone','$pttype','$lineid','$adddess','$moo','$district','$amphoe','$province','$zipcode','$flage','$dateupdate','$ipupdate','$cdate','$ctime')";
     $query = mysqli_query($conf, $log);
     header("Location: app.php");

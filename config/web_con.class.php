@@ -1,6 +1,6 @@
 <?php
  function sql_con(){
-   $pdo =  new PDO('mysql:host=163.44.198.57;dbname=cp187623_cv19db', 'cp187623_webcv19', '#Jhosxp10665!', 
+   $pdo =  new PDO('mysql:host=172.18.2.2;dbname=cpa19db', "webcvhost", "WebCpa10665Hos!", 
  		array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8") );
    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
    $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);

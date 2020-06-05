@@ -26,7 +26,7 @@
   </div>
   <!-- /.login-logo -->
   <?php 
-    include "../config/pg_con.class.php";
+   // include "../config/pg_con.class.php";
     include "../config/web_con.php";
     if(isset($_POST['submit'])){
       $username = $_POST['username'];

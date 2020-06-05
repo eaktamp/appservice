@@ -1,7 +1,7 @@
 <?php session_start();
 date_default_timezone_set('asia/bangkok');
-include"config/pg_con.class.php";
-include"config/web_con.php";
+include "config/pg_con.class.php";
+include "config/web_con.php";
 ?>
 <html>
    <head>

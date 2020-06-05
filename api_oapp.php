@@ -1,7 +1,7 @@
 <?php session_start();
 date_default_timezone_set('asia/bangkok');
-	include"config/pg_con.class.php";
- 	include"config/web_con.php";
+	include "config/pg_con.class.php";
+ 	include "config/web_con.php";
 ?>
 <html>
    <head>
@@ -119,7 +119,8 @@ try {
 			$vstdate 	=	$result['vstdate'];
 			$licenseno 	=	$result['licenseno'];
 			for ($i = 1; $i <= count($result); $i++) {	
-				if ($result[$i] != "") $sql = " INSERT INTO oapp (dateapp,clinic,cid,hn,oapp_id,patientname,doctor,insptty,vn,vstdate,licenseno)
+            if ($result[$i] != "") 
+            echo $sql = " INSERT INTO oapp (dateapp,clinic,cid,hn,oapp_id,patientname,doctor,insptty,vn,vstdate,licenseno)
 				VALUES ('".$dateapp."','".$clinic."','".$cid."','".$hn."','".$oapp_id."','".$patientname."','".$doctor."','".$insptty."','".$vn."','".$vstdate."','".$licenseno."'); ";
 			};		   
 $stmt = $pdo->prepare($sql);

@@ -44,7 +44,7 @@ if (isset($_SESSION['username']) == "" || isset($_SESSION['username']) == null) 
 <body class="hold-transition sidebar-mini">
 <?php 
     include('../config/my_con.class.php');
-    include("../config/pg_con.class.php");
+    //include("../config/pg_con.class.php");
   ///////////////////////////////////// เมื่อกดรับงาน ส่ง POST เข้ามาทำงาน //////////////////////////////// 
 
 
