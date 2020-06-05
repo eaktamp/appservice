@@ -91,7 +91,7 @@ if($_SESSION['statusinsert'] == 1){
       <!-- Main content -->
       <section class="content">
         <?php
-        $log = " SELECT * FROM web_data_patient where hn in (select hn from web_data_appoint where date_appoint > CURRENT_DATE GROUP BY hn) ";
+        $log = " SELECT * FROM web_data_patient where hn -- in (select hn from web_data_appoint where date_appoint > CURRENT_DATE GROUP BY hn) ";
         $query = mysqli_query($conf, $log);
         ?>
         <div class="container-fluid">
@@ -152,9 +152,10 @@ if($_SESSION['statusinsert'] == 1){
     <!----------------------------------------------------- Modal----------------------------------------------------------------------------- -->
       <!--------------------------------------------------------------------------------------------------------------------------------------- -->
     <?php 
-       $sql = " SELECT hn FROM web_data_appoint where date_appoint > CURRENT_DATE ORDER BY date_appoint DESC  ";
+       $sql = " SELECT pt.hn FROM web_data_patient pt LEFT JOIN  web_data_appoint wp on wp.hn = pt.hn";
        $result1 = mysqli_query($conf, $sql);
-       foreach ($result1 as $item) { $hn = $item['hn'];
+       foreach ($result1 as $item) { 
+         $hn = $item['hn'];
     ?>
     <div class="modal fade bd-example-modal-lg" id="appoint<?php echo $item['hn']?>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">

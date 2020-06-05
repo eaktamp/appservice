@@ -223,7 +223,7 @@ if (isset($_SESSION['username']) == "" || isset($_SESSION['username']) == null) 
                         <th>วันที่นัด</th>
                         <th>ยืนยันรับยา</th>
                         <th>ชำระเงิน</th>
-                        <th>print</th>
+                        <th>ออกใบเสร็จในhosxp</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -245,7 +245,7 @@ if (isset($_SESSION['username']) == "" || isset($_SESSION['username']) == null) 
                           <td><?php echo thaiDate($row_result['date_appoint']) ;?></td>
                           <td class="text-center text-success"><?php if($row_result['checkaddress'] == '1'){echo ' <i class="fas fa-check"></i>';} ;?></td>
                           <td class="text-center text-success"><?php if($row_result['successpayment'] == 'Y'){echo ' <i class="fas fa-check"></i>';} ;?></td>
-                          <td><button class="btn btn-secondary align-center"><i class="fas fa-print"></i></button></td>
+                          <td class="text-center ">x</td>
                         </tr>
                       <?php } ?>
                     </tbody>

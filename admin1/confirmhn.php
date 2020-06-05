@@ -137,10 +137,10 @@ if($_SESSION['statusinsert'] == 1){
                           $fillHn .= $numss[$sum]  ;
                       }
                          $realhn = $fillHn .=  $HnfromAdmin;
-                         echo $realhn;
+                          $realhn;
                     }
                     else{
-                       echo $realhn = $_POST['hn'];
+                        $realhn = $_POST['hn'];
                     }
 
 
@@ -201,7 +201,7 @@ if($_SESSION['statusinsert'] == 1){
 
 
                 <?php if(isset($result['fname'])){?>
-                    <h2>ข้อมูลของคุณ <?php echo $result['fname'] . ' ' . $result['lname'] ?></h2>
+                    <h2>ข้อมูลของคุณ <?php echo $result['fname'] . ' ' . $result['lname'].'เลขประจำตัวผู้ป่วย (HN) : '.$realhn?></h2>
                     <hr>
                     <div id="loader">
                         <div uk-spinner></div> รอสักครู่ กำลังโหลดฐานข้อมูล...
