@@ -51,10 +51,14 @@ if (isset($_POST['NeedGetMedicine'])) { //หากกดยืนยันร�
 
   $_SESSION['username'];
   mysqli_set_charset($conf, "utf8");
+  //echo  'this button  '.$_POST['book_no'];
 
   $updatestatus = "UPDATE `web_data_appoint` SET 
   `confirm_drugs` = 'Y', 
-  `admin_checkConfirm` = '" . $_SESSION['qfname'].' '.$_SESSION['qlname'] . "' WHERE oapp_id = '" .  $_POST['oapp_id']. "'";
+  `admin_checkConfirm` = '" . $_SESSION['qfname'].' '.$_SESSION['qlname'] . "' ,
+  `book_no` = '" .  $_POST['book_no']. "' 
+  WHERE oapp_id = '" .  $_POST['oapp_id']. "'  ";
+ 
   $Queryaddadminjob =  mysqli_query($conf, $updatestatus);
   if ($Queryaddadminjob) {
         $_POST['oapp_id'] = '';
@@ -64,13 +68,48 @@ if (isset($_POST['NeedGetMedicine'])) { //หากกดยืนยันร�
   }else{
     echo "<script>alertify.error('บันทึกไม่สำเร็จ');</script>";
   }
+   
 }
 if($_SESSION['statusinsert'] == 1){
   echo "<script>alertify.success('บันทึกสำเร็จ');</script>";
   $_SESSION['statusinsert'] = 0;//กำหนดให้ค่าเป็น 0 
   unset($_SESSION['statusinsert']);//ยกเลิกการใช้งาน session ตัวเช็คสถานะการบันทึกออก
 }
+
+
+
+if (isset($_POST['post_track'])) { //หากกดยืนยันรับงาน 
+  $_SESSION['username'];
+  mysqli_set_charset($conf, "utf8");
+  echo  'this button  '.$_POST['postcode'];
+
+  echo $updatestatus = "UPDATE `web_data_appoint` SET 
+  `confirm_drugs` = 'Y', 
+  `admin_checkConfirm` = '" . $_SESSION['qfname'].' '.$_SESSION['qlname'] . "' ,
+  `barcode` = '" .  $_POST['postcode']. "' ,
+  `confirm_postcode` = 'Y' 
+  WHERE oapp_id = '" .  $_POST['oapp_id']. "'  ";
+ 
+  $Queryaddadminjob =  mysqli_query($conf, $updatestatus);
+  if ($Queryaddadminjob) {
+        $_POST['oapp_id'] = '';
+        $_SESSION['statusinsert'] = 1;
+        header('location:./index.php'); 
+        exit(0);
+  }else{ echo "<script>alertify.error('บันทึกไม่สำเร็จ');</script>"; }
+ 
+  if($_SESSION['statusinsert'] == 1){
+    echo "<script>alertify.success('บันทึกสำเร็จ');</script>";
+    $_SESSION['statusinsert'] = 0;//กำหนดให้ค่าเป็น 0 
+    unset($_SESSION['statusinsert']);//ยกเลิกการใช้งาน session ตัวเช็คสถานะการบันทึกออก
+  }
+}
+
+
 ?>
+
+
+
 
   <div class="wrapper">
     <?php include "navbarleft.php"?>
@@ -172,7 +211,7 @@ if($_SESSION['statusinsert'] == 1){
                 <!-- The time line -->
                 <div class="timeline">
                   <!-- timeline time label -->
-                  <?php $queryApp = " SELECT * FROM web_data_appoint where hn = '$hn' and oapp_id is not null and date_appoint > CURRENT_DATE ORDER BY date_appoint  limit 10 ";
+                  <?php $queryApp = " SELECT * FROM web_data_appoint wa LEFT JOIN opi_rcpt opr on wa.vn = opr.vn where wa.hn = '$hn' and wa.oapp_id is not null and wa.date_appoint > CURRENT_DATE ORDER BY wa.date_appoint  limit 10 ";
                         $resultappoint = mysqli_query($conf, $queryApp);
                         foreach ($resultappoint as $Appointment) { ?>
                   <div class="time-label">
@@ -187,36 +226,53 @@ if($_SESSION['statusinsert'] == 1){
                       <h3 class="timeline-header"><a href="#"> <?php echo $Appointment['clinic_appoint'].' vn :'.$Appointment['vn']; ?></a> </h3>
 
                       <div class="timeline-body">
-                            <?php echo 'แพทย์ผู้นัด : '. $Appointment['doctor_appoint']; ?><br>
-                            <div class="row">
-                      
+                            <?php echo 'แพทย์ผู้นัด : '. $Appointment['doctor_appoint'].'<br>เหตุที่นัด : '. $Appointment['app_cause']; ?><br>
+           
+
+                            <!--  //confirm payment -->
                               <form action="#" method="POST" name='NeedGetMedicine'>
-                                <input type="hidden" name="oapp_id" value="<?= $Appointment['oapp_id'];?>">
-                                  <div class="btn-group btn-group-toggle" data-toggle="buttons"> 
-                                    <label class="btn btn-secondary active" >
-                                      <input type="radio" name="options" id="option1" checked>เลขที่:เล่มที่
-                                    </label>
-                                    <label class="btn btn-secondary">
-                                      <input type="radio" name="options" id="option2" value=""> 19201:80
-                                    </label>
-                                    <label class="btn btn-secondary">
-                                      <input type="radio" name="options" id="option3" value=""> 19201:81
-                                    </label>
-                                  </div>
-                                <button type="submit" class="btn btn-primary" name="NeedGetMedicine" <?php if($Appointment['confirm_drugs'] !='') echo 'disabled';?>>
-                                <i class="fas fa-check"></i>&nbsp; จ่ายเงินแล้ว </button>
+                                  <input type="hidden" name="oapp_id" value="<?= $Appointment['oapp_id'];?>">
+
+                                  <?php if(isset($Appointment['book_number'])) {?>
+
+                                    <input type="text" name="book_no" maxlength="20" 
+                                      value="<?php if(isset($Appointment['book_no'])){ echo $Appointment['book_no'];}
+                                                   else { echo $Appointment['book_number'].'/'.$Appointment['bill_number'];} ?>" 
+                                      placeholder="เลขที่เล่มที่ 9999/99" <?php  if($Appointment['confirm_drugs'] == 'Y'){echo 'disabled'; }?> required> 
+
+                                  <?php }
+                                  else  {?>
+                                       <input type="text" name="book_no" maxlength="20" 
+                                      value="<?php if(isset($Appointment['book_no'])){ echo $Appointment['book_no'];}
+                                                   else { echo ''; }?>" 
+                                      placeholder="เลขที่เล่มที่ 9999/99" <?php  if($Appointment['confirm_drugs'] == 'Y'){echo 'disabled'; }?> required> 
+                                  <?php }?>
+
+                                <button type="submit" class="btn btn-primary" name="NeedGetMedicine" value="NeedGetMedicine" <?php if($Appointment['confirm_drugs'] !='') echo 'disabled';?>>
+                                <i class="fas fa-check"></i>&nbsp; ยืนยันการจ่ายเงิน </button>
                               </form>
                           
-                           
+                              
+                              <!--  //Tag postman -->
+                              <form action="#"  method="POST" name='post_track'>
+                                <input type="hidden" name="oapp_id" value="<?= $Appointment['oapp_id'];?>">
+                                <input type="text" placeholder="เลขติดตามไปรษณีย์" name="postcode" value='<?php echo $Appointment['barcode'];?>'
+                                <?php if(($Appointment['confirm_drugs'] != 'Y' || $Appointment['confirm_postcode'] == 'Y') ){ echo"disabled";}   ?> required>
+                                <button type="submit" class="btn btn-primary" name="post_track" value="post_track" <?php if($Appointment['confirm_drugs'] != 'Y' || $Appointment['confirm_postcode'] == 'Y'   ) echo 'disabled';?>>
+                                <i class="fas fa-check"></i>&nbsp; ยืนยันเลขติดตามไปรษณีย์</button>
+                              </form>
+                               <hr>
+
+
+                              <!--  //print -->
                               <form action="./page/print_appoint.php" target="blank" method="POST" name='printappoint'>
                                   <input type="hidden" name="hn"   value="<?php echo $hn; ?>"  required />
                                   <input type="hidden" name="oapp_id"   value="<?php echo $Appointment['oapp_id'];?>"  required />
-                                  <button type="submit" class="btn btn-warning" name="printappoint" value = "submit" <?php if($Appointment['confirm_drugs'] != 'Y'){ echo"disabled";}?>>
+                                  <button type="submit" class="btn btn-warning" name="printappoint" value = "submit" <?php if($Appointment['confirm_drugs'] != 'Y'  ){ echo"disabled";}?>>
                                     <i class="fas fa-print">
-                                    </i>&nbsp; print </button>
-                              </form>
-                          
-                            </div>
+                                    </i>&nbsp; print ที่อยู่ตามใบนัด </button>
+                              </form>             
+                      
                       </div>
                     </div>
                   </div>
