@@ -184,7 +184,7 @@ if($_SESSION['statusinsert'] == 1){
                     <i class="fas fa-clock bg-purple"></i>
                     <div class="timeline-item">
                       <span class="time"><i class="fas fa-clock"></i><?php echo thaiDate($Appointment['date_appoint']); ?></span>
-                      <h3 class="timeline-header"><a href="#"> <?php echo $Appointment['clinic_appoint']; ?></a> </h3>
+                      <h3 class="timeline-header"><a href="#"> <?php echo $Appointment['clinic_appoint'].' vn :'.$Appointment['vn']; ?></a> </h3>
 
                       <div class="timeline-body">
                             <?php echo 'แพทย์ผู้นัด : '. $Appointment['doctor_appoint']; ?><br>
@@ -197,10 +197,10 @@ if($_SESSION['statusinsert'] == 1){
                                       <input type="radio" name="options" id="option1" checked>เลขที่:เล่มที่
                                     </label>
                                     <label class="btn btn-secondary">
-                                      <input type="radio" name="options" id="option2" > 19201:80
+                                      <input type="radio" name="options" id="option2" value=""> 19201:80
                                     </label>
                                     <label class="btn btn-secondary">
-                                      <input type="radio" name="options" id="option3"> 19201:81
+                                      <input type="radio" name="options" id="option3" value=""> 19201:81
                                     </label>
                                   </div>
                                 <button type="submit" class="btn btn-primary" name="NeedGetMedicine" <?php if($Appointment['confirm_drugs'] !='') echo 'disabled';?>>
