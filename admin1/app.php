@@ -131,17 +131,19 @@ if (isset($_SESSION['username']) == "" || isset($_SESSION['username']) == null) 
                                 $hn       =  $row_result['hn'];
                                 $cid      =  $row_result['cid'];
                                 $oapp_id  =  $row_result['oapp_id'];
+                                $vn  =  $row_result['vn'];
 
                                 //echo $dateapp .' '. $date_appoint[$rw];
                                 if($dateapp!= $date_appoint[$rw] &&  $clinic !=   $clinic_appoint[$rw] && $doctor !=  $doctor_appoint[$rw]   ){//echo 'ยังไม่มีกดติก';
                             ?>
                                 <div class="" >
                                     <div>
-                                        <input type="radio" id="<?= $rw; ?>" name="dateapp" value="<?php echo $dateapp."|".$clinic."|".$doctor."|".$hn."|".$cid."|".$oapp_id;?>" required>
+                                        <input type="radio" id="<?= $rw; ?>" name="dateapp" value="<?php echo $dateapp."|".$clinic."|".$doctor."|".$hn."|".$cid."|".$oapp_id."|".$vn;?>" required>
                                         <label for="<?= $rw; ?>">
                                             <h2 class="hh2"><?php echo thaiDateFULL($row_result['dateapp']); ?></h2>
                                             <p class="p1"><?php echo $row_result['clinic']; ?></p>
                                             <p class="p2"><?php echo $row_result['doctor']; ?></p>
+                                            <p class="p2"><?php echo $row_result['vn']; ?></p>
                                         </label>
                                     </div>
                                 </div>
@@ -185,14 +187,14 @@ if (isset($_SESSION['username']) == "" || isset($_SESSION['username']) == null) 
          $string = $_POST['dateapp'];//ประกาษเก็บค่าที่รับมา
          $arrposition = strpos($string, "|");//หาตำแหน่งแรกที่เป็นตัว | จากโจทย์จะได้เป็น 10
          $arrpositionSub =   $string;// เก็บค่าตัวแปรไว้วนเปลี่ยนแปลงค่าตาม forloop
-         for ($i = 0; $i <= 5; $i++) {//วนรอบเก็บค่าค่าที่ส่งมามี4แถว
+         for ($i = 0; $i <= 6; $i++) {//วนรอบเก็บค่าค่าที่ส่งมามี4แถว
              if ($arrposition != 0) {//เมื่อค่าแรกไม่ใช่ 0 ซึ่งปกติจะเป็ฯ 10 เสมอ | หลังวันที่ เช่น 2020-06-01| จะเป็นตัวที่ 11
              $data[$i] = substr($arrpositionSub, 0, $arrposition); //ตัดเอคำที่อย่หน้า | ในรอบแรกมาเก็บในdata
              $arrpositionSub = substr($arrpositionSub,$arrposition+1, 1000000);// เอาตัวแปร arrpositionSub รับค่าที่ตัดออกมาตัวแรก โดย arrpositionSub = ค่าstring ที่รับมาจากหน้าแรก ตัดส่วนแรกซึ่งคือวันที่ออกไป
              }
-             if($arrposition == 0){ $data[5] = $arrpositionSub;}//รอบสุดท้ายค่า cid มันจะไม่มี | จึงเป็น0 เช็คเก็บแบบธรรมดาเลย
+             if($arrposition == 0){ $data[6] = $arrpositionSub;}//รอบสุดท้ายค่า cid มันจะไม่มี | จึงเป็น0 เช็คเก็บแบบธรรมดาเลย
              $arrposition = strpos($arrpositionSub, "|").'<br>';//ทำงานครบให้ค่าตำแหน่งที่จะตัดเปลี่ยนไปตามค่าล่าสุด
-             echo 'this is arr ['.$i.'] '.$data[$i] . '<br>';//แสดงผลค่าในอาเรย์ที่เก็บ
+             //echo 'this is arr ['.$i.'] '.$data[$i] . '<br>';//แสดงผลค่าในอาเรย์ที่เก็บ
          }
 
          $date_appoint   = $data[0];
@@ -202,23 +204,20 @@ if (isset($_SESSION['username']) == "" || isset($_SESSION['username']) == null) 
          $hn             = $data[3];
          $cid            = $data[4];
          $oapp_id        = $data[5]; // เพิ่ม oapp_id
+         $vn             = $data[6]; // เพิ่ม oapp_id
          $app_status     = "1";
          $updatedate     = DATE('Y-m-d');
          $update_time    = DATE('H:i:s');
          //echo  $date_appoint . '<br/>' . $clinic_appoint . '<br/>' . $doctor_appoint . '<br>';
 
-        echo $searchdata = " SELECT * FROM  web_data_appoint WHERE oapp_id <> '$oapp_id'
-                         -- WHERE hn = '$hn' and cid = '$cid' and date_appoint = '$date_appoint' 
-                         --AND clinic_appoint = '$clinic_appoint' and doctor_appoint = '$doctor_appoint'
-                         ";
-
+         $searchdata = " SELECT * FROM  web_data_appoint WHERE oapp_id = '$oapp_id' ";
          $check_have_data = mysqli_query($conf, $searchdata);
          $countrow = mysqli_num_rows($check_have_data);
          //echo   $searchdata.'<br>';
 
          if ($countrow <= 0) {
-             $log = "INSERT INTO web_data_appoint (hn,cid,oapp_id,token_check,date_appoint,clinic_appoint,doctor_appoint,app_status,updatedate,update_time) 
-                 VALUES ('$hn','$cid','$oapp_id','$token_check','$date_appoint','$clinic_appoint','$doctor_appoint','$app_status','$updatedate','$update_time')";
+             $log = "INSERT INTO web_data_appoint (hn,cid,oapp_id,token_check,date_appoint,clinic_appoint,doctor_appoint,app_status,updatedate,update_time,vn) 
+                 VALUES ('$hn','$cid','$oapp_id','$token_check','$date_appoint','$clinic_appoint','$doctor_appoint','$app_status','$updatedate','$update_time','$vn')";
              $query = mysqli_query($conf, $log);
              //echo $log;
              //header("Location: complete.php?cid=$cid&token_check=$token_check");

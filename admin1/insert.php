@@ -26,6 +26,7 @@
   $amphoe    = $_POST['amphoe'];
   $province  = $_POST['province'];
   $zipcode   = $_POST['zipcode'];
+
   $flage     = "1";
 
   $dateupdate = DATE('Y-m-d H:i:s');
@@ -39,9 +40,9 @@
   $count = mysqli_num_rows($have_user_yet);
   // $have_user_yet['cid'];
   if ($count > 0) {
-        $log = "UPDATE  web_data_patient SET hn = '$hn',cid = '$cid',fname = '$fname',lname = '$lname',phone='$phone'
+        echo $log = "UPDATE  web_data_patient SET hn = '$hn',cid = '$cid',fname = '$fname',lname = '$lname',phone='$phone'
        ,pttype='$pttype',lineid='$lineid',adddess='$adddess',moo='$moo',district='$district',amphoe='$amphoe',province='$province'
-       ,zipcode='$zipcode',flage='$flage',dateupdate='$dateupdate',ipupdate='$ipupdate',cdate='$cdate',ctime='$ctime'
+       ,zipcode='$zipcode',flage='$flage',dateupdate='$dateupdate',ipupdate='$ipupdate',cdate='$cdate',ctime='$ctime'',vn='$vn'
       WHERE cid = '$cid'";
     $query = mysqli_query($conf, $log);
 
@@ -53,8 +54,8 @@
     header("Location: app.php?hn=$hn"); 
     mysqli_close($conf);
   } else {
-    $log = "INSERT INTO web_data_patient (hn,cid,fname,lname,phone,pttype,lineid,adddess,moo,district,amphoe,province,zipcode,flage,dateupdate,ipupdate,cdate,ctime,user_insert,user_insert_id) 
-                    VALUES ('$hn','$cid','$fname','$lname','$phone','$pttype','$lineid','$adddess','$moo','$district','$amphoe','$province','$zipcode','$flage','$dateupdate','$ipupdate','$cdate','$ctime','$admininsert','$admininsert_id' )";
+    $log = "INSERT INTO web_data_patient (hn,cid,fname,lname,phone,pttype,lineid,adddess,moo,district,amphoe,province,zipcode,flage,dateupdate,ipupdate,cdate,ctime,user_insert,user_insert_id,vn) 
+                    VALUES ('$hn','$cid','$fname','$lname','$phone','$pttype','$lineid','$adddess','$moo','$district','$amphoe','$province','$zipcode','$flage','$dateupdate','$ipupdate','$cdate','$ctime','$admininsert','$admininsert_id','$vn' )";
     $query = mysqli_query($conf, $log);
     header("Location: app.php?hn=$hn");
     mysqli_close($conf);

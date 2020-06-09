@@ -189,20 +189,33 @@ if($_SESSION['statusinsert'] == 1){
                       <div class="timeline-body">
                             <?php echo 'แพทย์ผู้นัด : '. $Appointment['doctor_appoint']; ?><br>
                             <div class="row">
-                            <form action="#" method="POST" name='NeedGetMedicine'>
-                              <input type="hidden" name="oapp_id" value="<?= $Appointment['oapp_id'];?>">
-                              <button type="submit" class="btn btn-primary" name="NeedGetMedicine" <?php if($Appointment['confirm_drugs'] !='') echo 'disabled';?>>
+                      
+                              <form action="#" method="POST" name='NeedGetMedicine'>
+                                <input type="hidden" name="oapp_id" value="<?= $Appointment['oapp_id'];?>">
+                                  <div class="btn-group btn-group-toggle" data-toggle="buttons"> 
+                                    <label class="btn btn-secondary active" >
+                                      <input type="radio" name="options" id="option1" checked>เลขที่:เล่มที่
+                                    </label>
+                                    <label class="btn btn-secondary">
+                                      <input type="radio" name="options" id="option2" > 19201:80
+                                    </label>
+                                    <label class="btn btn-secondary">
+                                      <input type="radio" name="options" id="option3"> 19201:81
+                                    </label>
+                                  </div>
+                                <button type="submit" class="btn btn-primary" name="NeedGetMedicine" <?php if($Appointment['confirm_drugs'] !='') echo 'disabled';?>>
                                 <i class="fas fa-check"></i>&nbsp; จ่ายเงินแล้ว </button>
-                            </form>
-                       
-                            <form action="./page/print_appoint.php" target="blank" method="POST" name='printappoint'>
-                                <input type="hidden" name="hn"   value="<?php echo $hn; ?>"  required />
-                                <input type="hidden" name="oapp_id"   value="<?php echo $Appointment['oapp_id'];?>"  required />
-                                <button type="submit" class="btn btn-warning" name="printappoint" value = "submit" <?php if($Appointment['confirm_drugs'] != 'Y'){ echo"disabled";}?>>
-                                  <i class="fas fa-print">
-                                  </i>&nbsp; พิมพ์รายการนี้ </button>
-                            </form>
+                              </form>
+                          
                            
+                              <form action="./page/print_appoint.php" target="blank" method="POST" name='printappoint'>
+                                  <input type="hidden" name="hn"   value="<?php echo $hn; ?>"  required />
+                                  <input type="hidden" name="oapp_id"   value="<?php echo $Appointment['oapp_id'];?>"  required />
+                                  <button type="submit" class="btn btn-warning" name="printappoint" value = "submit" <?php if($Appointment['confirm_drugs'] != 'Y'){ echo"disabled";}?>>
+                                    <i class="fas fa-print">
+                                    </i>&nbsp; print </button>
+                              </form>
+                          
                             </div>
                       </div>
                     </div>
@@ -306,3 +319,9 @@ if($_SESSION['statusinsert'] == 1){
 </body>
 
 </html>
+
+<style>
+  .radiobtn{
+    display: inline; 
+  }
+</style>
