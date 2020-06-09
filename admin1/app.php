@@ -208,7 +208,7 @@ if (isset($_SESSION['username']) == "" || isset($_SESSION['username']) == null) 
          $oapp_id        = $data[5]; // เพิ่ม oapp_id
          $vn             = $data[6]; // เพิ่ม oapp_id
          $app_cause      = $data[7]; // เพิ่ม oapp_id
-         $app_status     = "1";
+         $app_status     = "1"; 
          $updatedate     = DATE('Y-m-d');
          $update_time    = DATE('H:i:s');
          //echo  $date_appoint . '<br/>' . $clinic_appoint . '<br/>' . $doctor_appoint . '<br>';

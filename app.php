@@ -85,7 +85,7 @@ if($countdata > 1 ){$checkbutton = 0;}
            // echo '<br>data ['.$i.'] '.$date_appoint[$i].' '.$clinic_appoint[$i].' '.$doctor_appoint[$i];
          }
         ?>
-    
+     
         <form id="save" class="" autocomplete="" uk-grid method="POST" action="save.php">
             <?php
             $rw = 0;
@@ -97,13 +97,16 @@ if($countdata > 1 ){$checkbutton = 0;}
                 $hn       =  $row_result['hn'];
                 $cid      =  $row_result['cid'];
                 $oapp_id  =  $row_result['oapp_id'];
+                $app_cause  =  $row_result['app_cause'];
+                $vn  =  $row_result['vn'];
+                
 
                 //echo $dateapp .' '. $date_appoint[$rw];
                 if($dateapp!= $date_appoint[$rw] &&  $clinic !=   $clinic_appoint[$rw] && $doctor !=  $doctor_appoint[$rw]   ){//echo 'ยังไม่มีกดติก';
             ?>
                 <div class="">
                     <div>
-                        <input type="radio" id="<?= $rw; ?>" name="dateapp" value="<?php echo $dateapp."|".$clinic."|".$doctor."|".$hn."|".$cid."|".$oapp_id;?>" required>
+                        <input type="radio" id="<?= $rw; ?>" name="dateapp" value="<?php echo $dateapp."|".$clinic."|".$doctor."|".$hn."|".$cid."|".$oapp_id."|".$vn."|".$app_cause;?>" required>
                         <label for="<?= $rw; ?>">
                             <h2 class="hh2"><?php echo thaiDateFULL($row_result['dateapp']); ?></h2>
                             <p class="p1"><?php echo $row_result['clinic']; ?></p>
