@@ -184,7 +184,7 @@ if ($countdata > 1) {
                         <form action="./page/print_pems.php" target="blank" method="POST" name='printappoint'>
                           <input type="hidden" name="hn" value="<?php echo $hn; ?>" required />
                           <button type="submit" class="btn btn-block btn-danger" style="vertical-align:middle;font-size:16px;" title="พิมพ์หน้าซองจดหมายโดยไม่ระบุคลินิก">
-                              <i class="fa fa-print"></i> Print Default</button>
+                              <i class="fa fa-print"></i> Print </button>
                         </form>
                       </div>
                     </div>
