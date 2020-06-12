@@ -75,7 +75,7 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="./changepassword.php" class="nav-link">
+                  <a href="./changepassword.php" target="_blank" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>เปลี่ยนรหัสผ่าน</p>
                   </a>
