@@ -1,6 +1,9 @@
 <?php 
 session_start();
 ob_start();
+$admininsert =  $_SESSION['qfname'].' '. $_SESSION['qlname'];
+$admininsert_id =  $_SESSION['username'];
+include("../config/web_con.php");
 date_default_timezone_set("Asia/Bangkok");
 require_once('mpdf/mpdf.php');
 include "../../config/web_con.php";
@@ -30,6 +33,7 @@ $resultaddressPt = mysqli_fetch_array($queryAdpt);
    $zipcode    = $resultaddressPt['zipcode'];
    $hn         = $resultaddressPt['hn'];
    $phone      = $resultaddressPt['phone'];
+   $ipupdate   = $_SERVER['REMOTE_ADDR'];
    $page_flage = "Admin_Print";
 
    $update_date = "INSERT INTO web_data_patient_log (user,patient_hn,ipupdate,dateupdate,page_flage) VALUES ('$admininsert_id','$hn','$ipupdate','".date("Y-m-d H:i:s")."','$page_flage')";
