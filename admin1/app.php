@@ -1,6 +1,6 @@
 <?php
 date_default_timezone_set("Asia/Bangkok");
-include ("../config/web_con.php");
+include("../config/web_con.php");
 include "../config/func.class.php";
 session_start();
 if (isset($_SESSION['username']) == "" || isset($_SESSION['username']) == null) {
@@ -34,51 +34,54 @@ if (isset($_SESSION['username']) == "" || isset($_SESSION['username']) == null) 
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
-  
+
   <link rel="stylesheet" type="text/css" href="css/radio.css">
 
   <!-- JavaScript alerttify-->
   <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
   <!-- alerttify CSS -->
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
   <!-- alerttify Default theme -->
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css" />
   <!-- alerttify Semantic UI theme -->
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css" />
 </head>
 
 
 <?php
-        $hn = $_GET['hn'];
-        $checkAp = "SELECT * FROM web_data_appoint  where hn ='$hn' and date_appoint > CURRENT_DATE ORDER BY date_appoint";
-        $queryCheckAp = mysqli_query($conf,$checkAp);
-        $oppid_check = mysqli_query($conf,$checkAp);
-        $rowc        = mysqli_num_rows($oppid_check);
+$hn = $_GET['hn'];
+$checkAp = "SELECT * FROM web_data_appoint  where hn ='$hn' and date_appoint > CURRENT_DATE ORDER BY date_appoint";
+$queryCheckAp = mysqli_query($conf, $checkAp);
+$oppid_check = mysqli_query($conf, $checkAp);
+$rowc        = mysqli_num_rows($oppid_check);
 
 
-        $sql = " SELECT * FROM oapp WHERE hn = '$hn' ";
-        if ($rowc > 0) {
-                $sql .= " AND oapp_id Not in (";
-                while ($value = mysqli_fetch_array($oppid_check)) 
-                        {
-                            $sql .="'" .$value['oapp_id']. "',";
-                        }
-                            $sql = rtrim($sql,',');
-                            $sql .= ") ";
-                        }
-        $sql .= " AND dateapp > CURRENT_DATE ";
-        //$sql .= " AND (( oapp_status_id < 4 ) OR oapp_status_id IS NULL ) "; 
-        $sql .= " ORDER BY dateapp ";
-        $result = mysqli_query($conf, $sql);
-        $countdata = mysqli_num_rows($result);//เช็คมีนัดไม่มีนัด
-        if($countdata < 1 ){$checkbutton = 1;}
-        if($countdata > 1 ){$checkbutton = 0;}
-        //echo $sql;
+$sql = " SELECT * FROM oapp WHERE hn = '$hn' ";
+if ($rowc > 0) {
+  $sql .= " AND oapp_id Not in (";
+  while ($value = mysqli_fetch_array($oppid_check)) {
+    $sql .= "'" . $value['oapp_id'] . "',";
+  }
+  $sql = rtrim($sql, ',');
+  $sql .= ") ";
+}
+$sql .= " AND dateapp > CURRENT_DATE ";
+//$sql .= " AND (( oapp_status_id < 4 ) OR oapp_status_id IS NULL ) "; 
+$sql .= " ORDER BY dateapp ";
+$result = mysqli_query($conf, $sql);
+$countdata = mysqli_num_rows($result); //เช็คมีนัดไม่มีนัด
+if ($countdata < 1) {
+  $checkbutton = 1;
+}
+if ($countdata > 1) {
+  $checkbutton = 0;
+}
+//echo $sql;
 ?>
 
 <body class="hold-transition sidebar-mini">
   <div class="wrapper">
-    <?php include "navbarleft.php"?>
+    <?php include "navbarleft.php" ?>
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -87,7 +90,7 @@ if (isset($_SESSION['username']) == "" || isset($_SESSION['username']) == null) 
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>รายการข้อมูลนัดของ HN : <?php echo  $hn;?> </h1>
+              <h1>รายการข้อมูลนัดของ HN : <?php echo  $hn; ?> </h1>
             </div>
           </div>
         </div><!-- /.container-fluid -->
@@ -108,128 +111,150 @@ if (isset($_SESSION['username']) == "" || isset($_SESSION['username']) == null) 
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <div class="uk-container uk-padding">
-                        <?php
-                        //ทดสอบเช็คหากมีการกดไปแล้วให้ไม่แสดง
-                        $i = 0;
-                        while ($row_result22 = mysqli_fetch_array($queryCheckAp)) {
-                            $i++;
-                            $date_appoint[$i]   = $row_result22['date_appoint'];
-                            $clinic_appoint[$i] = $row_result22['clinic_appoint'];
-                            $doctor_appoint[$i] = $row_result22['doctor_appoint'];
-                            //echo '<br>data ['.$i.'] '.$date_appoint[$i].' '.$clinic_appoint[$i].' '.$doctor_appoint[$i];
-                        }
-                        ?>
+                  <div class="uk-container uk-padding">
+                    <?php
+                    //ทดสอบเช็คหากมีการกดไปแล้วให้ไม่แสดง
+                    $i = 0;
+                    while ($row_result22 = mysqli_fetch_array($queryCheckAp)) {
+                      $i++;
+                      $date_appoint[$i]   = $row_result22['date_appoint'];
+                      $clinic_appoint[$i] = $row_result22['clinic_appoint'];
+                      $doctor_appoint[$i] = $row_result22['doctor_appoint'];
+                      //echo '<br>data ['.$i.'] '.$date_appoint[$i].' '.$clinic_appoint[$i].' '.$doctor_appoint[$i];
+                    }
+                    ?>
 
-                        <form id="save" class="" autocomplete=""  method="POST" action="#">
-                            <?php
-                            $rw = 0;
-                            while ($row_result = mysqli_fetch_array($result)) {
-                                $rw++;
-                                $dateapp  =  $row_result['dateapp'];
-                                $clinic   =  $row_result['clinic'];
-                                $doctor   =  $row_result['doctor'];
-                                $hn       =  $row_result['hn'];
-                                $cid      =  $row_result['cid'];
-                                $oapp_id  =  $row_result['oapp_id'];
-                                $app_cause  =  $row_result['app_cause'];
-                                $vn  =  $row_result['vn'];
+                    <form id="save" class="" autocomplete="" method="POST" action="#">
+                      <?php
+                      $rw = 0;
+                      while ($row_result = mysqli_fetch_array($result)) {
+                        $rw++;
+                        $dateapp  =  $row_result['dateapp'];
+                        $clinic   =  $row_result['clinic'];
+                        $doctor   =  $row_result['doctor'];
+                        $hn       =  $row_result['hn'];
+                        $cid      =  $row_result['cid'];
+                        $oapp_id  =  $row_result['oapp_id'];
+                        $app_cause  =  $row_result['app_cause'];
+                        $vn  =  $row_result['vn'];
 
-                                $dateapp .' '. $date_appoint[$rw];
-                                //if($dateapp != $date_appoint[$rw] &&  $clinic !=   $clinic_appoint[$rw] && $doctor !=  $doctor_appoint[$rw]   ){//echo 'ยังไม่มีกดติก'; ?>
-                                <div class="" >
-                                    <div>
-                                        <input type="radio" id="<?= $rw; ?>" name="dateapp" value="<?php echo $dateapp."|".$clinic."|".$doctor."|".$hn."|".$cid."|".$oapp_id."|".$vn."|".$app_cause;?>" required>
-                                        <label for="<?= $rw; ?>">
-                                            <h2 class="hh2"><?php echo thaiDateFULL($row_result['dateapp']); ?></h2>
-                                            <p class="p2"><?php echo $row_result['vn']; ?></p>                       
-                                            <p class="p1"><?php echo $row_result['clinic']; ?></p>
-                                            <p class="p2"><?php echo $row_result['doctor']; ?></p>                                       
-                                            <p class="p2"><?php echo $row_result['app_cause']; ?></p>
-                                        </label>
-                                    </div>
-                                </div>
-                                <br> 
-                            <?php  }// } ?>
-                            <?php
-                            if ($countdata < 1) {
-                                echo "<center><h1>ไม่พบรายการนัดหมาย/ยืนยันรับยาครบแล้ว !!</h1><hr/></center>";
-                            }
-                            ?>
-                            <div>
-                                <div class="row">
-                                    <div class="col-3"></div>
-                                    <div class="col-3"> <center><button type="submit" class="btn btn-block btn-primary" id="submit" name="submit" value="submit" style="vertical-align:middle;font-size:16px" <?php if($countdata < 1) { echo 'disabled';}?>><span> ยืนยันรายการ </span></button> </center></div>
-                                    <div class="col-3"> <center><button type="button" class="btn btn-block btn-secondary" onclick="window.location.href='confirmhn.php'" style="vertical-align:middle;font-size:16px;">ยกเลิก</button> </center></div>   
-                                    <div class="col-3"></div>
-                                </div>
-                            </div>
+                        $dateapp . ' ' . $date_appoint[$rw];
+                        //if($dateapp != $date_appoint[$rw] &&  $clinic !=   $clinic_appoint[$rw] && $doctor !=  $doctor_appoint[$rw]   ){//echo 'ยังไม่มีกดติก'; 
+                      ?>
+                        <div class="">
+                          <div>
+                            <input type="radio" id="<?= $rw; ?>" name="dateapp" value="<?php echo $dateapp . "|" . $clinic . "|" . $doctor . "|" . $hn . "|" . $cid . "|" . $oapp_id . "|" . $vn . "|" . $app_cause; ?>" required>
+                            <label for="<?= $rw; ?>">
+                              <h2 class="hh2"><?php echo thaiDateFULL($row_result['dateapp']); ?></h2>
+                              <p class="p2"><?php echo $row_result['vn']; ?></p>
+                              <p class="p1"><?php echo $row_result['clinic']; ?></p>
+                              <p class="p2"><?php echo $row_result['doctor']; ?></p>
+                              <p class="p2"><?php echo $row_result['app_cause']; ?></p>
+                            </label>
+                          </div>
+                        </div>
+                        <br>
+                      <?php  } // } 
+                      ?>
+                      <?php
+                      if ($countdata < 1) {
+                        echo "<center><h1>ไม่พบรายการนัดหมาย/ยืนยันรับยาครบแล้ว !!</h1><hr/></center>";
+                      }
+                      ?>
+                      <div>
+                        <div class="row">
+                          <div class="col-3"></div>
+                          <div class="col-3">
+                            <center><button type="submit" class="btn btn-block btn-primary" id="submit" name="submit" value="submit" style="vertical-align:middle;font-size:16px" <?php if ($countdata < 1) {
+                                                                                                                                                                                    echo 'disabled';
+                                                                                                                                                                                  } ?>><span> ยืนยันรายการ </span></button> </center>
+                          </div>
+                          <div class="col-3">
+                            <center><button type="button" class="btn btn-block btn-secondary" onclick="window.location.href='confirmhn.php'" style="vertical-align:middle;font-size:16px;">ยกเลิก</button> </center>
+                          </div>
+                          <div class="col-3"></div>
+                        </div>
+                      </div>
+                    </form>
+
+                    <div class="row">
+                      <div class="col-1"></div>
+                      <div class="col-9"> </div>
+                      <div class="col-1">
+                        <form action="./page/print_pems.php" target="blank" method="POST" name='printappoint'>
+                          <input type="hidden" name="hn" value="<?php echo $hn; ?>" required />
+                          <button type="submit" class="btn btn-block btn-danger" style="vertical-align:middle;font-size:16px;">
+                              <i class="fa fa-print"></i> Print</button>
                         </form>
+                      </div>
                     </div>
-                <!-- /.card-body -->
+                  </div>
+                  <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
               </div>
-              <!-- /.card -->
+              <!-- /.col -->
             </div>
-            <!-- /.col -->
+            <!-- /.row -->
           </div>
-          <!-- /.row -->
-        </div>
-        <!-- /.container-fluid -->
+          <!-- /.container-fluid -->
       </section>
       <!-- /.content -->
     </div>
 
     <?php
-     if(isset($_POST['submit'])){
-         date_default_timezone_set("Asia/Bangkok");
-         include("../config/web_con.php");
-         $token_check = mt_rand(100, 999) . mt_rand(100, 999);
-          echo 'hello';
-         //เอาค่าที่รับมาจาก radio มา suustring แต่ละตัวที่ขั้นด้วย | เก็บไว้ในตัวแปร data เป็น array แต่ละช่อง
-         $string = $_POST['dateapp'];//ประกาษเก็บค่าที่รับมา
-         $arrposition = strpos($string, "|");//หาตำแหน่งแรกที่เป็นตัว | จากโจทย์จะได้เป็น 10
-         $arrpositionSub =   $string;// เก็บค่าตัวแปรไว้วนเปลี่ยนแปลงค่าตาม forloop
-         for ($i = 0; $i <= 7; $i++) {//วนรอบเก็บค่าค่าที่ส่งมามี4แถว
-             if ($arrposition != 0) {//เมื่อค่าแรกไม่ใช่ 0 ซึ่งปกติจะเป็ฯ 10 เสมอ | หลังวันที่ เช่น 2020-06-01| จะเป็นตัวที่ 11
-             $data[$i] = substr($arrpositionSub, 0, $arrposition); //ตัดเอคำที่อย่หน้า | ในรอบแรกมาเก็บในdata
-             $arrpositionSub = substr($arrpositionSub,$arrposition+1, 1000000);// เอาตัวแปร arrpositionSub รับค่าที่ตัดออกมาตัวแรก โดย arrpositionSub = ค่าstring ที่รับมาจากหน้าแรก ตัดส่วนแรกซึ่งคือวันที่ออกไป
-             }
-             if($arrposition == 0){ $data[7] = $arrpositionSub;}//รอบสุดท้ายค่า cid มันจะไม่มี | จึงเป็น0 เช็คเก็บแบบธรรมดาเลย
-             $arrposition = strpos($arrpositionSub, "|").'<br>';//ทำงานครบให้ค่าตำแหน่งที่จะตัดเปลี่ยนไปตามค่าล่าสุด
-             echo '<center>this is arr ['.$i.'] '.$data[$i] . '</center><br>';//แสดงผลค่าในอาเรย์ที่เก็บ
-         }
+    if (isset($_POST['submit'])) {
+      date_default_timezone_set("Asia/Bangkok");
+      include("../config/web_con.php");
+      $token_check = mt_rand(100, 999) . mt_rand(100, 999);
+      echo 'hello';
+      //เอาค่าที่รับมาจาก radio มา suustring แต่ละตัวที่ขั้นด้วย | เก็บไว้ในตัวแปร data เป็น array แต่ละช่อง
+      $string = $_POST['dateapp']; //ประกาษเก็บค่าที่รับมา
+      $arrposition = strpos($string, "|"); //หาตำแหน่งแรกที่เป็นตัว | จากโจทย์จะได้เป็น 10
+      $arrpositionSub =   $string; // เก็บค่าตัวแปรไว้วนเปลี่ยนแปลงค่าตาม forloop
+      for ($i = 0; $i <= 7; $i++) { //วนรอบเก็บค่าค่าที่ส่งมามี4แถว
+        if ($arrposition != 0) { //เมื่อค่าแรกไม่ใช่ 0 ซึ่งปกติจะเป็ฯ 10 เสมอ | หลังวันที่ เช่น 2020-06-01| จะเป็นตัวที่ 11
+          $data[$i] = substr($arrpositionSub, 0, $arrposition); //ตัดเอคำที่อย่หน้า | ในรอบแรกมาเก็บในdata
+          $arrpositionSub = substr($arrpositionSub, $arrposition + 1, 1000000); // เอาตัวแปร arrpositionSub รับค่าที่ตัดออกมาตัวแรก โดย arrpositionSub = ค่าstring ที่รับมาจากหน้าแรก ตัดส่วนแรกซึ่งคือวันที่ออกไป
+        }
+        if ($arrposition == 0) {
+          $data[7] = $arrpositionSub;
+        } //รอบสุดท้ายค่า cid มันจะไม่มี | จึงเป็น0 เช็คเก็บแบบธรรมดาเลย
+        $arrposition = strpos($arrpositionSub, "|") . '<br>'; //ทำงานครบให้ค่าตำแหน่งที่จะตัดเปลี่ยนไปตามค่าล่าสุด
+        echo '<center>this is arr [' . $i . '] ' . $data[$i] . '</center><br>'; //แสดงผลค่าในอาเรย์ที่เก็บ
+      }
 
-         $date_appoint   = $data[0];
-         $clinic_appoint = $data[1];
-         $doctor_appoint = trim($data[2]);
-         $doctor_appoint  = str_replace("  "," ",$doctor_appoint);//เกิดปัญหาinsert ชื่อสกุลเป็น2เคาะ เจอ2เคาะให้เปลี่ยนเป็ฯเคาะเดียว
-         $hn             = $data[3];
-         $cid            = $data[4];
-         $oapp_id        = $data[5]; // เพิ่ม oapp_id
-         $vn             = $data[6]; // เพิ่ม oapp_id
-         $app_cause      = $data[7]; // เพิ่ม oapp_id
-         $app_status     = "1"; 
-         $updatedate     = DATE('Y-m-d');
-         $update_time    = DATE('H:i:s');
-         //echo  $date_appoint . '<br/>' . $clinic_appoint . '<br/>' . $doctor_appoint . '<br>';
+      $date_appoint   = $data[0];
+      $clinic_appoint = $data[1];
+      $doctor_appoint = trim($data[2]);
+      $doctor_appoint  = str_replace("  ", " ", $doctor_appoint); //เกิดปัญหาinsert ชื่อสกุลเป็น2เคาะ เจอ2เคาะให้เปลี่ยนเป็ฯเคาะเดียว
+      $hn             = $data[3];
+      $cid            = $data[4];
+      $oapp_id        = $data[5]; // เพิ่ม oapp_id
+      $vn             = $data[6]; // เพิ่ม oapp_id
+      $app_cause      = $data[7]; // เพิ่ม oapp_id
+      $app_status     = "1";
+      $updatedate     = DATE('Y-m-d');
+      $update_time    = DATE('H:i:s');
+      //echo  $date_appoint . '<br/>' . $clinic_appoint . '<br/>' . $doctor_appoint . '<br>';
 
-         $searchdata = " SELECT * FROM  web_data_appoint WHERE oapp_id = '$oapp_id' ";
-         $check_have_data = mysqli_query($conf, $searchdata);
-         $countrow = mysqli_num_rows($check_have_data);
-         //echo   $searchdata.'<br>';
+      $searchdata = " SELECT * FROM  web_data_appoint WHERE oapp_id = '$oapp_id' ";
+      $check_have_data = mysqli_query($conf, $searchdata);
+      $countrow = mysqli_num_rows($check_have_data);
+      //echo   $searchdata.'<br>';
 
-         if ($countrow <= 0) {
-            $log = "INSERT INTO web_data_appoint (hn,cid,oapp_id,token_check,date_appoint,clinic_appoint,doctor_appoint,app_status,updatedate,update_time,vn,app_cause) 
+      if ($countrow <= 0) {
+        $log = "INSERT INTO web_data_appoint (hn,cid,oapp_id,token_check,date_appoint,clinic_appoint,doctor_appoint,app_status,updatedate,update_time,vn,app_cause) 
                  VALUES ('$hn','$cid','$oapp_id','$token_check','$date_appoint','$clinic_appoint','$doctor_appoint','$app_status','$updatedate','$update_time','$vn','$app_cause')";
-             $query = mysqli_query($conf, $log);
-             //echo $log;
-             //header("Location: complete.php?cid=$cid&token_check=$token_check");
-             header("Location:app.php?hn=$hn");
-             mysqli_close($conf);
-         } else {
-             echo "<script>javascript:alert('เคยบันทึกอนุมัติรายการนี้ไปแล้ว!');window.location='app.php';</script>";
-         }
-     }
+        $query = mysqli_query($conf, $log);
+        //echo $log;
+        //header("Location: complete.php?cid=$cid&token_check=$token_check");
+        header("Location:app.php?hn=$hn");
+        mysqli_close($conf);
+      } else {
+        echo "<script>javascript:alert('เคยบันทึกอนุมัติรายการนี้ไปแล้ว!');window.location='app.php';</script>";
+      }
+    }
     ?>
     <!-- /.content-wrapper -->
     <footer class="main-footer">
@@ -241,7 +266,7 @@ if (isset($_SESSION['username']) == "" || isset($_SESSION['username']) == null) 
 
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
+      <!-- Control sidebar content goes here -->
     </aside>
     <!-- /.control-sidebar -->
   </div>
@@ -278,7 +303,7 @@ if (isset($_SESSION['username']) == "" || isset($_SESSION['username']) == null) 
       });
     });
   </script>
-  
+
 </body>
 
 </html>

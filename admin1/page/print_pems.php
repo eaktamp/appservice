@@ -1,9 +1,10 @@
-<?php session_start();
+<?php 
+session_start();
 ob_start();
 date_default_timezone_set("Asia/Bangkok");
 require_once('mpdf/mpdf.php');
 include "../../config/web_con.php";
-
+/*
 $fname      = $_POST['fname'];
 $lname      = $_POST['lname'];
 $adddess    = $_POST['adddess'];
@@ -14,6 +15,21 @@ $province   = $_POST['province'];
 $zipcode    = $_POST['zipcode'];
 $phone       = $_POST['phone'];
 $file       = $_POST['hn'];
+*/
+$file       = $_POST['hn'];
+$selectaddresspt = "SELECT * FROM web_data_patient  where hn = '$file'";
+$queryAdpt= mysqli_query($conf,$selectaddresspt);
+$resultaddressPt = mysqli_fetch_array($queryAdpt);
+   $fname      = $resultaddressPt['fname'];
+   $lname      = $resultaddressPt['lname'];
+   $adddess    = $resultaddressPt['adddess'];
+   $moo        = $resultaddressPt['moo'];
+   $district   = $resultaddressPt['district'];
+   $amphoe     = $resultaddressPt['amphoe'];
+   $province   = $resultaddressPt['province'];
+   $zipcode    = $resultaddressPt['zipcode'];
+   $hn         = $resultaddressPt['hn'];
+   $phone      = $resultaddressPt['phone'];
 ?>
 <!DOCTYPE html>
 <html>
