@@ -59,7 +59,8 @@
                 <li class="nav-item">
                   <a href="./confirmhn.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>ยืนยันข้อมูลสำหรับ admin</p>
+                    <!-- <p>ยืนยันข้อมูลสำหรับ admin</p> -->
+                    <p>ค้นหาข้อมูลผู้ป่วย</p>
                   </a>
                 </li>
                 <li class="nav-item">
