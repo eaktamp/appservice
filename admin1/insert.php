@@ -33,7 +33,8 @@
   $ipupdate   = $_SERVER['REMOTE_ADDR'];
   $cdate    = DATE('Y-m-d');
   $ctime    = DATE('H:i:s');
-  $page_flage = "Admin_insert";
+  $page_insert = "Admin_insert";
+  $page_update = "Admin_update";
 
 
   $searchuser = "SELECT * FROM web_data_patient where cid = '" . $cid . "'  ";
@@ -48,16 +49,23 @@
     $query = mysqli_query($conf, $log);
 
     if($query){
-      $update_date = "INSERT INTO web_data_patient_log (user,patient_hn,ipupdate,dateupdate,page_flage) VALUES ('$admininsert_id','$hn','$ipupdate','".date("Y-m-d H:i:s")."','$page_flage')";
+      $update_date = "INSERT INTO web_data_patient_log (user,patient_hn,ipupdate,dateupdate,page_flage) VALUES ('$admininsert_id','$hn','$ipupdate','".date("Y-m-d H:i:s")."','$Admin_update')";
       $queryLog = mysqli_query($conf, $update_date);
     }
 
     header("Location: app.php?hn=$hn"); 
     mysqli_close($conf);
   } else {
-    $log = "INSERT INTO web_data_patient (hn,cid,fname,lname,phone,pttype,lineid,adddess,moo,district,amphoe,province,zipcode,flage,dateupdate,ipupdate,cdate,ctime,user_insert,user_insert_id) 
+   echo $log = "INSERT INTO web_data_patient (hn,cid,fname,lname,phone,pttype,lineid,adddess,moo,district,amphoe,province,zipcode,flage,dateupdate,ipupdate,cdate,ctime,user_insert,user_insert_id) 
                     VALUES ('$hn','$cid','$fname','$lname','$phone','$pttype','$lineid','$adddess','$moo','$district','$amphoe','$province','$zipcode','$flage','$dateupdate','$ipupdate','$cdate','$ctime','$admininsert','$admininsert_id')";
     $query = mysqli_query($conf, $log);
+
+    if($query){
+      $update_date = "INSERT INTO web_data_patient_log (user,patient_hn,ipupdate,dateupdate,page_flage) VALUES ('$admininsert_id','$hn','$ipupdate','".date("Y-m-d H:i:s")."','$page_insert')";
+      $queryLog = mysqli_query($conf, $update_date);
+    }
+
+
     header("Location: app.php?hn=$hn");
     mysqli_close($conf);
   }
