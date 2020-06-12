@@ -30,6 +30,11 @@ $resultaddressPt = mysqli_fetch_array($queryAdpt);
    $zipcode    = $resultaddressPt['zipcode'];
    $hn         = $resultaddressPt['hn'];
    $phone      = $resultaddressPt['phone'];
+   $page_flage = "Admin_Print";
+
+   $update_date = "INSERT INTO web_data_patient_log (user,patient_hn,ipupdate,dateupdate,page_flage) VALUES ('$admininsert_id','$hn','$ipupdate','".date("Y-m-d H:i:s")."','".$page_flage."')";
+   $queryLog = mysqli_query($conf, $update_date);
+
 ?>
 <!DOCTYPE html>
 <html>

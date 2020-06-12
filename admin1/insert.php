@@ -33,6 +33,7 @@
   $ipupdate   = $_SERVER['REMOTE_ADDR'];
   $cdate    = DATE('Y-m-d');
   $ctime    = DATE('H:i:s');
+  $page_flage = "Admin_insert";
 
 
   $searchuser = "SELECT * FROM web_data_patient where cid = '" . $cid . "'  ";
@@ -47,7 +48,7 @@
     $query = mysqli_query($conf, $log);
 
     if($query){
-      $update_date = "INSERT INTO web_data_patient_log (user,patient_hn,ipupdate,dateupdate) VALUES ('$admininsert_id','$hn','$ipupdate','".date("Y-m-d H:i:s")."')";
+      $update_date = "INSERT INTO web_data_patient_log (user,patient_hn,ipupdate,dateupdate,page_flage) VALUES ('$admininsert_id','$hn','$ipupdate','".date("Y-m-d H:i:s")."','".$page_flage."')";
       $queryLog = mysqli_query($conf, $update_date);
     }
 
