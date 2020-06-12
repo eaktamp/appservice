@@ -69,6 +69,12 @@
                   </a>
                 </li>
                 <li class="nav-item">
+                  <a href="../checkthpost.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p title="สำหรับผู้ป่วย">ติดตามสถานะไปรษณีย์</p>
+                  </a>
+                </li>
+                <li class="nav-item">
                   <a href="./changepassword.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>เปลี่ยนรหัสผ่าน</p>
