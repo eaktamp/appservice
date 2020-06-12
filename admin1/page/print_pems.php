@@ -3,7 +3,6 @@ session_start();
 ob_start();
 $admininsert =  $_SESSION['qfname'].' '. $_SESSION['qlname'];
 $admininsert_id =  $_SESSION['username'];
-include("../config/web_con.php");
 date_default_timezone_set("Asia/Bangkok");
 require_once('mpdf/mpdf.php');
 include "../../config/web_con.php";
