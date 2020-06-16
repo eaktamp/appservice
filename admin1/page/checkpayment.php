@@ -161,7 +161,7 @@ if (isset($_SESSION['username']) == "" || isset($_SESSION['username']) == null) 
              $datepickert    = $_POST['datepickert'];
              $radiopayment   = $_POST['payment'];
              $log = "SELECT wp.hn,wp.cid,concat(fname,' ',lname)as patient,pttype,phone,lineid,adddess,moo,district,amphoe,province,zipcode,date_appoint,
-             doctor_appoint,clinic_appoint,app_status as checkaddress,confirm_drugs as successpayment
+             doctor_appoint,clinic_appoint,app_status as checkaddress,confirm_drugs as successpayment,wa.book_no
              FROM web_data_patient wp 
              LEFT JOIN web_data_appoint  wa on wp.hn = wa.hn
              where  date_appoint BETWEEN {datepickers} AND {datepickert}  ";
@@ -169,7 +169,7 @@ if (isset($_SESSION['username']) == "" || isset($_SESSION['username']) == null) 
                   $log .= "AND confirm_drugs = "."'".$radiopayment."'";
               }
              $log .= " GROUP BY  wp.hn,wp.cid,patient,pttype,phone,lineid,adddess,moo,district,amphoe,province,zipcode,
-             date_appoint,doctor_appoint,clinic_appoint,app_status,confirm_drugs
+             date_appoint,doctor_appoint,clinic_appoint,app_status,confirm_drugs,wa.book_no
              ORDER BY date_appoint";
 
              if($datepickers != "--") {
@@ -179,12 +179,12 @@ if (isset($_SESSION['username']) == "" || isset($_SESSION['username']) == null) 
           }
           if($_POST['datepickers'] == '' || $_POST['datepickers']  = null){
           $log = "SELECT wp.hn,wp.cid,concat(fname,' ',lname)as patient,pttype,phone,lineid,adddess,moo,district,amphoe,province,zipcode,date_appoint,
-          doctor_appoint,clinic_appoint,app_status as checkaddress,confirm_drugs as successpayment
+          doctor_appoint,clinic_appoint,app_status as checkaddress,confirm_drugs as successpayment,wa.book_no
           FROM web_data_patient wp 
           LEFT JOIN web_data_appoint  wa on wp.hn = wa.hn
           where  date_appoint is not null  
           GROUP BY  wp.hn,wp.cid,patient,pttype,phone,lineid,adddess,moo,district,amphoe,province,zipcode,
-          date_appoint,doctor_appoint,clinic_appoint,app_status,confirm_drugs
+          date_appoint,doctor_appoint,clinic_appoint,app_status,confirm_drugs,wa.book_no
           ORDER BY date_appoint";
           }
    
@@ -245,7 +245,7 @@ if (isset($_SESSION['username']) == "" || isset($_SESSION['username']) == null) 
                           <td><?php echo thaiDate($row_result['date_appoint']) ;?></td>
                           <td class="text-center text-success"><?php if($row_result['checkaddress'] == '1'){echo ' <i class="fas fa-check"></i>';} ;?></td>
                           <td class="text-center text-success"><?php if($row_result['successpayment'] == 'Y'){echo ' <i class="fas fa-check"></i>';} ;?></td>
-                          <td class="text-center ">x</td>
+                          <td class="text-center "><?php echo $row_result['book_no'] ;?></td>
                         </tr>
                       <?php } ?>
                     </tbody>

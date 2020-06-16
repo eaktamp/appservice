@@ -212,8 +212,9 @@ if (isset($_POST['post_track'])) { //หากกดยืนยันรับ�
                 <div class="timeline">
                   <!-- timeline time label -->
                   <?php $queryApp = " SELECT * FROM web_data_appoint wa LEFT JOIN opi_rcpt opr on wa.vn = opr.vn 
-                        where wa.hn = '$hn' and wa.oapp_id is not null and wa.date_appoint > CURRENT_DATE and book_no is null
-                        ORDER BY wa.date_appoint  limit 10 ";
+                        where wa.hn = '$hn' and wa.oapp_id is not null and wa.date_appoint > CURRENT_DATE 
+                        ORDER BY book_no ,wa.date_appoint 
+                        limit 10 ";
                         $resultappoint = mysqli_query($conf, $queryApp);
                         foreach ($resultappoint as $Appointment) { ?>
                   <div class="time-label">
