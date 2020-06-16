@@ -70,6 +70,12 @@
                   </a>
                 </li>
                 <li class="nav-item">
+                  <a href="./payment.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>PayMent ทดสอบ</p>
+                  </a>
+                </li>
+                <li class="nav-item">
                   <a href="../checkthpost.php" target="_blank" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p title="สำหรับผู้ป่วย">ติดตามสถานะไปรษณีย์</p>
