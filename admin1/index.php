@@ -130,7 +130,7 @@ if (isset($_POST['post_track'])) { //หากกดยืนยันรับ�
       <!-- Main content -->
       <section class="content">
         <?php
-        $log = " SELECT * FROM web_data_patient where hn -- in (select hn from web_data_appoint where date_appoint > CURRENT_DATE GROUP BY hn) ";
+        $log = " SELECT * FROM web_data_patient where hn  in (select hn from web_data_appoint where date_appoint > CURRENT_DATE GROUP BY hn) ";
         $query = mysqli_query($conf, $log);
         ?>
         <div class="container-fluid">
@@ -211,7 +211,9 @@ if (isset($_POST['post_track'])) { //หากกดยืนยันรับ�
                 <!-- The time line -->
                 <div class="timeline">
                   <!-- timeline time label -->
-                  <?php $queryApp = " SELECT * FROM web_data_appoint wa LEFT JOIN opi_rcpt opr on wa.vn = opr.vn where wa.hn = '$hn' and wa.oapp_id is not null and wa.date_appoint > CURRENT_DATE ORDER BY wa.date_appoint  limit 10 ";
+                  <?php $queryApp = " SELECT * FROM web_data_appoint wa LEFT JOIN opi_rcpt opr on wa.vn = opr.vn 
+                        where wa.hn = '$hn' and wa.oapp_id is not null and wa.date_appoint > CURRENT_DATE and book_no is null
+                        ORDER BY wa.date_appoint  limit 10 ";
                         $resultappoint = mysqli_query($conf, $queryApp);
                         foreach ($resultappoint as $Appointment) { ?>
                   <div class="time-label">
