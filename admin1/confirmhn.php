@@ -84,7 +84,7 @@ if($_SESSION['statusinsert'] == 1){
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>หน้ายืนยันที่อยู่ผู้ป่วย </h1>
+                <h1>ค้นหาข้อมูลผู้รับบริการ และยืนยันข้อมูล</h1>
             </div>
           </div>
         </div><!-- /.container-fluid -->
@@ -107,7 +107,7 @@ if($_SESSION['statusinsert'] == 1){
                       <form name="form1" class="form-horizontal" action="#" method="POST">
                           <div class="form-group row">
                               <div class="col-8 col-lg-10">
-                                <input type="text" class="form-control" name="hn" value="" maxlength="9"  placeholder="กรุณากรอก HN" onKeyUp="if(isNaN(this.value)){ alert('กรุณากรอกตัวเลข'); this.value='';}" required />
+                                <input type="text" class="form-control" name="hn" value="" maxlength="9"  placeholder="กรุณากรอก HN [ ไม่ต้องเติม 0 ข้างหน้า  เช่น 000123456  พิมพ์แค่ 123456 ] " onKeyUp="if(isNaN(this.value)){ alert('กรุณากรอกตัวเลข'); this.value='';}" required />
                               </div>
                               <div class="col-4 col-lg-2">
                                 <button class="btn btn-primary btn-block" type="submit"  name="submit" value="submit"> ตรวจสอบ</button>

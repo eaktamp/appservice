@@ -65,7 +65,7 @@
 
   <div class="card">
     <div class="card-body login-card-body">
-      <p class="login-box-msg">Sign in to start your session</p>
+      <p class="login-box-msg">กรุณาลงชื่อเข้าใช้งาน</p>
 
       <form action="#" method="POST">
         <div class="input-group mb-3">
@@ -88,7 +88,7 @@
           <!-- /.col -->
           <div class="col-12">
             <button type="submit" name="submit" value="submit" class="btn btn-primary btn-block">Sign In</button>
-            <center><a href="../checkdata.php">กลับหน้าหลัก</a></center>
+            <center><a href="../">กลับหน้าหลัก</a></center>
             <?php echo '<center><p style = "margin-top:10px;" class="col-12 alert-danger">'.$message.'</p></center>';?>
           </div>
           <!-- /.col -->

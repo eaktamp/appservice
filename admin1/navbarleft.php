@@ -59,13 +59,26 @@
                 <li class="nav-item">
                   <a href="./confirmhn.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>ยืนยันข้อมูลสำหรับ admin</p>
+                    <!-- <p>ยืนยันข้อมูลสำหรับ admin</p> -->
+                    <p>ค้นหาข้อมูลผู้ป่วย</p>
                   </a>
                 </li>
                 <li class="nav-item">
                   <a href="page/checkpayment.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>ข้อมูลนัดส่งยาที่จ่ายเงินแล้ว</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="./payment.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>PayMent ทดสอบ</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="../checkthpost.php" target="_blank" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p title="สำหรับผู้ป่วย">ติดตามสถานะไปรษณีย์</p>
                   </a>
                 </li>
                 <li class="nav-item">

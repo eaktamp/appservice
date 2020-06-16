@@ -33,6 +33,8 @@
   $ipupdate   = $_SERVER['REMOTE_ADDR'];
   $cdate    = DATE('Y-m-d');
   $ctime    = DATE('H:i:s');
+  $page_insert = "Admin_insert";
+  $page_update = "Admin_update";
 
 
   $searchuser = "SELECT * FROM web_data_patient where cid = '" . $cid . "'  ";
@@ -40,14 +42,14 @@
   $count = mysqli_num_rows($have_user_yet);
   // $have_user_yet['cid'];
   if ($count > 0) {
-        echo $log = "UPDATE  web_data_patient SET hn = '$hn',cid = '$cid',fname = '$fname',lname = '$lname',phone='$phone'
+         $log = "UPDATE  web_data_patient SET hn = '$hn',cid = '$cid',fname = '$fname',lname = '$lname',phone='$phone'
        ,pttype='$pttype',lineid='$lineid',adddess='$adddess',moo='$moo',district='$district',amphoe='$amphoe',province='$province'
        ,zipcode='$zipcode',flage='$flage',dateupdate='$dateupdate',ipupdate='$ipupdate',cdate='$cdate',ctime='$ctime'
       WHERE cid = '$cid'";
     $query = mysqli_query($conf, $log);
 
     if($query){
-      $update_date = "INSERT INTO web_data_patient_log (user,patient_hn,ipupdate,dateupdate) VALUES ('$admininsert_id','$hn','$ipupdate','".date("Y-m-d H:i:s")."')";
+      $update_date = "INSERT INTO web_data_patient_log (user,patient_hn,ipupdate,dateupdate,page_flage) VALUES ('$admininsert_id','$hn','$ipupdate','".date("Y-m-d H:i:s")."','$Admin_update')";
       $queryLog = mysqli_query($conf, $update_date);
     }
 
@@ -57,6 +59,13 @@
     $log = "INSERT INTO web_data_patient (hn,cid,fname,lname,phone,pttype,lineid,adddess,moo,district,amphoe,province,zipcode,flage,dateupdate,ipupdate,cdate,ctime,user_insert,user_insert_id) 
                     VALUES ('$hn','$cid','$fname','$lname','$phone','$pttype','$lineid','$adddess','$moo','$district','$amphoe','$province','$zipcode','$flage','$dateupdate','$ipupdate','$cdate','$ctime','$admininsert','$admininsert_id')";
     $query = mysqli_query($conf, $log);
+
+    if($query){
+      $update_date = "INSERT INTO web_data_patient_log (user,patient_hn,ipupdate,dateupdate,page_flage) VALUES ('$admininsert_id','$hn','$ipupdate','".date("Y-m-d H:i:s")."','$page_insert')";
+      $queryLog = mysqli_query($conf, $update_date);
+    }
+
+
     header("Location: app.php?hn=$hn");
     mysqli_close($conf);
   }

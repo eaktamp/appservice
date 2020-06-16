@@ -19,6 +19,7 @@ $phone       = $_POST['phone'];
 $file       = $_POST['hn'];
 */
 $file       = $_POST['hn'];
+$code       = "RF436370542TH";
 $selectaddresspt = "SELECT * FROM web_data_patient  where hn = '$file'";
 $queryAdpt= mysqli_query($conf,$selectaddresspt);
 $resultaddressPt = mysqli_fetch_array($queryAdpt);
@@ -49,14 +50,14 @@ $resultaddressPt = mysqli_fetch_array($queryAdpt);
 
 
 <div class="div3">
-	<table width = 60% style="border:1px #000000;"  bgcolor="#000000"><tr><td style="height: 70px; width: 150px; border:1px dashed white;" bgcolor="white" align="center">
+	<table width = 60% style="border:1px #000000;"  bgcolor="#000000"><tr><td style="border:1px dashed white;" bgcolor="white" align="center">
 		<div align="center" style="font-size: 12px"><?php echo "ชำระค่าฝากส่งเป็นรายเดือน" ?></div>
 		<div align="center" style="font-size: 12px"><?php echo "ใบอนุญาตเลขที่ 27/2521" ?></div>
 		<div align="center" style="font-size: 12px"><?php echo "ปทจ.ปราจีนบุรี" ?></div>
 	</td></tr></table>
 </div>
 <div class="div4">
-	<table width = 100% style="border:1px #000000;"  bgcolor="#000000"><tr><td style="height: 100px; width: 200px; border:1px dashed white;" bgcolor="white" align="center">
+	<table width = 100% style="border:1px #000000;"  bgcolor="#000000"><tr><td style="border:1px dashed white;" bgcolor="white" align="center">
 		<div align="center" style="font-size: 25px"><?php echo "ยาและเวชภัณฑ์" ?></div>
 		<div align="center" style="font-size: 14px"><?php echo "โรงพยาบาลเจ้าพระยาอภัยภูเบศร" ?></div>
 		<div align="center" style="font-size: 14px"><?php echo "(หลีกเลี่ยงแสงแดดและความชื้น) (ระวังการกระแทก)" ?></div>
@@ -80,10 +81,16 @@ $resultaddressPt = mysqli_fetch_array($queryAdpt);
 	</div>
 	<div class="div6">
 		<div style="font-size: 13px"><?php echo "จำนวน ......... รายการ"; ?></div>
-
-		<div style="font-size: 15px"><?php echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;หมายเลขพัสดุ 13 หลัก"; ?></div>
-		<table style="border:1px #000000;"  bgcolor="#000000"><tr><td style="height: 130px; width: 215px; border:1px dashed white;" bgcolor="white" align="center">
-		</table>
+		<br><BR>
+		<!-- <div style="font-size: 13px"><?php //echo "&nbsp;&nbsp;&nbsp;ติดสติ๊กเกอร์"; ?></div> -->
+		<div style='text-align: center; font-size: 13px;'>
+		<!-- <img src="rthaipost.png" alt="" width="250px" higth="80px"> -->
+   		<img alt='Barcode Generator TEC-IT'
+       src='https://barcode.tec-it.com/barcode.ashx?data=<?=$code;?>&code=&multiplebarcodes=true&translate-esc=true&unit=Fit&dpi=72&imagetype=Gif&rotation=0&color=%23000000&bgcolor=%23ffffff&codepage=&qunit=Mm&quiet=0'/>
+</div>
+	
+<div style='padding-top:8px; text-align:center; font-size:15px; font-family: Source Sans Pro, Arial, sans-serif;'>
+</div>
 
 	</div>
 	<div class="div5">
