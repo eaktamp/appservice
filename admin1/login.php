@@ -51,7 +51,7 @@
            // $_SESSION['department'] =  $accoutUsser['department'];
             
             if($_SESSION['status'] =='1'){
-                header('location:./index.php'); 
+                header('location:./confirmhn.php'); 
             }
             else 
             { 
