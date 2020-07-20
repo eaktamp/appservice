@@ -64,6 +64,13 @@
                   </a>
                 </li>
                 <li class="nav-item">
+                  <a href="./api_patient_hn.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <!-- <p>ยืนยันข้อมูลสำหรับ admin</p> -->
+                    <p title="กรณีค้นหา  HN ไม่พบ ดึงข้อมูลจาก Hosxp">Service 1 HN</p>
+                  </a>
+                </li>
+                <li class="nav-item">
                   <a href="page/checkpayment.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>ข้อมูลนัดส่งยาที่จ่ายเงินแล้ว</p>
