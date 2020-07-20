@@ -64,7 +64,7 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="./api_patient_hn.php" class="nav-link">
+                  <a href="../api_patient_hn.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <!-- <p>ยืนยันข้อมูลสำหรับ admin</p> -->
                     <p title="กรณีค้นหา  HN ไม่พบ ดึงข้อมูลจาก Hosxp">Service 1 HN</p>
