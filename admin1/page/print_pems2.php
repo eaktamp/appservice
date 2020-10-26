@@ -69,14 +69,15 @@ $resultaddressPt = mysqli_fetch_array($queryAdpt);
 		<div style="font-size: 12px"><?php echo "เลขที่ 32/7 หมู่ 12 ตำบลท่างาม"; ?></div>
 		<div style="font-size: 12px"><?php echo "อำเภอเมือง จังหวัดปราจีนบุรี"; ?></div>
 		<div style="font-size: 12px"><?php echo "25000"; ?></div>
+		<div style="font-size: 12px"><?php echo "037216164 , 0853912255"; ?></div>
 	</div>
 
 	<div class="div2" >
-		<div style="font-size: 15px"><?php echo "ชื่อที่อยู่ผู้รับ"; ?></div>
-		<div style="font-size: 20px"><?php echo "คุณ. ".$fname." ".$lname." (".$phone.")"; ?></div>
-		<div style="font-size: 20px"><?php echo "เลขที่ ".$adddess." หมู่ ".$moo." ตำบล".$district; ?></div>
-		<div style="font-size: 20px"><?php echo "อำเภอ".$amphoe." จังหวัด".$province; ?></div>
-		<div style="font-size: 20px"><?php echo $zipcode; ?></div>
+		<div style="font-size: 14px"><?php echo "ชื่อที่อยู่ผู้รับ"; ?></div>
+		<div style="font-size: 18px"><?php echo "คุณ. ".$fname." ".$lname." (".$phone.")"; ?></div>
+		<div style="font-size: 18px"><?php echo "เลขที่ ".$adddess." หมู่ ".$moo." ตำบล".$district; ?></div>
+		<div style="font-size: 18px"><?php echo "อำเภอ".$amphoe." จังหวัด".$province; ?></div>
+		<div style="font-size: 18px"><?php echo $zipcode; ?></div>
 	</div>
 	<div class="div6">
 		<div style="font-size: 13px"><?php echo "จำนวน ......... รายการ"; ?></div>
