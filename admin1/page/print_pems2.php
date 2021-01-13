@@ -25,6 +25,7 @@ $resultaddressPt = mysqli_fetch_array($queryAdpt);
    $fname      = $resultaddressPt['fname'];
    $lname      = $resultaddressPt['lname'];
    $adddess    = $resultaddressPt['adddess'];
+   $pttype     = $resultaddressPt['pttype'];
    $moo        = $resultaddressPt['moo'];
    $district   = $resultaddressPt['district'];
    $amphoe     = $resultaddressPt['amphoe'];
@@ -91,7 +92,7 @@ $resultaddressPt = mysqli_fetch_array($queryAdpt);
 		<div align="center" style="font-size: 12px"><?php echo "รับรองที่อยู่ถูกต้อง"; ?></div>
 		<br><br>
 		<div style="font-size: 10px"><?php echo "ลงชื่อ ..................................................................."; ?></div>
-
+		<br><br><div>สิทธิ์ : <?php echo $pttype; ?></div>	
 	</div>
 
 </body>
