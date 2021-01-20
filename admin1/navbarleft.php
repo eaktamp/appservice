@@ -93,6 +93,12 @@
                     <i class="far fa-circle nav-icon"></i>
                     <p>เปลี่ยนรหัสผ่าน</p>
                   </a>
+                  <li class="nav-item">
+                  <a href="./adddata.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>เพิ่มข้อมูล (สำหรับ เดย์ สปา)</p>
+                  </a>
+                </li>
                 </li>
               </ul>
             </li>
