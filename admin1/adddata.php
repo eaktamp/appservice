@@ -100,21 +100,10 @@ if($_SESSION['statusinsert'] == 1){
           <div class="row">
             <div class="col-12">
 
-              <!-- <div class="card">
+              <div class="card">
                 <div class="card-header">
     
-                    div class="col-12">
-                      <form name="form1" class="form-horizontal" action="#" method="POST">
-                          <div class="form-group row">
-                              <div class="col-8 col-lg-10">
-                                <input type="text" class="form-control" name="cid" value="" maxlength="13"  placeholder="ค้นหา" required />
-                              </div>
-                              <div class="col-4 col-lg-2">
-                                <button class="btn btn-primary btn-block" type="submit"  name="submit" value="submit"> ค้นหา</button>
-                              </div>
-                            </div>
-                      </form>
-                    </div> -->
+                    
                   
                 </div>
                 <!-- /.card-header -->
@@ -126,45 +115,45 @@ if($_SESSION['statusinsert'] == 1){
 <?php
                 include '../config/web_con.php';
                 if (isset($_POST['submit'])) {
-                    $cidfromadmin = $_POST['cid'] ;
+                    $nofromadmin = $_POST['no'] ;
                     //echo strlen( $HnfromAdmin).'<br/>';
-                    $numofcid = strlen( $cidfromadmin);
-                    if(strlen( $cidfromadmin) < 9 ){
-                      for($ins=0;$ins < 9 - strlen( $cidfromadmin) ;$ins++){
+                    $numofno = strlen( $nofromadmin);
+                    if(strlen( $nofromadmin) < 9 ){
+                      for($ins=0;$ins < 9 - strlen( $nofromadmin) ;$ins++){
                              $numss[$ins] = '0';
                       }
                       //วนเอาค่าเลขในอาเรย์มาใช้
                       for($sum=0;$sum < sizeof($numss);$sum++ ){
-                          $fillcid .= $numss[$sum]  ;
+                          $fillno .= $numss[$sum]  ;
                       }
-                         $realcid = $fillcid .=  $cidfromadmin;
-                          $realcid;
+                         $realno = $fillno .=  $nofromadmin;
+                          $realno;
                     }
                     else{
-                        $realcid = $_POST['cid'];
+                        $realno = $_POST['no'];
                     }
 
 
 
-                    $searchuser = " SELECT cid FROM patient_2 where  cid = '" .  $realcid . "'";
+                    $searchuser = " SELECT no FROM patient_2 where  no = '" .  $realno . "'";
                     $have_user_yet = mysqli_query($conf, $searchuser);
                     $count = mysqli_num_rows($have_user_yet);
                     //echo $have_user_yet['cid'];
 
                     if ($count > 0) {
                         $accoutUsser = mysqli_fetch_assoc($have_user_yet);
-                        $patientcid =  $accoutUsser['cid'];
+                        $patientno =  $accoutUsser['no'];
                         echo "<script>alertify.warning('พบข้อมูล');</script>";
 
 
-                        $checkinmysqlbase =  " SELECT * FROM web_data_patient where  cid = '" . $patientcid  . "' ORDER BY dateupdate limit 1";
+                        $checkinmysqlbase =  " SELECT * FROM web_data_patient where  no = '" . $patientno  . "' ORDER BY dateupdate limit 1";
                         $have_user_inmydb = mysqli_query($conf, $checkinmysqlbase);
-                        $countcid = mysqli_num_rows($have_user_inmydb);
+                        $countno = mysqli_num_rows($have_user_inmydb);
     
-                        if ($countcid == 0) {
+                        if ($countno == 0) {
                             //echo ' <br/>' . 'is null data in mydb then check in pgsql on his hospital' . '<br/>';
                             $searchuser = " SELECT * FROM patient_2
-                            WHERE cid = '" .$patientcid  . "'";
+                            WHERE no = '" .$patientno  . "'";
                             $have_user_yet = mysqli_query($conf, $searchuser);
                             $result = mysqli_fetch_assoc($have_user_yet);
                         } else {
@@ -209,13 +198,13 @@ if($_SESSION['statusinsert'] == 1){
                     </div>
 
                     <form id="senddata" class="demo" style="display:none;" autocomplete="off"  method="post" target="_blank " action="insert_2.php">
-                        <input type="hidden"  name="cid" value="<?php echo $result['cid'] ?>">
-                        <input type="hidden" name="cid" value="<?php echo $result['cid'] ?>">
+                        <input type="hidden"  name="no" value="<?php echo $result['no'] ?>">
+                        <input type="hidden" name="no" value="<?php echo $result['no'] ?>">
                         
                       <div class="row">
                         <div class="col-6"> 
                             <label ><i class="fas fa-male"></i>  ชื่อ </label>
-                            <input name="fname" class="form-control" type="text" value="<?php echo $result['fname'] ?>" required>
+                            <input name="fname" class="form-control" type="text" value="<?php echo $result['fname'] ?>">
                           </div>
 
                         <!--   <div class="col-6"> 
@@ -225,14 +214,14 @@ if($_SESSION['statusinsert'] == 1){
 
                         <div class="col-6">
                         <label >นามสกุล</label>
-                            <input name="lname" class="form-control" type="text" value="<?php echo $result['lname'] ?>" required>
+                            <input name="lname" class="form-control" type="text" value="<?php echo $result['lname'] ?>">
                         </div>
                       </div>
 
                       <div class="row">
                         <div class="col-4">
                             <label ><i class="fas fa-phone-square"></i>  เบอร์โทรศัพท์ </label>
-                            <input name="phone" class="form-control" type="text" value="<?php echo $result['phone'] ?>" required>
+                            <input name="phone" class="form-control" type="text" value="<?php echo $result['phone'] ?>">
                         </div>
                        <!--  <div class="col-4">
                             <label ><i class="fas fa-user-md"></i>  สิทธิ์</label>
@@ -247,7 +236,7 @@ if($_SESSION['statusinsert'] == 1){
                       <div class="row">
                         <div class="col-lg-3">
                             <label ><i class="fas fa-address-book"></i> บ้านเลขที่</label>
-                            <input name="adddess" class="form-control" type="text" value="<?php echo $result['adddess'] ?>" required>
+                            <input name="adddess" class="form-control" type="text" value="<?php echo $result['adddess'] ?>">
                         </div>
                         <div class="col-lg-3">
                             <label ><i class="fas fa-address-book"></i> หมู่</label>
@@ -256,19 +245,19 @@ if($_SESSION['statusinsert'] == 1){
                         </div>
                         <div class="col-lg-3">  
                             <label ><i class="fas fa-address-book"></i> ตำบล / แขวง</label>
-                            <input name="district" class="form-control" type="text" value="<?php echo $result['district'] ?>" required>
+                            <input name="district" class="form-control" type="text" value="<?php echo $result['district'] ?>">
                         </div>
                         <div class="col-lg-3">
                           
                         <label ><i class="fas fa-address-book"></i> อำเภอ / เขต</label>
-                            <input name="amphoe" class="form-control" type="text" value="<?php echo $result['amphoe'] ?>" required>
+                            <input name="amphoe" class="form-control" type="text" value="<?php echo $result['amphoe'] ?>">
                         </div>
                       </div>
 
                       <div class="row">
                         <div class="col-lg-6">
                             <label ><i class="fas fa-address-book"></i> จังหวัด</label>
-                            <input name="province" class="form-control" type="text" value="<?php echo $result['province'] ?>" required>
+                            <input name="province" class="form-control" type="text" value="<?php echo $result['province'] ?>">
                         </div>
                         <div class="col-lg-6">
                             <label ><i class="fas fa-address-book"></i>  รหัสไปรษณีย์</label>

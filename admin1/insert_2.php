@@ -14,7 +14,7 @@
   include("../config/web_con.php");
 
   $hn        = $_POST['hn'];
-  $cid       = $_POST['cid'];
+  $token     = MD5(date('YmdHis'));
   $fname     = $_POST['fname'];
   $lname     = $_POST['lname'];
   $phone     = $_POST['phone'];
@@ -35,11 +35,12 @@
   // $ctime    = DATE('H:i:s');
   // $page_insert = "Admin_insert";
   // $page_update = "Admin_update";
-
-$insertdata = "INSERT INTO patient_2 (cid,fname,lname,phone,pttype,adddess,moo,district,amphoe,province,zipcode) 
-                                  VALUES ('$cid','$fname','$lname','$phone','$pttype','$adddess','$moo','$district','$amphoe','$province','$zipcode')";
+ $insertdata = "INSERT INTO patient_2 (fname,lname,phone,adddess,moo,district,amphoe,province,zipcode,flage) 
+                    VALUES ('$fname','$lname','$phone','$adddess','$moo','$district','$amphoe','$province','$zipcode','$token')";
 $queryLog = mysqli_query($conf, $insertdata);
 
+
+ 
   // $searchuser = "SELECT * FROM web_data_patient where cid = '" . $cid . "'  ";
   // $have_user_yet = mysqli_query($conf, $searchuser);
   // $count = mysqli_num_rows($have_user_yet);
@@ -69,7 +70,7 @@ $queryLog = mysqli_query($conf, $insertdata);
   //   }
 
 if ($queryLog) {
-header("Location:./page/print_cbd.php?cid=$cid");
+header("Location:./page/print_cbd.php?token=$token");
  }
   // }
   ?>

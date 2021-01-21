@@ -18,8 +18,8 @@ $zipcode    = $_POST['zipcode'];
 $phone       = $_POST['phone'];
 $file       = $_POST['hn'];
 */
-$file       = $_GET['cid'];
-$selectaddresspt = "SELECT * FROM patient_2  where cid = '$file'";
+$token       = $_GET['token'];
+$selectaddresspt = "SELECT * FROM patient_2  where flage = '$token'";
 $queryAdpt= mysqli_query($conf,$selectaddresspt);
 $resultaddressPt = mysqli_fetch_array($queryAdpt);
    $fname      = $resultaddressPt['fname'];
@@ -31,7 +31,7 @@ $resultaddressPt = mysqli_fetch_array($queryAdpt);
    $amphoe     = $resultaddressPt['amphoe'];
    $province   = $resultaddressPt['province'];
    $zipcode    = $resultaddressPt['zipcode'];
-   $hn         = $resultaddressPt['hn'];
+   $no         = $resultaddressPt['no'];
    $phone      = $resultaddressPt['phone'];
    $ipupdate   = $_SERVER['REMOTE_ADDR'];
    $page_flage = "Admin_Print";
@@ -104,22 +104,22 @@ F
 <?php 
 
 
-$filel = date('Y-m-d_His');
-$filel = $file;
+// $filel = date('Y-m-d_His');
+// $filel = $file;
 
-$save = "pdf/".$filel.".pdf";
-$lo   = "Location:pdf/".$filel.".pdf";
+// $save = "pdf/".$filel.".pdf";
+// $lo   = "Location:pdf/".$filel.".pdf";
 
-$html = ob_get_contents();
-ob_end_clean();
-$pdf = new mPDF('th','A4','0','THSaraban');
-$pdf->SetDisplayMode('fullpage');
-$stylesheet = file_get_contents('css/print.css');
-$pdf->WriteHTML($stylesheet,1);
-$pdf->WriteHTML($html,2);
-$success = $pdf->Output($save);
-header($lo);
-die();
+// $html = ob_get_contents();
+// ob_end_clean();
+// $pdf = new mPDF('th','A4','0','THSaraban');
+// $pdf->SetDisplayMode('fullpage');
+// $stylesheet = file_get_contents('css/print.css');
+// $pdf->WriteHTML($stylesheet,1);
+// $pdf->WriteHTML($html,2);
+// $success = $pdf->Output($save);
+// header($lo);
+// die();
 
 
 ?>
