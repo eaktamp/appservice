@@ -100,10 +100,10 @@ if($_SESSION['statusinsert'] == 1){
           <div class="row">
             <div class="col-12">
 
-              <div class="card">
-                <!-- <div class="card-header">
+              <!-- <div class="card">
+                <div class="card-header">
     
-                    <div class="col-12">
+                    div class="col-12">
                       <form name="form1" class="form-horizontal" action="#" method="POST">
                           <div class="form-group row">
                               <div class="col-8 col-lg-10">
@@ -114,9 +114,9 @@ if($_SESSION['statusinsert'] == 1){
                               </div>
                             </div>
                       </form>
-                    </div>
+                    </div> -->
                   
-                </div> -->
+                </div>
                 <!-- /.card-header -->
                 <div class="card-body">
                 
@@ -208,33 +208,33 @@ if($_SESSION['statusinsert'] == 1){
                         <div uk-spinner></div> รอสักครู่ กำลังโหลดฐานข้อมูล...
                     </div>
 
-                    <form id="senddata" class="demo" style="display:none;" autocomplete="off"  method="post" target="_blank " laction="insert_2.php">
+                    <form id="senddata" class="demo" style="display:none;" autocomplete="off"  method="post" target="_blank " action="insert_2.php">
                         <input type="hidden"  name="cid" value="<?php echo $result['cid'] ?>">
                         <input type="hidden" name="cid" value="<?php echo $result['cid'] ?>">
                         
                       <div class="row">
                         <div class="col-6"> 
-                            <label ><i class="fas fa-male"></i>  ชื่อ *</label>
-                            <input name="fname" class="form-control" type="text" value="<?php echo $result['fname'] ?>"required>
+                            <label ><i class="fas fa-male"></i>  ชื่อ </label>
+                            <input name="fname" class="form-control" type="text" value="<?php echo $result['fname'] ?>" required>
                           </div>
 
-                         <!--  <div class="col-6"> 
+                        <!--   <div class="col-6"> 
                             <label ><i class="fas fa-male"></i>  เลขบัตรประจำตัวประชาชน 13 หลัก </label>
                             <input name="cid" class="form-control" type="text" value="<?php echo $result['cid'] ?>">
                           </div> -->
 
                         <div class="col-6">
-                        <label >นามสกุล *</label>
-                            <input name="lname" class="form-control" type="text" value="<?php echo $result['lname'] ?>"required>
+                        <label >นามสกุล</label>
+                            <input name="lname" class="form-control" type="text" value="<?php echo $result['lname'] ?>" required>
                         </div>
                       </div>
 
                       <div class="row">
                         <div class="col-4">
-                            <label ><i class="fas fa-phone-square"></i>  เบอร์โทรศัพท์ *</label>
-                            <input name="phone" class="form-control" type="text" value="<?php echo $result['phone'] ?>"required>
+                            <label ><i class="fas fa-phone-square"></i>  เบอร์โทรศัพท์ </label>
+                            <input name="phone" class="form-control" type="text" value="<?php echo $result['phone'] ?>" required>
                         </div>
-                        <!-- <div class="col-4">
+                       <!--  <div class="col-4">
                             <label ><i class="fas fa-user-md"></i>  สิทธิ์</label>
                             <input name="pttype" class="form-control" type="text" value="<?php echo $result['pttype'] ?>">
                         </div> -->
@@ -246,36 +246,36 @@ if($_SESSION['statusinsert'] == 1){
 
                       <div class="row">
                         <div class="col-lg-3">
-                            <label ><i class="fas fa-address-book"></i> บ้านเลขที่ *</label>
-                            <input name="adddess" class="form-control" type="text" value="<?php echo $result['adddess'] ?>"required>
+                            <label ><i class="fas fa-address-book"></i> บ้านเลขที่</label>
+                            <input name="adddess" class="form-control" type="text" value="<?php echo $result['adddess'] ?>" required>
                         </div>
                         <div class="col-lg-3">
-                            <label ><i class="fas fa-address-book"></i> หมู่ </label>
+                            <label ><i class="fas fa-address-book"></i> หมู่</label>
                             <input name="moo" class="form-control" type="text" value="<?php echo $result['moo'] ?>">
 
                         </div>
                         <div class="col-lg-3">  
-                            <label ><i class="fas fa-address-book"></i> ตำบล / แขวง *</label>
+                            <label ><i class="fas fa-address-book"></i> ตำบล / แขวง</label>
                             <input name="district" class="form-control" type="text" value="<?php echo $result['district'] ?>" required>
                         </div>
                         <div class="col-lg-3">
                           
-                        <label ><i class="fas fa-address-book"></i> อำเภอ / เขต *</label>
+                        <label ><i class="fas fa-address-book"></i> อำเภอ / เขต</label>
                             <input name="amphoe" class="form-control" type="text" value="<?php echo $result['amphoe'] ?>" required>
                         </div>
                       </div>
 
                       <div class="row">
                         <div class="col-lg-6">
-                            <label ><i class="fas fa-address-book"></i> จังหวัด *</label>
+                            <label ><i class="fas fa-address-book"></i> จังหวัด</label>
                             <input name="province" class="form-control" type="text" value="<?php echo $result['province'] ?>" required>
                         </div>
                         <div class="col-lg-6">
-                            <label ><i class="fas fa-address-book"></i>  รหัสไปรษณีย์ *</label>
+                            <label ><i class="fas fa-address-book"></i>  รหัสไปรษณีย์</label>
                             <input name="zipcode" class="form-control" type="text" value="<?php echo trim($result['zipcode'])?>" required>
                         </div>
                       </div>
-                      <button class="btn btn-block btn-success mt-3" id="send" name="send" ><span> พิมพ์ </span></button>
+                      <button class="btn btn-block btn-success mt-3" id="send" name="send" ><span> พิมพ์เอกสาร </span></button>
                     </form>
 
 
